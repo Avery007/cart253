@@ -20,6 +20,10 @@ let trix1=0;
 let trix2=30;
 let trix3=60;
 
+// add a rectangle with random movement
+let randamRectX;
+let randamRectY;
+
 
 
 function preload() {
@@ -56,23 +60,32 @@ function setup() {
 }
 
 
-// draw()
-//
+
+// add a function to generate random numbers
+function RandomN(low,high) {
+	return Math.floor(Math.random()*(high-low+1)+low);
+}
+
+
 // Change the circle and square's positions so they move
 // Draw the circle and square on screen
-
 function draw() {
-  // We don't fill the background so we get a drawing effect
+
+  // add background to get rid of moving effect
+  background(246, 255, 176);
+
+  // display the random rectangle
+  fill(158, 66, 255);
+  randamRectX= RandomN(0,600);
+  randamRectY= RandomN(0,600);
+  rect(randamRectX,randamRectY,50,50);
+
 
   // Move circle up and to the right
   circleX += 1;
   circleY -= 1;
-
-//move triangle from left to the right
-
-
   // Make the circle transparent red
-  fill(255,0,0,10);
+  fill(255,0,0,100);
 
   // nostroke for ellipse and rectangle
   noStroke();
@@ -88,13 +101,19 @@ function draw() {
   // Display the square
   rect(squareX,squareY,squareSize,squareSize);
 
-   // display the triangle
 
-fill(0,0,170,10);
+   // display the triangle,move triangle from left to the right
+fill(158, 66, 255);
 stroke(255);
-   trix1 += 1;
-   trix2 += 1;
-   trix3 += 1;
+   trix1 += 0.5;
+   trix2 += 0.5;
+   trix3 += 0.5;
 
-  triangle(trix1,50,trix2,25,trix3,50);
+  triangle(trix1,100,trix2,50,trix3,80);
+
+//add an elispe always following your mouse
+  ellipse(mouseX,mouseY,25,40);
+
+
+
 }
