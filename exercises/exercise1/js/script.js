@@ -9,29 +9,35 @@
 let circleX;
 let circleY;
 let circleSize = 100;
-
+let text = "Hello, Word!";
 // The current position and size of the square
 let squareX;
 let squareY;
 let squareSize = 100;
 
+//add an triangle
+let trix1=0;
+let trix2=30;
+let trix3=60;
 
-// preload()
-//
-// Nothing here
+
 
 function preload() {
+
+
 
 }
 
 
-// setup()
-//
+
 // Set up the canvas, position the images, set the image mode.
 
 function setup() {
   // Create our canvas
+
   createCanvas(640,640);
+
+
 
   // Start the circle off screen to the bottom left
   // We divide the size by two because we're drawing from the center
@@ -46,7 +52,7 @@ function setup() {
   // We'll draw rectangles from the center
   rectMode(CENTER);
   // We won't have a stroke in this
-  noStroke();
+
 }
 
 
@@ -61,8 +67,16 @@ function draw() {
   // Move circle up and to the right
   circleX += 1;
   circleY -= 1;
+
+//move triangle from left to the right
+
+
   // Make the circle transparent red
   fill(255,0,0,10);
+
+  // nostroke for ellipse and rectangle
+  noStroke();
+
   // Display the circle
   ellipse(circleX,circleY,circleSize,circleSize);
 
@@ -73,4 +87,14 @@ function draw() {
   fill(0,0,255,10);
   // Display the square
   rect(squareX,squareY,squareSize,squareSize);
+
+   // display the triangle
+
+fill(0,0,170,10);
+stroke(255);
+   trix1 += 1;
+   trix2 += 1;
+   trix3 += 1;
+
+  triangle(trix1,50,trix2,25,trix3,50);
 }
