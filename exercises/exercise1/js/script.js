@@ -26,7 +26,7 @@ let imagedoge;
 
 //set image location
 let imageX=0;
-let imageY=50;
+let imageY=100;
 
 // add text
 let thetext="You dont understand!";
