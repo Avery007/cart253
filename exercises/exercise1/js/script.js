@@ -28,6 +28,8 @@ let theImage;
 let imageX=0;
 let imageY=50;
 
+let thetext="Catch me!";
+
 
 function preload() {
 
@@ -81,7 +83,7 @@ function draw() {
   fill(158, 66, 255);
   randamRectX= RandomN(0,600);
   randamRectY= RandomN(0,600);
-  rect(randamRectX,randamRectY,50,50);
+  image(theImage,randamRectX,randamRectY);
 
 
   // Move circle up and to the right
@@ -115,7 +117,7 @@ stroke(255);
   triangle(trix1,100,trix2,50,trix3,80);
 
 //add an elispe always following your mouse
-  image(theImage,mouseX,mouseY);
+  text(thetext,mouseX,mouseY);
 
 
 
