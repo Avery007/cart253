@@ -31,7 +31,7 @@ let imageY=50;
 
 function preload() {
 
-theImage = loadImage("assets/images/ha.jpeg");
+theImage = loadImage("assets/images/ha.png");
 
 }
 
