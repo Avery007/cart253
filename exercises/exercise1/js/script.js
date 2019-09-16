@@ -15,17 +15,16 @@ let squareX;
 let squareY;
 let squareSize = 100;
 
-//add an triangle
-let trix1=0;
-let trix2=30;
-let trix3=60;
 
 // an image with random movement
 let randamRectX;
 let randamRectY;
-
 let image1;
+
+// image from left to right
 let imagedoge;
+
+//set image location
 let imageX=0;
 let imageY=50;
 
@@ -97,7 +96,7 @@ function draw() {
   circleX += 1;
   circleY -= 1;
   // Make the circle transparent red
-  fill(255,0,0,100);
+  fill(255,0,0,120);
 
   // nostroke for ellipse and rectangle
   noStroke();
@@ -114,13 +113,10 @@ function draw() {
   rect(squareX,squareY,squareSize,squareSize);
 
 
-   // display the triangle,move triangle from left to the right
+   // display the doge image,move it from left to the right
 
    imageX += 0.5;
-   imageY += 0.5;
-
-
-  image(imagedoge,imageX,imageY);
+   image(imagedoge,imageX,imageY);
 
 //add a text always following your mouse
   text(thetext,mouseX,mouseY);
