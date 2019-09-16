@@ -82,7 +82,7 @@ function RandomN(low,high) {
 // Draw the circle and square on screen
 function draw() {
 
-  // add background to get rid of moving effect
+  // add background to get rid of some moving effect
   background(246, 255, 176,100);
 
   // display the random image
@@ -121,9 +121,6 @@ function draw() {
 //add a text always following your mouse
    fill(0,0,255,100);
   text(thetext,mouseX,mouseY);
-
-
-
 
 
 }
