@@ -119,6 +119,7 @@ function draw() {
    image(imagedoge,imageX,imageY);
 
 //add a text always following your mouse
+   fill(0,0,255,100);
   text(thetext,mouseX,mouseY);
 
 
