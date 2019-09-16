@@ -20,7 +20,7 @@ let trix1=0;
 let trix2=30;
 let trix3=60;
 
-// add a rectangle with random movement
+// an image with random movement
 let randamRectX;
 let randamRectY;
 
@@ -28,6 +28,7 @@ let theImage;
 let imageX=0;
 let imageY=50;
 
+// add text
 let thetext="Catch me!";
 
 
@@ -62,6 +63,10 @@ function setup() {
   rectMode(CENTER);
   // We won't have a stroke in this
 
+
+  textSize(25);
+  textAlign(CENTER);
+
 }
 
 
@@ -79,7 +84,7 @@ function draw() {
   // add background to get rid of moving effect
   background(246, 255, 176,100);
 
-  // display the random rectangle
+  // display the random image
 
   randamRectX= RandomN(0,600);
   randamRectY= RandomN(0,600);
@@ -116,7 +121,7 @@ stroke(255);
 
   triangle(trix1,100,trix2,50,trix3,80);
 
-//add an elispe always following your mouse
+//add a text always following your mouse
   text(thetext,mouseX,mouseY);
 
 
