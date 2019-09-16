@@ -34,7 +34,7 @@ let thetext="Catch me!";
 
 function preload() {
 
-theImage = loadImage("assets/images/ha.png");
+theImage = loadImage("assets/images/doge.png");
 
 }
 
