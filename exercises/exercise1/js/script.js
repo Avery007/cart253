@@ -44,7 +44,7 @@ function setup() {
 
   createCanvas(640,640);
 
-  imageSize(24,35);
+
 
   // Start the circle off screen to the bottom left
   // We divide the size by two because we're drawing from the center
