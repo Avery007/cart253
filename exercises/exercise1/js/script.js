@@ -9,7 +9,7 @@
 let circleX;
 let circleY;
 let circleSize = 100;
-let text = "Hello, Word!";
+//let text = "Hello, Word!";
 // The current position and size of the square
 let squareX;
 let squareY;
@@ -24,11 +24,14 @@ let trix3=60;
 let randamRectX;
 let randamRectY;
 
+let theImage;
+let imageX=0;
+let imageY=50;
 
 
 function preload() {
 
-
+theImage = loadImage("assets/images/clown.png");
 
 }
 
@@ -112,7 +115,9 @@ stroke(255);
   triangle(trix1,100,trix2,50,trix3,80);
 
 //add an elispe always following your mouse
-  ellipse(mouseX,mouseY,25,40);
+  ellipse(mouseX,mouseY,40,40);
+
+  image(theImage,imageX,imageY);
 
 
 
