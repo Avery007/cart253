@@ -24,17 +24,17 @@ let trix3=60;
 let randamRectX;
 let randamRectY;
 
-let theImage;
+let image1;
 let imageX=0;
 let imageY=50;
 
 // add text
-let thetext="Catch me!";
+let thetext="You dont understand!";
 
 
 function preload() {
 
-theImage = loadImage("assets/images/doge.png");
+image1 = loadImage("assets/images/trump.png");
 
 }
 
@@ -64,7 +64,7 @@ function setup() {
   // We won't have a stroke in this
 
 
-  textSize(25);
+  textSize(20);
   textAlign(CENTER);
 
 }
@@ -88,7 +88,7 @@ function draw() {
 
   randamRectX= RandomN(0,600);
   randamRectY= RandomN(0,600);
-  image(theImage,randamRectX,randamRectY);
+  image(image1,randamRectX,randamRectY);
 
 
   // Move circle up and to the right
