@@ -115,9 +115,9 @@ stroke(255);
   triangle(trix1,100,trix2,50,trix3,80);
 
 //add an elispe always following your mouse
-  ellipse(mouseX,mouseY,40,40);
+  image(theImage,mouseX,mouseY);
 
-  image(theImage,imageX,imageY);
+
 
 
 
