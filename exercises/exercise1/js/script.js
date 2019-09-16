@@ -77,7 +77,7 @@ function RandomN(low,high) {
 function draw() {
 
   // add background to get rid of moving effect
-  background(246, 255, 176,90);
+  background(246, 255, 176,100);
 
   // display the random rectangle
 
