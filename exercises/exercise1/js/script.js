@@ -77,10 +77,10 @@ function RandomN(low,high) {
 function draw() {
 
   // add background to get rid of moving effect
-  background(246, 255, 176);
+  background(246, 255, 176,10);
 
   // display the random rectangle
-  fill(158, 66, 255);
+
   randamRectX= RandomN(0,600);
   randamRectY= RandomN(0,600);
   image(theImage,randamRectX,randamRectY);
