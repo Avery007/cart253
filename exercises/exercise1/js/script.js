@@ -25,6 +25,7 @@ let randamRectX;
 let randamRectY;
 
 let image1;
+let imagedoge;
 let imageX=0;
 let imageY=50;
 
@@ -35,6 +36,7 @@ let thetext="You dont understand!";
 function preload() {
 
 image1 = loadImage("assets/images/trump.png");
+imagedoge = loadImage("assets/images/doge.png");
 
 }
 
@@ -113,13 +115,12 @@ function draw() {
 
 
    // display the triangle,move triangle from left to the right
-fill(158, 66, 255);
-stroke(255);
-   trix1 += 0.5;
-   trix2 += 0.5;
-   trix3 += 0.5;
 
-  triangle(trix1,100,trix2,50,trix3,80);
+   imageX += 0.5;
+   imageY += 0.5;
+
+
+  image(imagedoge,imageX,imageY);
 
 //add a text always following your mouse
   text(thetext,mouseX,mouseY);
