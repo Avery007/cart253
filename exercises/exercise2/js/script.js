@@ -10,7 +10,7 @@ A simple dodging game with keyboard controls
 // The position and size of our avatar circle
 let avatarX;
 let avatarY;
-let avatarSize = 20;
+let avatarSize = 30;
 
 let word;
 let lose=0;
