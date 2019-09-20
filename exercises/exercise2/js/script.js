@@ -49,6 +49,7 @@ function RandomN(low,high) {
 function setup() {
   // Create our playing area
   createCanvas(1000,500);
+	imageMode(CENTER);
 	player = loadImage("assets/images/run.png");
 	imgapple = loadImage("assets/images/apple.png");
 
@@ -81,7 +82,7 @@ function draw() {
   // Check which keys are down and set the avatar's velocity based on its
   // speed appropriately
 
-image(player,avatarX,avatarY);
+image(player,avatarX,avatarY，avatarSize，avatarSize);
   // Left and right
   if (keyIsDown(LEFT_ARROW)) {
     avatarVX = -avatarSpeed;
@@ -154,7 +155,7 @@ image(player,avatarX,avatarY);
   // The player is black
   fill(0);
   // Draw the player as a circle
-  ellipse(avatarX,avatarY,avatarSize,avatarSize);
+
 
   // The enemy is red
   fill(255,0,0);
