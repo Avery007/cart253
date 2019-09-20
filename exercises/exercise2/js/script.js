@@ -10,7 +10,7 @@ A simple dodging game with keyboard controls
 // The position and size of our avatar circle
 let avatarX;
 let avatarY;
-let avatarSize = 30;
+let avatarSize;
 
 let word;
 let warn;
@@ -52,9 +52,13 @@ function setup() {
 
 	player = loadImage("assets/images/run.png");// source of image https://tenor.com/view/help-dog-anime-gif-12333977
 	imgapple = loadImage("assets/images/apple.png");// source of image https://pixabay.com/illustrations/apple-fruit-red-crayons-drawing-1485458
-	 enemySpeed = 5;
+
+  instruction="Eat the apple to increase your lifespin!";
+
+  avatarSize = 30;
+  appleX=random(10,width-10);
+	enemySpeed = 5;
 	enemyVX = 5;
-instruction="Eat the apple to increase your lifespin!";
   // Put the avatar in the centre
   avatarX = width/2;
   avatarY = height/2;
@@ -64,7 +68,7 @@ instruction="Eat the apple to increase your lifespin!";
   // Put the enemy to the left at a random y coordinate within the canvas
   enemyX = 0;
   enemyY = random(0,height);
-  appleX=random(10,width-10);
+
   // No stroke so it looks cleaner
   noStroke();
 }
@@ -139,7 +143,7 @@ console.log(avatarSize);
 
 		avatarX=width/2;
 		avatarY=height/2;
-    speedup();
+    enemySpeed=enemySpeed+50;
   }
 
   // Check if the enemy has moved all the way across the screen
