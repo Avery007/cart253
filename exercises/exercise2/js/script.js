@@ -74,7 +74,7 @@ instruction="Eat the apple to increase your lifespin!";
 // game over situations.
 function draw() {
   // A pink background
-  background(3, 82, 161);
+  background(139, 191, 240);
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
@@ -169,7 +169,7 @@ console.log(avatarSize);
 
 	if(enemySize<=50){
 	enemySize=5+0.5*dodges;
-  enemySpeed=enemySize+0.5*dodges;
+  enemySpeed=enemySize+0.1*dodges;
   }
 	else{enemySize=enemySize;}
   rect(enemyX,enemyY,enemySize,enemySize);
