@@ -137,6 +137,7 @@ console.log(avatarSize);
     enemySpeed = 0;
     enemyX = 0;
     dodges = 0;
+		avatarSize=avatarSize+50;
   }
 
   // Check if the enemy has moved all the way across the screen
