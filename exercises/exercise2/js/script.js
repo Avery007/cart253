@@ -8,6 +8,8 @@ A simple dodging game with keyboard controls
 ******************************************************/
 
 // The position and size of our avatar circle
+let cheatime;
+
 let avatarX;
 let avatarY;
 let avatarSize;
@@ -140,11 +142,17 @@ console.log(avatarSize);
     console.log("YOU LOSE!");
     warn="Opps! You fall down from the edge! move back to continue";
     text(warn,450,250);
-
+    cheatime=cheatime+1;
 		avatarX=width/2;
 		avatarY=height/2;
-    enemySpeed=enemySpeed+50;
+    // why doesnt workenemySpeed=enemySpeed+50;
   }
+
+	if(cheatime>=1){
+    if(avatarSize>=60){avatarSize=150;}
+		else{avatarSize=cheatime*60;}
+	}
+
 
   // Check if the enemy has moved all the way across the screen
   if (enemyX > width) {
