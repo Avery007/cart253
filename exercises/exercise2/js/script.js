@@ -149,13 +149,12 @@ console.log(avatarSize);
 	 dodges=0;
 }
 text(check,400,400);
-		if(cheatime>=1){
-	                       if(avatarSize>=60){avatarSize=150;}
-			                    else{avatarSize=cheatime*60;}
+		if(cheatime>=1){ avatarSize=100;
+	                      // if(avatarSize>=60){avatarSize=150;}
+			                   // else{avatarSize=cheatime*60;}
 
-
-                                             // why doesnt
-  }
+}
+                                             // why doesnt}
 
 
 
