@@ -83,6 +83,7 @@ function draw() {
   // speed appropriately
 
 image(player,avatarX,avatarY,avatarSize,avatarSize);
+console.log(avatarSize);
   // Left and right
   if (keyIsDown(LEFT_ARROW)) {
     avatarVX = -avatarSpeed;
@@ -185,7 +186,7 @@ if(lose>=1){
    appleY=appleY+1;
    fill(255,0,0);
   ellipse(appleX,appleY,25,25);
-  text(appleY,50,50);
+  text(avatarSize,50,50);
 
 	text(instruction,400,300);
 }
