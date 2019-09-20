@@ -34,8 +34,8 @@ let thetext="You dont understand!";
 
 function preload() {
 
-image1 = loadImage("assets/images/trump.png");
-imagedoge = loadImage("assets/images/doge.png");
+image1 = loadImage("assets/images/trump.png"); // source of image https://www.pinterest.ca/pin/641974121860039389/?autologin=true&nic=1
+imagedoge = loadImage("assets/images/doge.png");// source of image https://twitter.com/xxhama2/status/766216698143711232
 
 }
 

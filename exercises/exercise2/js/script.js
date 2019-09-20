@@ -50,8 +50,8 @@ function setup() {
   // Create our playing area
   createCanvas(1000,500);
 	imageMode(CENTER);
-	player = loadImage("assets/images/run.png");
-	imgapple = loadImage("assets/images/apple.png");
+	player = loadImage("assets/images/run.png");// source of image https://tenor.com/view/help-dog-anime-gif-12333977
+	imgapple = loadImage("assets/images/apple.png");// source of image https://pixabay.com/illustrations/apple-fruit-red-crayons-drawing-1485458/
 
 
 instruction="eat the apple to increase life spin!";
