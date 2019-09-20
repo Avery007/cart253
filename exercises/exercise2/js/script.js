@@ -13,6 +13,7 @@ let avatarY;
 let avatarSize = 30;
 
 let word;
+let warn;
 let lose=0;
 // The speed and velocity of our avatar circle
 let avatarSpeed = 10;
@@ -54,7 +55,7 @@ function setup() {
 	imgapple = loadImage("assets/images/apple.png");// source of image https://pixabay.com/illustrations/apple-fruit-red-crayons-drawing-1485458/
 
 
-instruction="eat the apple to increase life spin!";
+instruction="Eat the apple to increase your lifespin!";
   // Put the avatar in the centre
   avatarX = width/2;
   avatarY = height/2;
@@ -73,7 +74,7 @@ instruction="eat the apple to increase life spin!";
 // game over situations.
 function draw() {
   // A pink background
-  background(255,220,220);
+  background(3, 82, 161);
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
@@ -132,10 +133,11 @@ console.log(avatarSize);
   if (avatarX < 0 || avatarX > width || avatarY < 0 || avatarY > height) {
     // If they went off the screen they lose in the same way as above.
     console.log("YOU LOSE!");
-    word="Opps! You fall down from the edge! move back to continue";
-    text(word,450,250);
-    enemySpeed = 0;
-    enemyX = 0;
+    warn="Opps! You fall down from the edge! move back to continue";
+    text(warn,450,250);
+    enemySpeed = enemySpeed+10;
+		avatarX=width/2;
+		avatarY=height/2;
     dodges = 0;
 		avatarSize=avatarSize+50;
   }
@@ -163,18 +165,23 @@ console.log(avatarSize);
   fill(255,0,0);
   // Draw the enemy as a rectangle
     rectMode(CENTER);
-  rect(enemyX,enemyY,enemySize,enemySize);
-  enemySize=5+0.5*dodges;
+
+
+	if(enemySize<=50){
+	enemySize=5+0.5*dodges;
   enemySpeed=enemySize+0.5*dodges;
+  }
+	else{enemySize=enemySize;}
+  rect(enemyX,enemyY,enemySize,enemySize);
 
   text(word,20,20);
-  text(lose,300,20);
+  text(lose,500,20);
 
   avatarSize=30+lose*lose*5;
 
   if(avatarSize> 150){
     word="You lose!,your final dodges is "+ dodges;
-    text(word,20,20);
+    text(word,100,20);
     enemySpeed=0;
     appleX=0;appleY=0;
 
