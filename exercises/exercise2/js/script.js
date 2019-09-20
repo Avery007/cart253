@@ -145,8 +145,9 @@ console.log(avatarSize);
     cheatime=cheatime+1;
 		avatarX=width/2;
 		avatarY=height/2;
-
+   check=cheatime;
 }
+text(check,400,400);
 		if(cheatime>=1){
 	                       if(avatarSize>=60){avatarSize=150;}
 			                    else{avatarSize=cheatime*60;}
