@@ -146,6 +146,7 @@ console.log(avatarSize);
 		avatarX=width/2;
 		avatarY=height/2;
    check=cheatime;
+	 dodges=0;
 }
 text(check,400,400);
 		if(cheatime>=1){
