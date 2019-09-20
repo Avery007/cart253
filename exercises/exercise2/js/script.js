@@ -169,7 +169,7 @@ console.log(avatarSize);
   text(word,20,20);
   text(lose,300,20);
 
-  avatarSize=20+lose*lose*5;
+  avatarSize=30+lose*lose*5;
 
   if(avatarSize> 150){
     word="You lose!,your final dodges is "+ dodges;
