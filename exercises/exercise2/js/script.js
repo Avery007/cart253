@@ -54,7 +54,7 @@ function setup() {
 
 	player = loadImage("assets/images/run.png");// source of image https://tenor.com/view/help-dog-anime-gif-12333977
 	imgapple = loadImage("assets/images/apple.png");// source of image https://pixabay.com/illustrations/apple-fruit-red-crayons-drawing-1485458
-
+ cheatime=0;
   instruction="Eat the apple to increase your lifespin!";
 
   avatarSize = 30;
@@ -145,14 +145,17 @@ console.log(avatarSize);
     cheatime=cheatime+1;
 		avatarX=width/2;
 		avatarY=height/2;
-		check=cheatime;
-    // why doesnt workenemySpeed=enemySpeed+50;
+
+}
+		if(cheatime>=1){
+	                       if(avatarSize>=60){avatarSize=150;}
+			                    else{avatarSize=cheatime*60;}
+
+
+                                             // why doesnt
   }
- text(check,500,400);
-	if(cheatime>=1){
-    if(avatarSize>=60){avatarSize=150;}
-		else{avatarSize=cheatime*60;}
-	}
+
+
 
 
   // Check if the enemy has moved all the way across the screen
