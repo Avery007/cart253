@@ -9,7 +9,7 @@ A simple dodging game with keyboard controls
 
 // The position and size of our avatar circle
 let cheatime;
-
+let check;
 let avatarX;
 let avatarY;
 let avatarSize;
@@ -145,9 +145,10 @@ console.log(avatarSize);
     cheatime=cheatime+1;
 		avatarX=width/2;
 		avatarY=height/2;
+		check=cheatime;
     // why doesnt workenemySpeed=enemySpeed+50;
   }
-
+ text(check,500,400);
 	if(cheatime>=1){
     if(avatarSize>=60){avatarSize=150;}
 		else{avatarSize=cheatime*60;}
