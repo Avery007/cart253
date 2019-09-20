@@ -26,8 +26,8 @@ let enemyY;
 let enemySize = 5;
 
 // The speed and velocity of our enemy circle
-let enemySpeed = 5;
-let enemyVX = 5;
+let enemySpeed ;
+let enemyVX ;
 
 // How many dodges the player has made
 let dodges = 0;
@@ -43,22 +43,23 @@ let imgapple;
 // setup()
 //
 // Make the canvas, position the avatar and anemy
-function speedup() {
-	enemySpeed=enemySpeed+30;
-}
+
 
 function setup() {
   // Create our playing area
   createCanvas(1000,500);
 	imageMode(CENTER);
+
 	player = loadImage("assets/images/run.png");// source of image https://tenor.com/view/help-dog-anime-gif-12333977
-	imgapple = loadImage("assets/images/apple.png");// source of image https://pixabay.com/illustrations/apple-fruit-red-crayons-drawing-1485458/
-
-
+	imgapple = loadImage("assets/images/apple.png");// source of image https://pixabay.com/illustrations/apple-fruit-red-crayons-drawing-1485458
+	 enemySpeed = 5;
+	enemyVX = 5;
 instruction="Eat the apple to increase your lifespin!";
   // Put the avatar in the centre
   avatarX = width/2;
   avatarY = height/2;
+
+
 
   // Put the enemy to the left at a random y coordinate within the canvas
   enemyX = 0;
