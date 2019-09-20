@@ -185,7 +185,7 @@ console.log(avatarSize);
 if(lose>=1){
    appleY=appleY+1;
    fill(255,0,0);
-  image(appleX,appleY,25,25);
+  image(imgapple,appleX,appleY,25,25);
   text(avatarSize,50,50);
 
 	text(instruction,400,300);
