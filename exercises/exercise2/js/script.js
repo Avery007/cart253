@@ -82,7 +82,7 @@ function draw() {
   // Check which keys are down and set the avatar's velocity based on its
   // speed appropriately
 
-image(player,avatarX,avatarY,20,20);
+image(player,avatarX,avatarY,avatarSize,avatarSize);
   // Left and right
   if (keyIsDown(LEFT_ARROW)) {
     avatarVX = -avatarSpeed;
