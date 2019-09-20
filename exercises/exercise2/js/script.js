@@ -43,8 +43,8 @@ let imgapple;
 // setup()
 //
 // Make the canvas, position the avatar and anemy
-function RandomN(low,high) {
-	return Math.floor(Math.random()*(high-low+1)+low);
+function speedup() {
+	enemySpeed=enemySpeed+30;
 }
 
 function setup() {
@@ -135,11 +135,10 @@ console.log(avatarSize);
     console.log("YOU LOSE!");
     warn="Opps! You fall down from the edge! move back to continue";
     text(warn,450,250);
-    enemySpeed = enemySpeed+10;
+
 		avatarX=width/2;
 		avatarY=height/2;
-    dodges = 0;
-		avatarSize=avatarSize+50;
+    speedup();
   }
 
   // Check if the enemy has moved all the way across the screen
