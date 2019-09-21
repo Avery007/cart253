@@ -18,7 +18,7 @@ let word;
 let warn;
 let lose=0;
 // The speed and velocity of our avatar circle
-let avatarSpeed = 10;
+let avatarSpeed ;
 let avatarVX = 0;
 let avatarVY = 0;
 
@@ -56,7 +56,7 @@ function setup() {
 	imgapple = loadImage("assets/images/apple.png");// source of image https://pixabay.com/illustrations/apple-fruit-red-crayons-drawing-1485458
  cheatime=0;
   instruction="Eat the apple to increase your lifespin!";
-
+  avatarSpeed=10;
   avatarSize = 30;
   appleX=random(10,width-10);
 	enemySpeed = 5;
@@ -140,20 +140,22 @@ console.log(avatarSize);
   if (avatarX < 0 || avatarX > width || avatarY < 0 || avatarY > height) {
     // If they went off the screen they lose in the same way as above.
     console.log("YOU LOSE!");
-    warn="Opps! You fall down from the edge! move back to continue";
+    warn="Opps! You fall down from the edge! ";
     text(warn,450,250);
     cheatime=cheatime+1;
 		avatarX=width/2;
 		avatarY=height/2;
    check=cheatime;
+   avatarSpeed=avatarSpeed-cheatime*2;
 	 dodges=0;
 }
 text(check,400,400);
-		if(cheatime>=1){ avatarSize=100;
+if(cheatime>=1){ avatarSize=100;}
+
 	                      // if(avatarSize>=60){avatarSize=150;}
 			                   // else{avatarSize=cheatime*60;}
 
-}
+
                                              // why doesnt}
 
 
