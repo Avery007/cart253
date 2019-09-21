@@ -97,8 +97,8 @@ function setup() {
 
 function draw() {
   // A pink background
-  background(139, 191, 240); // change background to blue
-image(backimg,500,250);
+  //background(139, 191, 240);
+  image(backimg,500,250);
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
   avatarVY = 0;
@@ -170,7 +170,7 @@ if(avatarSpeed>=1){ avatarSpeed=9-cheatime*3;} // reset player's speed
  warn="Opps! You fall down from the edge so your speed is reduced to " + avatarSpeed;
 }
 textSize(15);
-text(warn,250,15);
+text(warn,250,25);
 
 
 
@@ -208,9 +208,11 @@ text(warn,250,15);
   rect(enemyX,enemyY,enemySize,enemySize);// display enery as a rectangle
 
   textSize(15);
+  fill(176, 206, 255);
   text(word,20,20);
 
 showlose="You are hit "+lose+ " times!"; //display how many times players lose
+fill(239, 255, 176);
 text(showlose,20,40);
 
   avatarSize=40+lose*lose*5; // change player size eatch time after hit
