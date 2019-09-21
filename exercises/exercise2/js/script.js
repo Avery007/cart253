@@ -9,7 +9,7 @@ A simple dodging game with keyboard controls
 
 // The position and size of our avatar circle
 let cheatime;
-let check;
+let result;
 let avatarX;
 let avatarY;
 let avatarSize;
@@ -17,6 +17,7 @@ let avatarSize;
 let word;
 let warn;
 let lose=0;
+let showlose;
 // The speed and velocity of our avatar circle
 let avatarSpeed ;
 let avatarVX = 0;
@@ -148,15 +149,10 @@ if(avatarSpeed>=1){ avatarSpeed=9-cheatime*3;}
   else{avatarSpeed=0;}
  warn="Opps! You fall down from the edge so your speed is reduced to " + avatarSpeed;
 }
-text(check,400,400);
-text(warn,450,250);
+textSize(15);
+text(warn,250,15);
 
 
-	                      // if(avatarSize>=60){avatarSize=150;}
-			                   // else{avatarSize=cheatime*60;}
-
-
-                                             // why doesnt}
 
 
 
@@ -192,15 +188,18 @@ text(warn,450,250);
   }
 	else{enemySize=enemySize;}
   rect(enemyX,enemyY,enemySize,enemySize);
-
+  textSize(15);
   text(word,20,20);
-  text(lose,500,20);
+  showlose="You are hit "+lose+ " times!";
+  text(showlose,20,40);
 
   avatarSize=30+lose*lose*5;
 
   if(avatarSize> 150){
-    word="You lose!,your final dodges is "+ dodges;
-    text(word,100,20);
+    result="You lose!Good luck next time!";
+    textSize(30);
+    text(result,400,250);
+    instruction="";
     enemySpeed=0;
     appleX=0;appleY=0;
 
@@ -213,13 +212,14 @@ if(lose>=1){
    appleY=appleY+1;
    fill(255,0,0);
   image(imgapple,appleX,appleY,25,25);
-  text(avatarSize,50,50);
+
 
 	text(instruction,400,300);
 }
 if (dist(appleX,appleY,avatarX,avatarY) < enemySize/2+avatarSize/2) {
   lose=lose-1;
-  appleY=0;appleX=random(10,width-10);
+  appleY=0;
+  appleX=random(10,width-10);
 	instruction="";
   }
 
