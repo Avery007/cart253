@@ -7,17 +7,35 @@ A simple dodging game with keyboard controls
 
 ******************************************************/
 
-// The position and size of our avatar circle
-let cheatime;
-let result;
+
+//added items
+let cheatime; //count how many times players move out of the screen
+let result;  // display when players lose the game
+
+// add an apple to recude player's lose
+let apple;
+let appleX;
+let appleY=0;
+let instruction; // instruction about the apple
+
+//texts showing players'state
+let word;
+let warn; // display when players go off screen
+let showlose; // show how mnay times players are hit
+
+let player;  //player image
+let imgapple; // apple image
+
+
+
 let avatarX;
 let avatarY;
 let avatarSize;
 
-let word;
-let warn;
+
+
 let lose=0;
-let showlose;
+
 // The speed and velocity of our avatar circle
 let avatarSpeed ;
 let avatarVX = 0;
@@ -35,13 +53,7 @@ let enemyVX ;
 // How many dodges the player has made
 let dodges = 0;
 
-let apple;
-let appleX;
-let appleY=0;
-let instruction;
 
-let player;
-let imgapple;
 
 // setup()
 //
@@ -51,14 +63,17 @@ let imgapple;
 function setup() {
   // Create our playing area
   createCanvas(1000,500);
-	imageMode(CENTER);
+	imageMode(CENTER); // set imagecenter to compare the distance
 
 	player = loadImage("assets/images/run.png");// source of image https://tenor.com/view/help-dog-anime-gif-12333977
 	imgapple = loadImage("assets/images/apple.png");// source of image https://pixabay.com/illustrations/apple-fruit-red-crayons-drawing-1485458
- cheatime=0;
+  cheatime=0; // initally players are on the screen
   instruction="Eat the apple to increase your lifespin!";
   avatarSpeed=10;
   avatarSize = 30;
+
+
+
   appleX=random(10,width-10);
 	enemySpeed = 5;
 	enemyVX = 5;
@@ -76,13 +91,11 @@ function setup() {
   noStroke();
 }
 
-// draw()
-//
-// Handle moving the avatar and enemy and checking for dodges and
-// game over situations.
+
+
 function draw() {
   // A pink background
-  background(139, 191, 240);
+  background(139, 191, 240); // change background to blue
 
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
@@ -91,8 +104,12 @@ function draw() {
   // Check which keys are down and set the avatar's velocity based on its
   // speed appropriately
 
+
+// show player as an image and the size and speed could change
 image(player,avatarX,avatarY,avatarSize,avatarSize);
 console.log(avatarSize);
+
+
   // Left and right
   if (keyIsDown(LEFT_ARROW)) {
     avatarVX = -avatarSpeed;
@@ -127,7 +144,7 @@ console.log(avatarSize);
     // Tell the player they lost
     console.log("YOU LOSE!");
     // Reset the enemy's position
-    lose=lose+1;
+    lose=lose+1; // count how many times lose
     enemyX = 0;
     enemyY = random(0,height);
     // Reset the avatar's position
@@ -139,13 +156,14 @@ console.log(avatarSize);
 
   // Check if the avatar has gone off the screen (cheating!)
   if (avatarX < 0 || avatarX > width || avatarY < 0 || avatarY > height) {
-    // If they went off the screen they lose in the same way as above.
-    console.log("YOU LOSE!");
 
-    cheatime=cheatime+1;
-		avatarX=width/2;
+    console.log("YOU LOSE!");
+ // if players do so, their position will be reset and their speed reduces
+ //each time they cheat
+    cheatime=cheatime+1; //count cheat time
+		avatarX=width/2;    // reset position
 		avatarY=height/2;
-if(avatarSpeed>=1){ avatarSpeed=9-cheatime*3;}
+if(avatarSpeed>=1){ avatarSpeed=9-cheatime*3;} // reset player's speed
   else{avatarSpeed=0;}
  warn="Opps! You fall down from the edge so your speed is reduced to " + avatarSpeed;
 }
@@ -171,56 +189,62 @@ text(warn,250,15);
   // Display the number of successful dodges in the console
   console.log(dodges);
 
-  // The player is black
-  fill(0);
-  // Draw the player as a circle
 
 
-  // The enemy is red
+// The enemy is red
   fill(255,0,0);
   // Draw the enemy as a rectangle
     rectMode(CENTER);
 
-
-	if(enemySize<=50){
-	enemySize=5+0.5*dodges;
+  // change the size and speed of enermy when players make dodges
+	if(enemySize<=50){           // set the max size of enermy to 50
+	enemySize=5+0.5*dodges;  // rate of increased speed and size
   enemySpeed=enemySize+0.1*dodges;
   }
-	else{enemySize=enemySize;}
-  rect(enemyX,enemyY,enemySize,enemySize);
+	else{enemySize=enemySize;}    // cannot go above 50
+
+  rect(enemyX,enemyY,enemySize,enemySize);// display enery as a rectangle
+
   textSize(15);
   text(word,20,20);
-  showlose="You are hit "+lose+ " times!";
-  text(showlose,20,40);
 
-  avatarSize=30+lose*lose*5;
+showlose="You are hit "+lose+ " times!"; //display how many times players lose
+text(showlose,20,40);
 
-  if(avatarSize> 150){
+  avatarSize=30+lose*lose*5; // change player size eatch time after hit
+
+
+//what will happen when players lose the game
+  if(avatarSize> 150){           //players lose the game after 5 hit
     result="You lose!Good luck next time!";
     textSize(30);
     text(result,400,250);
-    instruction="";
-    enemySpeed=0;
-    appleX=0;appleY=0;
+    instruction=""; // get rid of instruction by set it to null
+    enemySpeed=0;   // reset enemySpeed
+    appleX=0;  // reset apply --no apple on the screen
+    appleY=0;
 
   }
-  else{  word="Your dodges" + dodges;}
+  else{  word="Your dodges" + dodges;} // when game continues, show dodges time
 
 
-
+// display an apple each time when players are hit
 if(lose>=1){
-   appleY=appleY+1;
-   fill(255,0,0);
-  image(imgapple,appleX,appleY,25,25);
-
-
-	text(instruction,400,300);
+   appleY=appleY+1; // move apply
+  image(imgapple,appleX,appleY,25,25); // appleX is random number so the
+                                    //position of apple is different each time
+	text(instruction,400,300); // explain the apple
 }
-if (dist(appleX,appleY,avatarX,avatarY) < enemySize/2+avatarSize/2) {
-  lose=lose-1;
+
+// when players move towats the apple, lose is reduced by one each time
+if (dist(appleX,appleY,avatarX,avatarY) < enemySize/2+avatarSize/2)
+// check distance between players and apples
+{
+  lose=lose-1; // reduce lose if it is true
   appleY=0;
   appleX=random(10,width-10);
-	instruction="";
+	instruction=""; // instructions only show up one time
+                  //when players eat the apple,it disappears
   }
 
 }
