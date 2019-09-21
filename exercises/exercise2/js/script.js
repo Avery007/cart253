@@ -225,7 +225,7 @@ text(showlose,20,40);
     appleY=0;
 
   }
-  else{  word="Your dodges" + dodges;} // when game continues, show dodges time
+  else{  word="Your dodges " + dodges;} // when game continues, show dodges time
 
 
 // display an apple each time when players are hit
