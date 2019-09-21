@@ -66,7 +66,7 @@ function setup() {
   createCanvas(1000,500);
 	imageMode(CENTER); // set imagecenter to compare the distance
   backimg=loadImage("assets/images/thunder.png");
-  img(backimg,500,250,width/2,height/2);
+  image(backimg,500,250,width/2,height/2);
 	player = loadImage("assets/images/run.png");// source of image https://tenor.com/view/help-dog-anime-gif-12333977
 	imgapple = loadImage("assets/images/apple.png");// source of image https://pixabay.com/illustrations/apple-fruit-red-crayons-drawing-1485458
   cheatime=0; // initally players are on the screen
