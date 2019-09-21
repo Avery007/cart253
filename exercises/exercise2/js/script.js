@@ -140,8 +140,7 @@ console.log(avatarSize);
   if (avatarX < 0 || avatarX > width || avatarY < 0 || avatarY > height) {
     // If they went off the screen they lose in the same way as above.
     console.log("YOU LOSE!");
-    warn="Opps! You fall down from the edge! ";
-    text(warn,450,250);
+    warn="Opps! You fall down from the edge so your speed is reduced to " + avatarSpeed;
     cheatime=cheatime+1;
 		avatarX=width/2;
 		avatarY=height/2;
@@ -150,6 +149,7 @@ if(avatarSpeed>=1){ avatarSpeed=9-cheatime*3;}
  check=avatarSpeed;
 }
 text(check,400,400);
+text(warn,450,250);
 
 
 	                      // if(avatarSize>=60){avatarSize=150;}
