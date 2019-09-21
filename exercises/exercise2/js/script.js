@@ -26,7 +26,7 @@ let showlose; // show how mnay times players are hit
 
 let player;  //player image
 let imgapple; // apple image
-
+let backimg;
 
 
 let avatarX;
@@ -65,7 +65,7 @@ function setup() {
   // Create our playing area
   createCanvas(1000,500);
 	imageMode(CENTER); // set imagecenter to compare the distance
-
+  backimg=loadImage("assets/images/thunder.png");
 	player = loadImage("assets/images/run.png");// source of image https://tenor.com/view/help-dog-anime-gif-12333977
 	imgapple = loadImage("assets/images/apple.png");// source of image https://pixabay.com/illustrations/apple-fruit-red-crayons-drawing-1485458
   cheatime=0; // initally players are on the screen
