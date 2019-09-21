@@ -146,12 +146,12 @@ console.log(avatarSize);
 		avatarX=width/2;
 		avatarY=height/2;
    check=avatarSpeed;
+if(avatarSpeed<1){ avaterSpeed=0;}
+  else{avatarSpeed=10-cheatime*3;}
 
-   avatarSpeed=10-cheatime*3;
-	 dodges=0;
 }
 text(check,400,400);
-if(avatarSpeed<1){ avaterSpeed=0;}
+
 
 	                      // if(avatarSize>=60){avatarSize=150;}
 			                   // else{avatarSize=cheatime*60;}
