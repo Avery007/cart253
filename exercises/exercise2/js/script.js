@@ -98,7 +98,7 @@ function setup() {
 function draw() {
   // A pink background
   //background(139, 191, 240);
-  image(backimg,500,250);
+  image(backimg,490,250);
   // Default the avatar's velocity to 0 in case no key is pressed this frame
   avatarVX = 0;
   avatarVY = 0;
