@@ -70,7 +70,7 @@ function setup() {
   cheatime=0; // initally players are on the screen
   instruction="Eat the apple to increase your lifespin!";
   avatarSpeed=10;
-  avatarSize = 30;
+  avatarSize = 40;
 
 
 
