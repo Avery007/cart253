@@ -75,8 +75,8 @@ function setup() {
 
 
   appleX=random(10,width-10);
-	enemySpeed = 5;
-	enemyVX = 5;
+	enemySpeed = 9;
+	enemyVX = 9;
   // Put the avatar in the centre
   avatarX = width/2;
   avatarY = height/2;
