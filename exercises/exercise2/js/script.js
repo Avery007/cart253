@@ -146,7 +146,7 @@ console.log(avatarSize);
 		avatarX=width/2;
 		avatarY=height/2;
    check=avatarSpeed;
-if(avatarSpeed>=1){ avatarSpeed=10-cheatime*2;}
+if(avatarSpeed>=1){ avatarSpeed=9-cheatime*3;}
   else{avatarSpeed=0;}
 
 }
