@@ -1,12 +1,25 @@
-/*********************************************
 
-Here is a description of any special CSS used.
-In this case it's just padding and margin to 0
-so the canvas is flush with the top left corner.
 
-**********************************************/
+.textcontent{ position: absolute;
+	        top: 80px;
+	        left: 1000px;
+           background-color: #ADD8F6;
+           width: 200px;
+           height: 450px;
 
-body {
-  padding: 0;
-  margin: 0;
-}
+
+           border-color : yellow;
+         border-left-style: solid;
+	border-right-style: solid;
+         z-index:1;
+         opacity:0.6;filter: alpha(opacity=60);
+
+                            }
+
+.text1 p {font-size: 20px;
+               color: blue;
+           font-family:Verdana,Arial;
+           margin-top:20px;
+           margin-left:20px;
+
+                                  }

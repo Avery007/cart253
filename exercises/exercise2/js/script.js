@@ -63,7 +63,7 @@ let dodges = 0;
 
 function setup() {
   // Create our playing area
-  createCanvas(1000,500);
+  createCanvas(950,500);
 	imageMode(CENTER); // set imagecenter to compare the distance
   backimg=loadImage("assets/images/thunder.png"); // source:https://pixabay.com/photos/thunderbolt-lightning-thunderstorm-1905603/
 
