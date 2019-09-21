@@ -65,10 +65,10 @@ function setup() {
   // Create our playing area
   createCanvas(1000,500);
 	imageMode(CENTER); // set imagecenter to compare the distance
-  backimg=loadImage("assets/images/thunder.png");
+  backimg=loadImage("assets/images/thunder.png"); // source:https://pixabay.com/photos/thunderbolt-lightning-thunderstorm-1905603/
 
-	player = loadImage("assets/images/run.png");// source of image https://tenor.com/view/help-dog-anime-gif-12333977
-	imgapple = loadImage("assets/images/apple.png");// source of image https://pixabay.com/illustrations/apple-fruit-red-crayons-drawing-1485458
+	player = loadImage("assets/images/run.png");// source of image: https://tenor.com/view/help-dog-anime-gif-12333977
+	imgapple = loadImage("assets/images/apple.png");// source of image: https://pixabay.com/illustrations/apple-fruit-red-crayons-drawing-1485458
   cheatime=0; // initally players are on the screen
   instruction="Eat the apple to increase your lifespin!";
   avatarSpeed=10;
@@ -208,11 +208,11 @@ console.log(enemySize&enemySpeed);
   rect(enemyX,enemyY,enemySize,enemySize);// display enery as a rectangle
 
   textSize(15);
-  fill(176, 206, 255);
+fill(239, 255, 176); //pale yellow
   text(word,20,20);
 
 showlose="You are hit "+lose+ " times!"; //display how many times players lose
-fill(239, 255, 176);
+fill(239, 255, 176); //pale yellow
 text(showlose,20,40);
 
   avatarSize=40+lose*lose*5; // change player size eatch time after hit
@@ -224,9 +224,12 @@ text(showlose,20,40);
     textSize(30);
     text(result,400,250);
     instruction=""; // get rid of instruction by set it to null
-    enemySpeed=0;   // reset enemySpeed
+    enemySpeed=0;
+
     appleX=0;  // reset apply --no apple on the screen
     appleY=0;
+    avatarX=300;   // reset the player location to look better
+    avatarY=250;
 
   }
   else{  word="Your dodges " + dodges;} // when game continues, show dodges time
