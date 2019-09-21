@@ -240,7 +240,7 @@ if(lose>=1){
    appleY=appleY+1; // move apply
   image(imgapple,appleX,appleY,25,25); // appleX is random number so the
                                     //position of apple is different each time
-	text(instruction,400,300); // explain the apple
+	text(instruction,400,200); // explain the apple
 }
 
 // when players move towats the apple, lose is reduced by one each time
