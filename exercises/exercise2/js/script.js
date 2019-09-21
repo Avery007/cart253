@@ -45,7 +45,7 @@ let avatarVY = 0;
 // The position and size of the enemy circle
 let enemyX;
 let enemyY;
-let enemySize = 5;
+let enemySize = 10;
 
 // The speed and velocity of our enemy circle
 let enemySpeed ;
@@ -199,7 +199,7 @@ text(warn,250,15);
 
   // change the size and speed of enermy when players make dodges
 	if(enemySize<=50){           // set the max size of enermy to 50
-	enemySize=5+0.5*dodges;  // rate of increased speed and size
+	enemySize=10+0.5*dodges;  // rate of increased speed and size
   enemySpeed=enemySize+0.1*dodges;
   }
 	else{enemySize=enemySize;}    // cannot go above 50
@@ -212,7 +212,7 @@ text(warn,250,15);
 showlose="You are hit "+lose+ " times!"; //display how many times players lose
 text(showlose,20,40);
 
-  avatarSize=30+lose*lose*5; // change player size eatch time after hit
+  avatarSize=40+lose*lose*5; // change player size eatch time after hit
 
 
 //what will happen when players lose the game
