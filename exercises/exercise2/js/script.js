@@ -159,7 +159,7 @@ console.log(avatarSize);
   // Check if the avatar has gone off the screen (cheating!)
   if (avatarX < 0 || avatarX > width || avatarY < 0 || avatarY > height) {
 
-    console.log("YOU LOSE!");
+
  // if players do so, their position will be reset and their speed reduces
  //each time they cheat
     cheatime=cheatime+1; //count cheat time
@@ -204,7 +204,7 @@ text(warn,250,25);
   enemySpeed=enemySize+0.1*dodges;
   }
 	else{enemySize=enemySize;}    // cannot go above 50
-
+console.log(enemySize&enemySpeed);
   rect(enemyX,enemyY,enemySize,enemySize);// display enery as a rectangle
 
   textSize(15);
