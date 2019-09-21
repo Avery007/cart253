@@ -19,6 +19,7 @@ let appleY=0;
 let instruction; // instruction about the apple
 
 //texts showing players'state
+
 let word;
 let warn; // display when players go off screen
 let showlose; // show how mnay times players are hit
@@ -75,8 +76,8 @@ function setup() {
 
 
   appleX=random(10,width-10);
-	enemySpeed = 9;
-	enemyVX = 9;
+	enemySpeed = 10;
+	enemyVX = 10;
   // Put the avatar in the centre
   avatarX = width/2;
   avatarY = height/2;
