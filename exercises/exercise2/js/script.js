@@ -147,7 +147,7 @@ console.log(avatarSize);
 		avatarY=height/2;
    check=avatarSpeed;
 
-   avatarSpeed=avatarSpeed-cheatime*3;
+   avatarSpeed=10-cheatime*3;
 	 dodges=0;
 }
 text(check,400,400);
