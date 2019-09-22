@@ -130,7 +130,7 @@ console.log(avatarSize);
   fill(255,0,0);
   rectMode(CENTER);
 // change the size and speed of enermy when players make dodges
-  if(enemySize<=30){           // set the max size of enermy to 40
+  if(enemySize<=30){           // set the max size of enermy to 30
     	enemySize=10+0.5*dodges;  // rate of increased speed and size
       enemySpeed=enemySize+5;
       }
@@ -148,8 +148,6 @@ console.log(avatarSize);
     lose=lose+1; // count how many times lose
     enemyX = 0; // reset enemy location
     enemyY = random(0,height);
-    avatarX = width/2;// Reset the avatar's position
-    avatarY = height/2;
 
    }
    showlose="You are hit "+lose+ " times!"; //display how many times players lose
@@ -165,7 +163,7 @@ console.log(avatarSize);
    image(imgapple,appleX,appleY,25,25);
    text(instruction,400,200); // explain the apple function
    }
-
+  else{lose=0;} // I found a bug that sometimes lose turns to -1. so fix it
 // when players move towards the apple, lose is reduced by one each time
  if (dist(appleX,appleY,avatarX,avatarY) < enemySize/2+avatarSize/2)
    // check distance between players and apples
