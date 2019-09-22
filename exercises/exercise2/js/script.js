@@ -127,7 +127,7 @@ console.log(avatarSize);
     }
 
   // Draw the enemy as a red rectangle
-  fill(255,0,0);
+  fill(255,0,0,90);
   rectMode(CENTER);
 // change the size and speed of enermy when players make dodges
   if(enemySpeed<=45){           // set the max speed of enermy to 45
