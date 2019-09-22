@@ -54,7 +54,7 @@ function setup() {
   createCanvas(950,500);
 
 	imageMode(CENTER); // set center to compare the distance betweens images
-  backimg=loadImage("assets/images/thunder.png"); // source:https://pixabay.com/photos/thunderbolt-lightning-thunderstorm-1905603/
+  backimg=loadImage("assets/images/thunder1.png"); // source:https://pixabay.com/photos/thunderbolt-lightning-thunderstorm-1905603/
   player = loadImage("assets/images/run.png");// source of image: https://tenor.com/view/help-dog-anime-gif-12333977
 	imgapple = loadImage("assets/images/apple.png");// source of image: https://pixabay.com/illustrations/apple-fruit-red-crayons-drawing-1485458
 
