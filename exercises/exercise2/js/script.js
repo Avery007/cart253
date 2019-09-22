@@ -130,12 +130,13 @@ console.log(avatarSize);
   fill(255,0,0);
   rectMode(CENTER);
 // change the size and speed of enermy when players make dodges
-  if(enemySize<=40){           // set the max size of enermy to 50
+  if(enemySize<=40){           // set the max size of enermy to 40
     	enemySize=10+0.5*dodges;  // rate of increased speed and size
       enemySpeed=enemySize+0.1*dodges;
       }
-  else{enemySize=enemySize;}    // cannot go above 40
-  console.log(enemySize&enemySpeed);
+  else{enemySize=enemySize;
+    enemySpeed=enemySpeed;} // size and speed stops increasing
+  console.log(enemySpeed);
   rect(enemyX,enemyY,enemySize,enemySize);// display enery as a rectangle
 
 
