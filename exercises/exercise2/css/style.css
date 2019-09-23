@@ -5,7 +5,7 @@
 	        left: 975px;
            background-color: #ADD8F6;
            width: 200px;
-           height: 450px;
+           height: 300px;
 
 
            border-color : yellow;
@@ -16,10 +16,10 @@
 
                             }
 
-.text1 p {font-size: 20px;
+.textcontent p {font-size: 15px;
                color: blue;
            font-family:Verdana,Arial;
-           margin-top:20px;
-           margin-left:20px;
+           margin-top:15px;
+           margin-left:15px;
 
                                   }
