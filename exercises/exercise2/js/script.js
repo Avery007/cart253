@@ -180,7 +180,7 @@ console.log(avatarSize);
 //what will happen when players lose the game
 // I use avatarSize to check if players lose the game since players's size
 // reflect how many times they fail to dodge
-  if(avatarSize> 150){      //players lose the game after 5 hit
+  if(avatarSize> 150 || enemySpeed===0){      //players lose the game after 5 hit
        result="You lose!Good luck next time!"; //display when game over
        textSize(30);
        text(result,400,250);
