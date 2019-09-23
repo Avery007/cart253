@@ -130,12 +130,12 @@ console.log(avatarSize);
   fill(255,0,0);
   rectMode(CENTER);
 // change the size and speed of enermy when players make dodges
-  if(enemySpeed<50 && enemySpeed>0){           // set the max speed of enermy to 45
+  if(enemySpeed<60 && enemySpeed>0){           // set the max speed of enermy to 45
     	enemySpeed=10+0.5*dodges;  // rate of increased speed and size
       enemySize=enemySpeed/2;
       }
   else if(enemySpeed===0){enemySpeed=0;} // stop increasing when game over
-  else{enemySpeed=50;
+  else{enemySpeed=60;
     } // size and speed stops increasing
   console.log(enemySpeed);
   rect(enemyX,enemyY,enemySize,enemySize);// display enery as a rectangle
@@ -180,12 +180,16 @@ console.log(avatarSize);
 //what will happen when players lose the game
 // I use avatarSize to check if players lose the game since players's size
 // reflect how many times they fail to dodge
-  if(avatarSize> 150 || enemySpeed===0){      //players lose the game after 5 hit
+  if(avatarSize> 150 || enemySpeed===0){
+     //players lose the game after 5 hit
+//a bug occurs when players eat the apple right after being hit 5 times，
+//so speed turns 0 but size reduces.To fix the bug, add condition and reset values
        result="You lose!Good luck next time!"; //display when game over
        textSize(30);
        text(result,400,250);
        instruction=""; // get rid of apple instruction by set it to null
        enemySpeed=0;
+       lose=5;  // fix the bug
        appleX=0;  // reset apple--no apple on the screen
        appleY=0;
        avatarX=300;   // reset the player location to look better
