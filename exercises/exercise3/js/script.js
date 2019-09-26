@@ -29,6 +29,11 @@ let decoyImage8;
 let decoyImage9;
 let decoyImage10;
 
+let showtarget;
+let showX=700;
+let showY=50;
+
+
 // The number of decoys to show on the screen, randomly
 // chosen from the decoy images
 let numDecoys = 100;
@@ -62,7 +67,7 @@ function setup() {
   createCanvas(windowWidth,windowHeight);
   background("#ffff00");
   imageMode(CENTER);
-
+  showtarget= targetImage;
   // Use a for loop to draw as many decoys as we need
   for (let i = 0; i < numDecoys; i++) {
     // Choose a random location on the canvas for this decoy
@@ -112,6 +117,8 @@ function setup() {
 
   // And draw it (because it's the last thing drawn, it will always be on top)
   image(targetImage,targetX,targetY);
+  showtarget= targetImage;
+  image(showtarget,showX,showY);
 }
 
 
