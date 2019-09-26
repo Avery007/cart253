@@ -30,7 +30,7 @@ let decoyImage9;
 let decoyImage10;
 
 let showtarget;
-let showX=windowWidth-50;
+let showX;
 let showY=50;
 
 
@@ -118,7 +118,7 @@ function setup() {
   // And draw it (because it's the last thing drawn, it will always be on top)
   image(targetImage,targetX,targetY);
   showtarget= targetImage;
-  image(showtarget,showX,showY,30,30);
+  image(showtarget,windowWidth-50,showY,30,30);
 
 }
 
