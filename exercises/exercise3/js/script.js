@@ -33,6 +33,8 @@ let showtarget;
 let showX;
 let showY=50;
 
+let backshow;
+
 
 // The number of decoys to show on the screen, randomly
 // chosen from the decoy images
@@ -65,7 +67,6 @@ function preload() {
 // of decoys in random positions, then the target
 function setup() {
   createCanvas(windowWidth,windowHeight);
-  background("#ffff00");
   background(255,255,0,50);
   imageMode(CENTER);
   rectMode(CENTER);
