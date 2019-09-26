@@ -66,7 +66,9 @@ function preload() {
 function setup() {
   createCanvas(windowWidth,windowHeight);
   background("#ffff00");
+  background(255,255,0,50);
   imageMode(CENTER);
+  rectMode(CENTER);
   showtarget= targetImage;
   // Use a for loop to draw as many decoys as we need
   for (let i = 0; i < numDecoys; i++) {
@@ -118,9 +120,9 @@ function setup() {
   // And draw it (because it's the last thing drawn, it will always be on top)
   image(targetImage,targetX,targetY);
   showtarget= targetImage;
-  image(showtarget,windowWidth-50,showY,30,30);
   image(showtarget,width-50,showY,30,30);
-
+  fill(255,0,0);
+  rect(width-50,showY,50,50);
 
 }
 
