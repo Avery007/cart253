@@ -119,6 +119,8 @@ function setup() {
   image(targetImage,targetX,targetY);
   showtarget= targetImage;
   image(showtarget,windowWidth-50,showY,30,30);
+  image(showtarget,width-50,showY,30,30);
+
 
 }
 
