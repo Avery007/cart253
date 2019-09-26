@@ -128,6 +128,7 @@ function setup() {
 // Displays the game over screen if the player has won,
 // otherwise nothing (all the gameplay stuff is in mousePressed())
 function draw() {
+
   if (gameOver) {
     // Prepare our typography
     textFont("Helvetica");
