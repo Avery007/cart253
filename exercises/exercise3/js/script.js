@@ -34,7 +34,7 @@ let showX;
 let showY=50;
 
 let backshow;
-
+let opacity;
 
 // The number of decoys to show on the screen, randomly
 // chosen from the decoy images
@@ -47,11 +47,11 @@ let gameOver = false;
 //
 // Loads the target and decoy images before the program starts
 function preload() {
-  targetImage = loadImage("assets/images/animals-target.png");
+  targetImage = loadImage('./assets/images/animals-target.png');
 
-  decoyImage1 = loadImage("assets/images/animals-01.png");
-  decoyImage2 = loadImage("assets/images/animals-02.png");
-  decoyImage3 = loadImage("assets/images/animals-03.png");
+  decoyImage1 = loadImage('./assets/images/animals-01.png');
+  decoyImage2 = loadImage("./assets/images/animals-02.png");
+  decoyImage3 = loadImage("./assets/images/animals-03.png");
   decoyImage4 = loadImage("assets/images/animals-04.png");
   decoyImage5 = loadImage("assets/images/animals-05.png");
   decoyImage6 = loadImage("assets/images/animals-06.png");
@@ -67,9 +67,10 @@ function preload() {
 // of decoys in random positions, then the target
 function setup() {
   createCanvas(windowWidth,windowHeight);
+  opacity=0;
   background(255,255,0,50);
   imageMode(CENTER);
-  rectMode(CENTER);
+
   showtarget= targetImage;
   // Use a for loop to draw as many decoys as we need
   for (let i = 0; i < numDecoys; i++) {
@@ -119,12 +120,14 @@ function setup() {
   targetY = random(0,height);
 
   // And draw it (because it's the last thing drawn, it will always be on top)
-  image(targetImage,targetX,targetY);
+
   showtarget= targetImage;
 
-  fill(255,0,0);
-  rect(width-50,showY,50,50);
-  image(showtarget,width-50,showY,30,30);
+image(showtarget,width-50,showY,50,50);
+fill(17,48,207,100);
+rectMode(CENTER);
+rect(width-50,showY,100,100);
+
 }
 
 
@@ -133,6 +136,13 @@ function setup() {
 // Displays the game over screen if the player has won,
 // otherwise nothing (all the gameplay stuff is in mousePressed())
 function draw() {
+
+
+  rectMode(CORNER);
+  fill(255,1,255,opacity);
+  rect(0,0,windowWidth,windowHeight);
+
+  image(targetImage,targetX,targetY);
 
   if (gameOver) {
     // Prepare our typography
@@ -150,10 +160,17 @@ function draw() {
     noFill();
     stroke(random(255));
     strokeWeight(10);
-    ellipse(targetX,targetY,targetImage.width,targetImage.height);
+
+    if (opacity<200){opacity=opacity+0.05;}
+    for (let i = 0; i < 20; i++) {
+
+      rotateZ(millis() / 1000);
+      image(targetImage,targetX,targetY);
+      ellipse(targetX,targetY,targetImage.width,targetImage.height);
+
   }
 }
-
+}
 // mousePressed()
 //
 // Checks if the player clicked on the target and if so tells them they won
