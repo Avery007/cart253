@@ -50,6 +50,10 @@ let restart="restart";
 let restartX;
 let restartY;
 
+let wintimeX;
+let wintimeY;
+let wintime="Good Job! You got it!";
+
 
 // preload()
 //
@@ -82,12 +86,12 @@ function setup() {
   imageMode(CENTER);
   restartX=0;
   restartY=0;
-  showtarget= targetImage;
+
   // Use a for loop to draw as many decoys as we need
   for (let i = 0; i < numDecoys; i++) {
     // Choose a random location on the canvas for this decoy
-    let x = random(0,width);
-    let y = random(0,height);
+    let x = random(50,width-150);
+    let y = random(50,height-50);
     // Generate a random number we can use for probability
     let r = random();
     // Use the random number to display one of the ten decoy
@@ -127,8 +131,8 @@ function setup() {
   }
 
   // Once we've displayed all decoys, we choose a random location for the target
-  targetX = random(0,width);
-  targetY = random(0,height);
+  targetX = random(50,width-150);
+  targetY = random(50,height-70);
 
   // And draw it (because it's the last thing drawn, it will always be on top)
 
@@ -166,8 +170,10 @@ function draw() {
     textAlign(CENTER,CENTER);
     noStroke();
     fill(random(255));
-     text("Good job!You got it!",width/2,height/2);
+     text(wintime,wintimeX,wintimeY);
     // Tell them they won!
+     wintimeX=width/2;
+     wintimeY=height/3;
 
      restartX=width/2;
      restartY=height/2;
@@ -178,7 +184,7 @@ function draw() {
 
     if (opacity<80){opacity=opacity+0.1;}
 
-    if( opacity>30&&targetX<windowWidth){
+    if( opacity>30&&targetX<1000){
       targetX=targetX+1;
       image(targetImage,targetX,targetY);
       fill(255);
@@ -195,7 +201,7 @@ function draw() {
 
 }
 
-else if(!gameOver){opacity=0;}
+else {opacity=0;}
 
 
 
@@ -221,7 +227,7 @@ function mousePressed() {
        gameOver = false; restartX=20;
 //gamecount=gamecount+1;
 //numDecoys= numDecoys*gamecount*10;
-opacity=0;background(255,255,0,50); gamecount=gamecount+1;
+background(255,255,0); gamecount=gamecount+1;
 console.log(gamecount);
 newgame();
     }
@@ -232,10 +238,12 @@ newgame();
 function newgame(){
   numDecoys=numDecoys+gamecount*10;
   console.log(numDecoys);
+  restartX=0;
+  restartY=0;
    for (let i = 0; i < numDecoys; i++) {
   // Choose a random location on the canvas for this decoy
-  let x = random(0,width);
-  let y = random(0,height);
+  let x = random(50,width-150);
+  let y = random(50,height-50);
   // Generate a random number we can use for probability
   let r = random();
   // Use the random number to display one of the ten decoy
@@ -273,6 +281,18 @@ function newgame(){
     image(decoyImage10,x,y);
   }
 }
+
+targetX = random(50,width-150);
+targetY = random(50,height-70);
+
+showtarget= targetImage;
+
+image(showtarget,width-50,showY,100,100);
+fill(17,48,207,100);
+rectMode(CENTER);
+rect(width-50,showY,150,150);
+
+
 redraw();
 
 
