@@ -29,40 +29,37 @@ let decoyImage8;
 let decoyImage9;
 let decoyImage10;
 
+// display the image of target at the right coner
 let showtarget;
 let showX;
 let showY=90;
 
+//background will gradually turn pink when players win
 let backshow;
 let opacity;
 
-// The number of decoys to show on the screen, randomly
+// The number of decoys to show on the screen
 // chosen from the decoy images
 let numDecoys;
 
 // Keep track of whether they've won
 let gameOver = false;
-let gamecount;
-let nextgame;
+let gamecount;//count how many games played. this value is used to increase numDecoys and game level
 
-
-let restart="restart";
-let restartX;
+// set a new game starter
+let restart="Click to next level!";
+let restartX;// location
 let restartY;
 
+//texts to show game information
 let instruction="Where I am?";
 let gamelevel;
 let animalN;
 
-let wintimeX;
-let wintimeY;
+//diaplay when players win
 let wintime="Good Job! You got it!";
 
 
-
-
-// preload()
-//
 // Loads the target and decoy images before the program starts
 function preload() {
   targetImage = loadImage('./assets/images/animals-target.png');
@@ -79,24 +76,23 @@ function preload() {
   decoyImage10 = loadImage("assets/images/animals-10.png");
 }
 
-// setup()
-//
+
 // Creates the canvas, sets basic modes, draws correct number
 // of decoys in random positions, then the target
 function setup() {
   createCanvas(windowWidth,windowHeight);
-  numDecoys=50;
-  opacity=0;
-  gamecount=0;
+  numDecoys=50; // initial number.
+  opacity=0;   // the pink background is invisible until players win
+  gamecount=1;
   background(255,255,0,50);
   imageMode(CENTER);
-  restartX=0;
+  restartX=0; // hide restart button
   restartY=0;
 
   // Use a for loop to draw as many decoys as we need
   for (let i = 0; i < numDecoys; i++) {
     // Choose a random location on the canvas for this decoy
-    let x = random(50,width-150);
+    let x = random(50,width-150);// leave some empty place to put instruction
     let y = random(50,height-50);
     // Generate a random number we can use for probability
     let r = random();
@@ -142,43 +138,38 @@ function setup() {
 
   // And draw it (because it's the last thing drawn, it will always be on top)
 
-  showtarget= targetImage;
-
-
-
-
-
+  showtarget= targetImage; // display the image of the dog that plays are supposed to find
 
 }
 
 
-// draw()
-//
 // Displays the game over screen if the player has won,
 // otherwise nothing (all the gameplay stuff is in mousePressed())
 function draw() {
 
-
+  // fistly set the pink backgorund when game ends
   rectMode(CORNER);
-  fill(255,1,255,opacity);
-  rect(0,0,windowWidth,windowHeight);
+  fill(255,1,255,opacity); // invisible
+  rect(0,0,windowWidth,windowHeight);// cover whole screen
+
+  //instruction texts
   textSize(15);
   textAlign(LEFT,LEFT);
   noStroke();
   fill(255);
-  gamelevel="Level "+ gamecount;
-  animalN="Animals " + numDecoys;
+  gamelevel="Level "+ gamecount; // display game level
+  animalN="Animals " + numDecoys; // display the total number of animals on screen
   text(gamelevel,width-100,showY+120);
   text(animalN,width-110,showY+140);
-  text(instruction,width-110,showY-40);
+  text(instruction,width-110,showY-40); // display instruction
 
   image(showtarget,width-60,showY,70,70);
+ // display the instruction image with background color
   fill(17,48,207,100);
   rectMode(CENTER);
   rect(width-50,showY,150,350);
 
-
-  image(targetImage,targetX,targetY);
+  image(targetImage,targetX,targetY); //targetimage
 
   if (gameOver) {
     // Prepare our typography
@@ -187,44 +178,35 @@ function draw() {
     textAlign(CENTER,CENTER);
     noStroke();
     fill(random(255));
-     text(wintime,wintimeX,wintimeY);
+    text(wintime,width/2,height/3);
     // Tell them they won!
-     wintimeX=width/2;
-     wintimeY=height/3;
 
-     restartX=width/2;
-     restartY=height/2;
-    // Draw a circle around the sausage dog to show where it is (even though
-    // they already know because they found it!)
+    restartX=width/2; // now reset and display the restart button
+    restartY=height/2;
 
-    //strokeWeight(10);
+// opacity of pink background
+  if (opacity<60){opacity=opacity+0.1;} // gradually becoming visible
 
-    if (opacity<80){opacity=opacity+0.1;}
-
-    if( opacity>30&&targetX<1000){
+    if( opacity>30&&targetX<windowWidth){  //move target image now
       targetX=targetX+1;
       image(targetImage,targetX,targetY);
       fill(255);
-      text(restart,restartX,restartY);
+      text(restart,restartX,restartY); // display button to start a new game
 
-       }
-  else if(opacity<=29){
+  }
+  else if(opacity<=29){ // Draw a circle around the dog to show where it is
   noFill();
   stroke(random(255));
    ellipse(targetX,targetY,targetImage.width,targetImage.height);
  }
-  else {targetX=50;}
+  else {targetX=50;} // prevent the dog move off screen
 
+}
+
+else {opacity=0;} //reset the opacity after restart
 
 }
 
-else {opacity=0;}
-
-
-
-}
-// mousePressed()
-//
 // Checks if the player clicked on the target and if so tells them they won
 function mousePressed() {
   // The mouse was clicked!
@@ -238,15 +220,14 @@ function mousePressed() {
       gameOver = true;
     }
   }
+// start a new game when players click the restart button
+else if (restartX!==0 && mouseX>restartX-100 && mouseX<restartX+100){
+    if (mouseY<restartY+50&& mouseY>restartY-50)     {
+       gameOver = false;
+       background(random(255)); // rest the background to hide texts
 
-  else if (restartX!==0 && mouseX>restartX-50 && mouseX<restartX+50){
-    if (mouseY<restartY+30&& mouseY>restartY-30)     {
-       gameOver = false; restartX=20;
-//gamecount=gamecount+1;
-//numDecoys= numDecoys*gamecount*10;
-background(255,255,0); gamecount=gamecount+1;
-console.log(gamecount);
-newgame();
+gamecount=gamecount+1;
+newgame(); // calling new game function
     }
   }
 
@@ -254,9 +235,9 @@ newgame();
 
 function newgame(){
   numDecoys=numDecoys+gamecount*10;
-  console.log(numDecoys);
-  restartX=0;
+  restartX=0; // reset the location of the button
   restartY=0;
+
    for (let i = 0; i < numDecoys; i++) {
   // Choose a random location on the canvas for this decoy
   let x = random(50,width-150);
@@ -304,24 +285,8 @@ targetY = random(50,height-70);
 
 showtarget= targetImage;
 
-
-
-
-redraw();
-
+redraw(); // recall the draw fucntion
 
 }
 
-
-//function newgame(){
-//  if(nextgame){ gamecount=gamecount+1; numDecoys= numDecoys*gamecount*10;opacity=0;
-
-//}
-
-
-
-  //else if ( restartX!==0 && mouseX > restartX-restart.width/2 && mouseX < restartX + restart.width/2) {
-    // Check if the cursor is also in the y range of the target
-    // i.e. check if it's within the top and bottom of the image
-  //  if (mouseY > restartY - restart.height/2 && mouseY < restarY + restart.height/2) {
-      //gameOver = false;
+  //else if ( restartX!==0 && mouseX > restartX-restart.width/2 && mouseX < restartX + restart.width/2) dosent work?
