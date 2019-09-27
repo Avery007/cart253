@@ -43,6 +43,11 @@ let numDecoys = 100;
 // Keep track of whether they've won
 let gameOver = false;
 
+
+let final="YOU WINNED!";
+let textX;
+let textY=200;
+
 // preload()
 //
 // Loads the target and decoy images before the program starts
@@ -128,6 +133,10 @@ fill(17,48,207,100);
 rectMode(CENTER);
 rect(width-50,showY,100,100);
 
+
+let textX=0;
+
+
 }
 
 
@@ -153,7 +162,7 @@ function draw() {
     fill(random(255));
 
     // Tell them they won!
-    text("YOU WINNED!",width/2,height/2);
+
 
     // Draw a circle around the sausage dog to show where it is (even though
     // they already know because they found it!)
@@ -161,14 +170,17 @@ function draw() {
     stroke(random(255));
     strokeWeight(10);
 
-    if (opacity<200){opacity=opacity+0.05;}
-    for (let i = 0; i < 20; i++) {
+    if (opacity<100){opacity=opacity+0.1;}
 
-      rotateZ(millis() / 1000);
-      image(targetImage,targetX,targetY);
-      ellipse(targetX,targetY,targetImage.width,targetImage.height);
+    if( opacity>50&&textX<windowWidth){  text(final,textX,textY);
+      textX=textX+1;
+
 
   }
+  else if(opacity<=49){ ellipse(targetX,targetY,targetImage.width,targetImage.height);}
+  else {textX=50;}
+
+
 }
 }
 // mousePressed()
