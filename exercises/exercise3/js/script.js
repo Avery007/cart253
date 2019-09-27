@@ -31,7 +31,7 @@ let decoyImage10;
 
 let showtarget;
 let showX;
-let showY=50;
+let showY=90;
 
 let backshow;
 let opacity;
@@ -50,9 +50,15 @@ let restart="restart";
 let restartX;
 let restartY;
 
+let instruction="Where I am?";
+let gamelevel;
+let animalN;
+
 let wintimeX;
 let wintimeY;
 let wintime="Good Job! You got it!";
+
+
 
 
 // preload()
@@ -138,10 +144,6 @@ function setup() {
 
   showtarget= targetImage;
 
-image(showtarget,width-50,showY,50,50);
-fill(17,48,207,100);
-rectMode(CENTER);
-rect(width-50,showY,100,100);
 
 
 
@@ -160,6 +162,21 @@ function draw() {
   rectMode(CORNER);
   fill(255,1,255,opacity);
   rect(0,0,windowWidth,windowHeight);
+  textSize(15);
+  textAlign(LEFT,LEFT);
+  noStroke();
+  fill(255);
+  gamelevel="Level "+ gamecount;
+  animalN="Animals " + numDecoys;
+  text(gamelevel,width-100,showY+120);
+  text(animalN,width-110,showY+140);
+  text(instruction,width-110,showY-40);
+
+  image(showtarget,width-60,showY,70,70);
+  fill(17,48,207,100);
+  rectMode(CENTER);
+  rect(width-50,showY,150,350);
+
 
   image(targetImage,targetX,targetY);
 
@@ -287,10 +304,7 @@ targetY = random(50,height-70);
 
 showtarget= targetImage;
 
-image(showtarget,width-50,showY,100,100);
-fill(17,48,207,100);
-rectMode(CENTER);
-rect(width-50,showY,150,150);
+
 
 
 redraw();
