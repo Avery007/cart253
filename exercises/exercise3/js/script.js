@@ -16,6 +16,7 @@ https://creativenerds.co.uk/freebies/80-free-wildlife-icons-the-best-ever-animal
 let targetX;
 let targetY;
 let targetImage;
+let targetSize;
 
 // The ten decoy images
 let decoyImage1;
@@ -34,20 +35,17 @@ let showtarget;
 let showX;
 let showY=90;
 
-//background will gradually turn pink when players win
-let backshow;
+let backshow;//background will gradually turn pink when players win
 let opacity;
 
 // The number of decoys to show on the screen
-// chosen from the decoy images
 let numDecoys;
 
 // Keep track of whether they've won
 let gameOver = false;
 let gamecount;//count how many games played. this value is used to increase numDecoys and game level
 
-// set a new game starter
-let restart="Click to next level!";
+let restart="Click to next level!"; // set a new game starter
 let restartX;// location
 let restartY;
 
@@ -88,6 +86,7 @@ function setup() {
   imageMode(CENTER);
   restartX=0; // hide restart button
   restartY=0;
+  targetSize=120;
 
   // Use a for loop to draw as many decoys as we need
   for (let i = 0; i < numDecoys; i++) {
@@ -143,8 +142,6 @@ function setup() {
 }
 
 
-// Displays the game over screen if the player has won,
-// otherwise nothing (all the gameplay stuff is in mousePressed())
 function draw() {
 
   // fistly set the pink backgorund when game ends
@@ -152,6 +149,7 @@ function draw() {
   fill(255,1,255,opacity); // invisible
   rect(0,0,windowWidth,windowHeight);// cover whole screen
 
+  image(targetImage,targetX,targetY,targetSize,targetSize); //targetimage
   //instruction texts
   textSize(15);
   textAlign(LEFT,LEFT);
@@ -169,7 +167,7 @@ function draw() {
   rectMode(CENTER);
   rect(width-50,showY,150,350);
 
-  image(targetImage,targetX,targetY); //targetimage
+
 
   if (gameOver) {
     // Prepare our typography
@@ -234,7 +232,12 @@ newgame(); // calling new game function
 }
 
 function newgame(){
+  // increase difficulty with levels
   numDecoys=numDecoys+gamecount*10;
+  if(targetSize>14){
+  targetSize=targetSize-gamecount*2;}
+  else {targetSize=12};
+  console.log(targetSize);
   restartX=0; // reset the location of the button
   restartY=0;
 
