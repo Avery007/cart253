@@ -50,7 +50,7 @@ let restartX;// location
 let restartY;
 
 //texts to show game information
-let instruction="Where I am?";
+let instruction="Where Am I?";
 let gamelevel;
 let animalN;
 
@@ -182,9 +182,10 @@ if (gameOver) {
     restartY=height/2;
 
 // opacity of pink background
-  if (opacity<60){opacity=opacity+0.1;} // gradually becoming visible
+  if (opacity<30){opacity=opacity+0.1;} // gradually becoming visible
+
    console.log(opacity);
-    if( opacity>30){
+    if( opacity>20){
       if(targetX<windowWidth)   //move target image now
       {targetX=targetX+3;}
       else if(targetX>=windowWidth){
@@ -198,12 +199,12 @@ if (gameOver) {
       text(restart,restartX,restartY); // display button to start a new game
 
   }
-  else if(opacity<=29){ // Draw a circle around the dog to show where it is
+  else if(opacity<=19){ // Draw a circle around the dog to show where it is
   noFill();
   stroke(random(255));
    ellipse(targetX,targetY,targetImage.width,targetImage.height);
  }
-  //else {targetX=50;} // prevent the dog move off screen
+ else{opacity=30}; // max opacity 30
 
 }
 
