@@ -182,8 +182,8 @@ if (gameOver) {
     restartY=height/2;
 
 // opacity of pink background
-  if (opacity<200){opacity=opacity+0.1;} // gradually becoming visible
-
+  if (opacity<60){opacity=opacity+0.1;} // gradually becoming visible
+   console.log(opacity);
     if( opacity>30){
       if(targetX<windowWidth)   //move target image now
       {targetX=targetX+3;}
