@@ -168,8 +168,7 @@ function draw() {
   rect(width-50,showY,150,350);
 
 
-
-  if (gameOver) {
+if (gameOver) {
     // Prepare our typography
     textFont("Helvetica");
     textSize(28);
@@ -183,10 +182,17 @@ function draw() {
     restartY=height/2;
 
 // opacity of pink background
-  if (opacity<60){opacity=opacity+0.1;} // gradually becoming visible
+  if (opacity<200){opacity=opacity+0.1;} // gradually becoming visible
 
-    if( opacity>30&&targetX<windowWidth){  //move target image now
-      targetX=targetX+1;
+    if( opacity>30){
+      if(targetX<windowWidth)   //move target image now
+      {targetX=targetX+3;}
+      else if(targetX>=windowWidth){
+        targetX=50;}
+      if(targetY<windowHeight)  {
+        targetY=targetY+15;
+        }
+      else{targetY=targetY-random(100,height);}
       image(targetImage,targetX,targetY);
       fill(255);
       text(restart,restartX,restartY); // display button to start a new game
@@ -197,7 +203,7 @@ function draw() {
   stroke(random(255));
    ellipse(targetX,targetY,targetImage.width,targetImage.height);
  }
-  else {targetX=50;} // prevent the dog move off screen
+  //else {targetX=50;} // prevent the dog move off screen
 
 }
 
@@ -219,7 +225,7 @@ function mousePressed() {
     }
   }
 // start a new game when players click the restart button
-else if (restartX!==0 && mouseX>restartX-100 && mouseX<restartX+100){
+else if (restartX!==0 && mouseX>restartX-120 && mouseX<restartX+120){
     if (mouseY<restartY+50&& mouseY>restartY-50)     {
        gameOver = false;
        background(random(255)); // rest the background to hide texts
