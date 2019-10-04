@@ -54,20 +54,28 @@ let noisetime;
 let speedupX;
 let speedupY;
 
+let backimage;
+let backgroundX;
+
 // setup()
 //
 // Sets up the basic elements of the game
+function preload(){
+  backimage= loadImage('./assets/images/backimg.png'); // https://pixabay.com/images/search/egyption%20wall/
+  //https://hiddenincatours.com/cholula-mexico-the-worlds-largest-ancient-pyramid/
+}
 function setup() {
-  createCanvas(500, 500);
+  createCanvas(1000, 500);
   noisetime=0;
   speedupX=0;
   speedupY=0;
   noStroke();
-
+  imageMode(CORNER);
   // We're using simple functions to separate code out
   setupPrey();
   setupPlayer();
 
+ backgroundX=-2500;
 
 }
 
@@ -100,8 +108,12 @@ function setupPlayer() {
 // When the game is over, shows the game over screen.
 function draw() {
   background(100, 100, 200);
-
+  image(backimage,backgroundX,0,3500,501);
   if (!gameOver) {
+    if(backgroundX<0){
+    backgroundX=backgroundX+1;}
+    else if (backgroundX>0){backgroundX=0;}
+    console.log(backgroundX);
     handleInput();
 
     movePlayer();
@@ -115,12 +127,15 @@ function draw() {
   }
   else {
     showGameOver();
+
   }
 }
 
 // handleInput()
 //
 // Checks arrow keys and adjusts player velocity accordingly
+
+
 function handleInput() {
   // Check for horizontal movement
   if (keyIsDown(LEFT_ARROW)) {
