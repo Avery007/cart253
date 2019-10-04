@@ -128,9 +128,9 @@ function handleInput() {
       if (keyIsDown(SHIFT)){speedupX=-5;
        }
 
-
-
 }
+
+
   else if (keyIsDown(RIGHT_ARROW)) {
     playerVX = playerMaxSpeed;
     if (keyIsDown(SHIFT)){speedupX=5;
@@ -138,9 +138,7 @@ function handleInput() {
 
 
 }
-  else {
-    playerVX = 0;
-  }
+
 
   // Check for vertical movement
   if (keyIsDown(UP_ARROW)) {
@@ -153,6 +151,10 @@ function handleInput() {
     if (keyIsDown(SHIFT)){speedupY=5;
      }
   }
+  else {
+    playerVX = 0;
+    playerVY=0;
+  }
 }
 // movePlayer()
 //
@@ -161,7 +163,7 @@ function handleInput() {
 function movePlayer() {
   // Update position
   playerX = playerX + playerVX+speedupX;
-  playerY = playerY + playerVY+speedupY;
+  playerY = playerY + playerVY+ speedupY;
 
   // Wrap when player goes off the canvas
   if (playerX < 0) {
@@ -294,5 +296,6 @@ function showGameOver() {
 }
 
 function keyReleased() {
-  speedupX=0;speedupY=0;
+  speedupX=0;
+  speedupY=0;
   }
