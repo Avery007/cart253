@@ -126,6 +126,7 @@ function handleInput() {
   if (keyIsDown(LEFT_ARROW)) {
       playerVX = -playerMaxSpeed;
       if (keyIsDown(SHIFT)){speedupX=-5;
+        playerHealth=playerHealth-1;
        }
 
 }
@@ -134,6 +135,7 @@ function handleInput() {
   else if (keyIsDown(RIGHT_ARROW)) {
     playerVX = playerMaxSpeed;
     if (keyIsDown(SHIFT)){speedupX=5;
+      playerHealth=playerHealth-1;
      }
 
 
@@ -144,17 +146,16 @@ function handleInput() {
   if (keyIsDown(UP_ARROW)) {
     playerVY = -playerMaxSpeed;
     if (keyIsDown(SHIFT)){speedupY=-5;
+      playerHealth=playerHealth-1;
      }
   }
   else if (keyIsDown(DOWN_ARROW)) {
     playerVY = playerMaxSpeed;
     if (keyIsDown(SHIFT)){speedupY=5;
+      playerHealth=playerHealth-1;
      }
   }
-  else {
-    playerVX = 0;
-    playerVY=0;
-  }
+
 }
 // movePlayer()
 //
@@ -162,8 +163,8 @@ function handleInput() {
 // wraps around the edges.
 function movePlayer() {
   // Update position
-  playerX = playerX + playerVX+speedupX;
-  playerY = playerY + playerVY+ speedupY;
+  playerX = playerX + playerVX + speedupX;
+  playerY = playerY + playerVY + speedupY;
 
   // Wrap when player goes off the canvas
   if (playerX < 0) {
@@ -191,7 +192,7 @@ function movePlayer() {
 // Check if the player is dead
 function updateHealth() {
   // Reduce player health
-  playerHealth = playerHealth - 0.5;
+  playerHealth = playerHealth - 0.1;
   // Constrain the result to a sensible range
   playerHealth = constrain(playerHealth, 0, playerMaxHealth);
   // Check if the player is dead (0 health)
@@ -298,4 +299,8 @@ function showGameOver() {
 function keyReleased() {
   speedupX=0;
   speedupY=0;
+
+    playerVX = 0;
+    playerVY = 0;
+
   }
