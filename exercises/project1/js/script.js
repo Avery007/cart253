@@ -51,12 +51,17 @@ let preyEaten = 0;
 
 let noisetime;
 
+let speedupX;
+let speedupY;
+
 // setup()
 //
 // Sets up the basic elements of the game
 function setup() {
   createCanvas(500, 500);
   noisetime=0;
+  speedupX=0;
+  speedupY=0;
   noStroke();
 
   // We're using simple functions to separate code out
@@ -119,11 +124,20 @@ function draw() {
 function handleInput() {
   // Check for horizontal movement
   if (keyIsDown(LEFT_ARROW)) {
-    playerVX = -playerMaxSpeed;
-  }
+      playerVX = -playerMaxSpeed;
+      if (keyIsDown(SHIFT)){speedupX=-5;
+       }
+
+
+
+}
   else if (keyIsDown(RIGHT_ARROW)) {
     playerVX = playerMaxSpeed;
-  }
+    if (keyIsDown(SHIFT)){speedupX=5;
+     }
+
+
+}
   else {
     playerVX = 0;
   }
@@ -131,23 +145,23 @@ function handleInput() {
   // Check for vertical movement
   if (keyIsDown(UP_ARROW)) {
     playerVY = -playerMaxSpeed;
+    if (keyIsDown(SHIFT)){speedupY=-5;
+     }
   }
   else if (keyIsDown(DOWN_ARROW)) {
     playerVY = playerMaxSpeed;
-  }
-  else {
-    playerVY = 0;
+    if (keyIsDown(SHIFT)){speedupY=5;
+     }
   }
 }
-
 // movePlayer()
 //
 // Updates player position based on velocity,
 // wraps around the edges.
 function movePlayer() {
   // Update position
-  playerX = playerX + playerVX;
-  playerY = playerY + playerVY;
+  playerX = playerX + playerVX+speedupX;
+  playerY = playerY + playerVY+speedupY;
 
   // Wrap when player goes off the canvas
   if (playerX < 0) {
