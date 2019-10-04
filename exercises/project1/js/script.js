@@ -292,3 +292,7 @@ function showGameOver() {
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
 }
+
+function keyReleased() {
+  speedupX=0;speedupY=0;
+  }
