@@ -54,6 +54,7 @@ let noisetime;
 let speedupX;
 let speedupY;
 
+let playerimage;
 let backimage;
 let backgroundX;
 
@@ -63,19 +64,21 @@ let backgroundX;
 function preload(){
   backimage= loadImage('./assets/images/backimg.png'); // https://pixabay.com/images/search/egyption%20wall/
   //https://hiddenincatours.com/cholula-mexico-the-worlds-largest-ancient-pyramid/
+  //https://www.tes.com/teaching-resource/ancient-egyptian-clothing-6446514
+  playerimage= loadImage('./assets/images/player.png');
 }
 function setup() {
-  createCanvas(1000, 500);
+  createCanvas(windowWidth, windowHeight);
   noisetime=0;
   speedupX=0;
   speedupY=0;
   noStroke();
-  imageMode(CORNER);
+
   // We're using simple functions to separate code out
   setupPrey();
   setupPlayer();
 
- backgroundX=-2500;
+ backgroundX=-3500;
 
 }
 
@@ -108,7 +111,10 @@ function setupPlayer() {
 // When the game is over, shows the game over screen.
 function draw() {
   background(100, 100, 200);
-  image(backimage,backgroundX,0,3500,501);
+
+    imageMode(CORNER);
+      noTint();
+  image(backimage,backgroundX,0,3500+windowWidth,windowHeight);
   if (!gameOver) {
     if(backgroundX<0){
     backgroundX=backgroundX+1;}
@@ -291,8 +297,12 @@ function drawPrey() {
 //
 // Draw the player as an ellipse with alpha value based on health
 function drawPlayer() {
-  fill(playerFill, playerHealth);
-  ellipse(playerX, playerY, playerRadius * 2);
+  //fill(playerFill, playerHealth);
+  //tint(255,100);
+  tint(0, 153, 204,playerHealth);
+  imageMode(CENTER);
+  image(playerimage,playerX, playerY, 70,120,);
+  //playerRadius * 2
 }
 
 // showGameOver()
