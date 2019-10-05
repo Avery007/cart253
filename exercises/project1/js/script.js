@@ -64,7 +64,9 @@ let osOpacity;
 
 let front;
 let frontOpacity;
+let isWinner;
 
+let gameWinText;
 
 // setup()
 //
@@ -85,7 +87,7 @@ function setup() {
   noStroke();
 osOpacity=0;
 gameState = 0;
-
+isWinner=false;
    setupFront();
   // We're using simple functions to separate code out
   setupOrb();
@@ -141,12 +143,11 @@ function draw() {
     //imageMode(CORNER);
   //noTint();
 //  image(backimage,backgroundX,0,3500+windowWidth,windowHeight);
-  tint(255,osOpacity);
-  image(otherside,10,10,windowWidth,windowHeight);
-  if (backgroundX===0 && playerX<140){osOpacity=osOpacity+1};
+
+
   if (gameState===1) {
     if(backgroundX<0){
-    backgroundX=backgroundX+1;}
+    backgroundX=backgroundX+10;}
     else if (backgroundX>0){backgroundX=0;}
     console.log(playerX);
     handleInput();
@@ -156,12 +157,19 @@ function draw() {
 
     updateHealth();
     checkOrbAbsorb();
+
      drawbackground();
     drawOrb();
+
     drawPlayer();
+   checkwin();
   }
-  else if(gameState===2){
+  if(gameState===2){
     showGameOver();
+
+  }
+  else if (gameState===3) {
+    wintime();
 
   }
   //else {};
@@ -252,6 +260,7 @@ function updateHealth() {
     // If so, the game is over
     gameState = 2;
   }
+
 }
 
 // checkEating()
@@ -363,8 +372,8 @@ function showGameOver() {
   fill(0);
   // Set up the text to display
   let gameOverText = "GAME OVER\n"; // \n means "new line"
-  gameOverText = gameOverText + "You ate " + preyEaten + " prey\n";
-  gameOverText = gameOverText + "before you died."
+  gameOverText = gameOverText + "You failed to absorb enough orbs to maintain health";
+  gameOverText = gameOverText + "Good luck next time";
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
 }
@@ -381,3 +390,29 @@ function keyReleased() {
 function mousePressed()
 {gameState=1;
 frontOpacity=0;}
+
+function wintime(){  tint(255,osOpacity);
+
+  if (osOpacity<255){
+  osOpacity=osOpacity+0.5;}
+  else {osOpacity=255;}
+   imageMode(CORNER);
+    image(otherside,0,0,width,height);
+   textSize(35);
+
+   fill(252,244,3,osOpacity);
+   console.log(noisetime);
+   gameWinText="Congratulations!\n" + " You've just passed the time tunnel\n";
+   gameWinText=gameWinText + "You've traveled to Atlantis";
+   text(gameWinText, windowWidth-400,150);
+
+ }
+
+
+ function checkwin(){
+   if (backgroundX===0 && playerX<140){
+    isWinner=true;
+     gameState=3;}
+    else {isWinner=false;
+           }
+ }
