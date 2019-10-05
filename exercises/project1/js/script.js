@@ -68,6 +68,9 @@ let isWinner;
 
 let gameWinText;
 
+let healthDisplay;
+let guide;
+
 // setup()
 //
 // Sets up the basic elements of the game
@@ -159,10 +162,12 @@ function draw() {
     checkOrbAbsorb();
 
      drawbackground();
+     drawInstruction();
     drawOrb();
 
     drawPlayer();
    checkwin();
+
   }
   if(gameState===2){
     showGameOver();
@@ -359,6 +364,23 @@ noTint();
 image(backimage,backgroundX,0,3500+windowWidth,windowHeight);}
 
 function drawInstruction(){
+  if(backgroundX<0){
+textSize(12);
+fill(255,200);
+guide="Wanna run faster ? \n" + "Press Shift to speed up!\n";
+guide= guide + "But is it good for health ?";
+text(guide,windowWidth-200,20);
+
+//healthDisplay="Your health Index is " + playerHealth;
+  //text(healthDisplay,windowWidth-200,100);
+}
+else if(backgroundX===0){
+  guide="oh, what is inside the hole? Go and see ?";
+  textSize(20);
+  fill(255,200);
+  text(guide,windowWidth/2,50);
+}
+
 
 }
 
