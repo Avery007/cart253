@@ -77,7 +77,7 @@ function preload(){
   //https://www.tes.com/teaching-resource/ancient-egyptian-clothing-6446514
   playerimage= loadImage('./assets/images/player.png');
   otherside= loadImage('./assets/images/altlantisa.png');
-    front= loadImage('./assets/images/frontimg.png');
+    front= loadImage('./assets/images/front.png');
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -101,7 +101,7 @@ isWinner=false;
 //
 // Initialises prey's position, velocity, and health
 function setupFront(){imageMode(CORNER);
-  frontOpacity=200;
+  frontOpacity=255;
   tint(255,frontOpacity);
   image(front,0,0,windowWidth/1.5,windowHeight/1.5);
   rectMode(CENTER);
