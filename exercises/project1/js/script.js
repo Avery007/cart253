@@ -357,9 +357,9 @@ function showGameOver() {
   textAlign(CENTER, CENTER);
   fill(255);
   // Set up the text to display
-  let gameOverText = "GAME OVER, YOU DIE\n"; // \n means "new line"
-  gameOverText = gameOverText + "You failed to absorb enough orbs to maintain your health\n";
-  gameOverText = gameOverText + "Good luck next time";
+  let gameOverText = "GAME OVER, YOU DIE\n"+ "You absorbed "+ orbAbsorb + " orbs\n" ; // \n means "new line"
+  gameOverText = gameOverText + "You don't absorb enough orbs to maintain your health\n";
+  gameOverText = gameOverText + "So you failed to know the mystery of the pyramid ";
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
 }
