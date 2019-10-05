@@ -59,14 +59,18 @@ let playerimage;
 let backimage;
 let backgroundX;
 
+let otherside;
+let osOpacity;
+
 // setup()
 //
 // Sets up the basic elements of the game
 function preload(){
-  backimage= loadImage('./assets/images/backimg0.png'); // https://pixabay.com/images/search/egyption%20wall/
+  backimage= loadImage('./assets/images/backimgtry.png'); // https://pixabay.com/images/search/egyption%20wall/
   //https://hiddenincatours.com/cholula-mexico-the-worlds-largest-ancient-pyramid/
   //https://www.tes.com/teaching-resource/ancient-egyptian-clothing-6446514
   playerimage= loadImage('./assets/images/player.png');
+  otherside= loadImage('./assets/images/altlantisa.png');
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -74,7 +78,7 @@ function setup() {
   speedupX=0;
   speedupY=0;
   noStroke();
-
+osOpacity=0;
 
   // We're using simple functions to separate code out
   setupPrey();
@@ -114,9 +118,13 @@ function setupPlayer() {
 function draw() {
   background(100, 100, 200);
 
+
     imageMode(CORNER);
-      noTint();
+  noTint();
   image(backimage,backgroundX,0,3500+windowWidth,windowHeight);
+  tint(255,osOpacity);
+  image(otherside,10,10,windowWidth,windowHeight);
+  if (backgroundX>-2500){osOpacity=osOpacity+1};
   if (!gameOver) {
     if(backgroundX<0){
     backgroundX=backgroundX+1;}
