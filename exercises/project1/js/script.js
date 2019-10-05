@@ -391,10 +391,10 @@ function showGameOver() {
   // Set up the font
   textSize(32);
   textAlign(CENTER, CENTER);
-  fill(0);
+  fill(255);
   // Set up the text to display
-  let gameOverText = "GAME OVER\n"; // \n means "new line"
-  gameOverText = gameOverText + "You failed to absorb enough orbs to maintain health";
+  let gameOverText = "GAME OVER, YOU DIE\n"; // \n means "new line"
+  gameOverText = gameOverText + "You failed to absorb enough orbs to maintain your health\n";
   gameOverText = gameOverText + "Good luck next time";
   // Display it in the centre of the screen
   text(gameOverText, width / 2, height / 2);
@@ -424,9 +424,10 @@ function wintime(){  tint(255,osOpacity);
 
    fill(252,244,3,osOpacity);
    console.log(noisetime);
-   gameWinText="Congratulations!\n" + " You've just passed the time tunnel\n";
-   gameWinText=gameWinText + "You've traveled to Atlantis";
-   text(gameWinText, windowWidth-400,150);
+   gameWinText="Congratulations!\n" + "You've just passed the time tunnel\n";
+   gameWinText=gameWinText + "Welcome Back to Atlantis!\n" + "Now you know the secret of the pyramid\n";
+   gameWinText=gameWinText +  "Don't you?";
+   text(gameWinText, windowWidth/2.5,150);
 
  }
 
