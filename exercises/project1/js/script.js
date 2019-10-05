@@ -21,10 +21,11 @@ let gameOver = false;
 // Player position, size, velocity
 let playerX;
 let playerY;
-let playerRadius = 25;
+let playerSizeX= 80;
+let playerSizeY=150;
 let playerVX = 0;
 let playerVY = 0;
-let playerMaxSpeed = 2;
+let playerMaxSpeed = 5;
 // Player health
 let playerHealth;
 let playerMaxHealth = 255;
@@ -34,7 +35,7 @@ let playerFill = 50;
 // Prey position, size, velocity
 let preyX;
 let preyY;
-let preyRadius = 25;
+let preyRadius;
 let preyVX;
 let preyVY;
 let preyMaxSpeed = 4;
@@ -62,7 +63,7 @@ let backgroundX;
 //
 // Sets up the basic elements of the game
 function preload(){
-  backimage= loadImage('./assets/images/backimg.png'); // https://pixabay.com/images/search/egyption%20wall/
+  backimage= loadImage('./assets/images/backimg0.png'); // https://pixabay.com/images/search/egyption%20wall/
   //https://hiddenincatours.com/cholula-mexico-the-worlds-largest-ancient-pyramid/
   //https://www.tes.com/teaching-resource/ancient-egyptian-clothing-6446514
   playerimage= loadImage('./assets/images/player.png');
@@ -73,6 +74,7 @@ function setup() {
   speedupX=0;
   speedupY=0;
   noStroke();
+
 
   // We're using simple functions to separate code out
   setupPrey();
@@ -187,6 +189,7 @@ function movePlayer() {
   playerX = playerX + playerVX + speedupX;
   playerY = playerY + playerVY + speedupY;
 
+
   // Wrap when player goes off the canvas
   if (playerX < 0) {
     // Off the left side, so add the width to reset to the right
@@ -230,7 +233,7 @@ function checkEating() {
   // Get distance of player to prey
   let d = dist(playerX, playerY, preyX, preyY);
   // Check if it's an overlap
-  if (d < playerRadius + preyRadius) {
+  if (d < playerSizeX/2 + preyRadius) {
     // Increase the player health
     playerHealth = playerHealth + eatHealth;
     // Constrain to the possible range
@@ -258,10 +261,9 @@ function checkEating() {
 // Moves the prey based on random velocity changes
 function movePrey() {
   // Change the prey's velocity
-
   noisetime=noisetime+0.01;
 
-  preyVX = noise(noisetime)*5;
+  preyVX = noise(noisetime)*7;
   preyVY = noise(noisetime)*5;
 
 
@@ -290,7 +292,12 @@ function movePrey() {
 // Draw the prey as an ellipse with alpha based on health
 function drawPrey() {
   fill(preyFill, preyHealth);
-  ellipse(preyX, preyY, preyRadius * 2);
+
+  preyRadius = noise(noisetime)*20;
+
+  ellipse(preyX, preyY, preyRadius);
+  console.log(preyRadius);
+
 }
 
 // drawPlayer()
@@ -301,7 +308,7 @@ function drawPlayer() {
   //tint(255,100);
   tint(0, 153, 204,playerHealth);
   imageMode(CENTER);
-  image(playerimage,playerX, playerY, 70,120,);
+  image(playerimage,playerX, playerY, playerSizeX,playerSizeY);
   //playerRadius * 2
 }
 
