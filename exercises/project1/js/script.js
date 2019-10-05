@@ -25,10 +25,10 @@ let playerSizeX= 80;
 let playerSizeY=150;
 let playerVX = 0;
 let playerVY = 0;
-let playerMaxSpeed = 5;
+let playerMaxSpeed = 3;
 // Player health
 let playerHealth;
-let playerMaxHealth = 255;
+let playerMaxHealth = 200;
 // Player fill color
 let playerFill = 50;
 
@@ -150,7 +150,7 @@ function draw() {
 
   if (gameState===1) {
     if(backgroundX<0){
-    backgroundX=backgroundX+10;}
+    backgroundX=backgroundX+0.5;}
     else if (backgroundX>0){backgroundX=0;}
     console.log(playerX);
     handleInput();
@@ -331,10 +331,10 @@ function moveOrb() {
 
 // drawPrey()
 //
-// Draw the prey as an ellipse with alpha based on health
+// Draw the orb as an ellipse with alpha based on health
 function drawOrb() {
 
-  fill(orbFill, orbHealth);
+  fill(orbFill, 100);
   textSize(15);
   if(orbAbsorb<1){ // add an instruction of the Orb before players eat them
   text("Hello, I am an Orb!",orbX-10,orbY-10);}
