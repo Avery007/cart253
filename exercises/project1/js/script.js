@@ -33,22 +33,22 @@ let playerMaxHealth = 255;
 let playerFill = 50;
 
 // Prey position, size, velocity
-let preyX;
-let preyY;
-let preyRadius;
-let preyVX;
-let preyVY;
-let preyMaxSpeed = 4;
+let orbX;
+let orbY;
+let orbRadius;
+let orbVX;
+let orbVY;
+let orbMaxSpeed = 4;
 // Prey health
-let preyHealth;
-let preyMaxHealth = 100;
+let orbHealth;
+let orbMaxHealth = 100;
 // Prey fill color
-let preyFill = 200;
+let orbFill = 200;
 
 // Amount of health obtained per frame of "eating" (overlapping) the prey
-let eatHealth = 10;
+let absorbHealth = 10;
 // Number of prey eaten during the game (the "score")
-let preyEaten = 0;
+let orbAbsorb = 0;
 
 let noisetime;
 
@@ -64,6 +64,8 @@ let osOpacity;
 
 let front;
 let frontOpacity;
+
+
 // setup()
 //
 // Sets up the basic elements of the game
@@ -86,7 +88,7 @@ gameState = 0;
 
    setupFront();
   // We're using simple functions to separate code out
-  setupPrey();
+  setupOrb();
   setupPlayer();
 
  backgroundX=-3500;
@@ -107,12 +109,12 @@ function setupFront(){imageMode(CORNER);
   fill(255,frontOpacity);
   text("Enter the pyramid !",windowWidth/3,windowHeight/3); }
 
-function setupPrey() {
-  preyX = width / 5;
-  preyY = height / 2;
-  preyVX = -preyMaxSpeed;
-  preyVY = preyMaxSpeed;
-  preyHealth = preyMaxHealth;
+function setupOrb() {
+  orbX = width / 5;
+  orbY = height / 2;
+  orbVX = -orbMaxSpeed;
+  orbVY = orbMaxSpeed;
+  orbHealth = orbMaxHealth;
 }
 
 // setupPlayer()
@@ -150,12 +152,12 @@ function draw() {
     handleInput();
 
     movePlayer();
-    movePrey();
+    moveOrb();
 
     updateHealth();
-    checkEating();
+    checkOrbAbsorb();
      drawbackground();
-    drawPrey();
+    drawOrb();
     drawPlayer();
   }
   else if(gameState===2){
@@ -248,36 +250,36 @@ function updateHealth() {
   // Check if the player is dead (0 health)
   if (playerHealth === 0) {
     // If so, the game is over
-    gameOver = true;
+    gameState = 2;
   }
 }
 
 // checkEating()
 //
 // Check if the player overlaps the prey and updates health of both
-function checkEating() {
+function checkOrbAbsorb() {
   // Get distance of player to prey
-  let d = dist(playerX, playerY, preyX, preyY);
+  let d = dist(playerX, playerY, orbX, orbY);
   // Check if it's an overlap
-  if (d < playerSizeX/2 + preyRadius) {
+  if (d < playerSizeX/2 + orbRadius) {
     // Increase the player health
-    playerHealth = playerHealth + eatHealth;
+    playerHealth = playerHealth + absorbHealth;
     // Constrain to the possible range
     playerHealth = constrain(playerHealth, 0, playerMaxHealth);
     // Reduce the prey health
-    preyHealth = preyHealth - eatHealth;
+    orbHealth = orbHealth - absorbHealth;
     // Constrain to the possible range
-    preyHealth = constrain(preyHealth, 0, preyMaxHealth);
+    orbHealth = constrain(orbHealth, 0, orbMaxHealth);
 
     // Check if the prey died (health 0)
-    if (preyHealth === 0) {
+    if (orbHealth === 0) {
       // Move the "new" prey to a random position
-      preyX = random(0, width);
-      preyY = random(0, height);
+      orbX = random(0, width);
+      orbY = random(0, height);
       // Give it full health
-      preyHealth = preyMaxHealth;
+      orbHealth = orbMaxHealth;
       // Track how many prey were eaten
-      preyEaten = preyEaten + 1;
+      orbAbsorb = orbAbsorb + 1;
     }
   }
 }
@@ -285,44 +287,48 @@ function checkEating() {
 // movePrey()
 //
 // Moves the prey based on random velocity changes
-function movePrey() {
+function moveOrb() {
   // Change the prey's velocity
   noisetime=noisetime+0.01;
 
-  preyVX = noise(noisetime)*7;
-  preyVY = noise(noisetime)*5;
+  orbVX = noise(noisetime)*7;
+  orbVY = noise(noisetime)*5;
 
 
   // Update prey position based on velocity
-  preyX = preyX + preyVX;
-  preyY = preyY + preyVY;
+  orbX = orbX + orbVX;
+  orbY = orbY + orbVY;
 
   // Screen wrapping
-  if (preyX < 0) {
-    preyX = preyX + width;
+  if (orbX < 0) {
+    orbX = orbX + width;
   }
-  else if (preyX > width) {
-    preyX = preyX - width;
+  else if (orbX > width) {
+    orbX = orbX - width;
   }
 
-  if (preyY < 0) {
-    preyY = preyY + height;
+  if (orbY < 0) {
+    orbY = orbY + height;
   }
-  else if (preyY > height) {
-    preyY = preyY - height;
+  else if (orbY > height) {
+    orbY = orbY - height;
   }
 }
 
 // drawPrey()
 //
 // Draw the prey as an ellipse with alpha based on health
-function drawPrey() {
-  fill(preyFill, preyHealth);
+function drawOrb() {
 
-  preyRadius = noise(noisetime)*20;
+  fill(orbFill, orbHealth);
+  textSize(15);
+  if(orbAbsorb<1){ // add an instruction of the Orb before players eat them
+  text("Hello, I am an Orb!",orbX-10,orbY-10);}
 
-  ellipse(preyX, preyY, preyRadius);
-  console.log(preyRadius);
+  orbRadius = noise(noisetime)*20;
+
+  ellipse(orbX, orbY, orbRadius);
+
 
 }
 
@@ -342,6 +348,10 @@ function drawbackground(){
 imageMode(CORNER);
 noTint();
 image(backimage,backgroundX,0,3500+windowWidth,windowHeight);}
+
+function drawInstruction(){
+
+}
 
 // showGameOver()
 //
