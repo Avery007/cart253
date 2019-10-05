@@ -3,19 +3,21 @@
 /******************************************************
 
 Game - Chaser
-Pippin Barr
 
-A "simple" game of cat and mouse. The player is a circle and can move with keys,
-if they overlap the (randomly moving) prey they "eat it" by sucking out its life
-and adding it to their own. The player "dies" slowly over time so they have to keep
-eating to stay alive.
+Modified by Qingyi Deng
+
+This game is based on the mystery of pyramid. The player is an engyptian walking inside the pyramid and can move with keys,
+Player has to overlap the (randomly moving) orb to keep healthy or they will die.
+The color of player image is corresponding to player's health state.
+There is a hole linked to the image of Atlantis at the end of the background image. Player will travel to another world when they success.
+
 
 Includes: Physics-based movement, keyboard controls, health/stamina,
-random movement, screen wrap.
+random movement(noise), screen wrap. Using tint() to control image opacity.
 
 ******************************************************/
 
-// Track whether the game is over
+// Track which stage the game is in
 let gameState;
 
 // Player position, size, velocity
@@ -29,85 +31,80 @@ let playerMaxSpeed = 3;
 // Player health
 let playerHealth;
 let playerMaxHealth = 200;
-// Player fill color
-let playerFill = 50;
 
-// Prey position, size, velocity
+// orb position, size, velocity
 let orbX;
 let orbY;
 let orbRadius;
 let orbVX;
 let orbVY;
 let orbMaxSpeed = 4;
-// Prey health
+// orb health
 let orbHealth;
 let orbMaxHealth = 100;
-// Prey fill color
+// orb fill color
 let orbFill = 200;
 
-// Amount of health obtained per frame of "eating" (overlapping) the prey
+// Amount of health obtained per frame of "eating" (overlapping) the orb
 let absorbHealth = 10;
-// Number of prey eaten during the game (the "score")
+// Number of orb absorbed during the game (the "score")
 let orbAbsorb = 0;
 
-let noisetime;
+let noisetime; // the value inside noise function
 
-let speedupX;
+let speedupX; // increase player speed when press shift
 let speedupY;
 
-let playerimage;
+let playerimage; // change the player from a cicrle to image
 let backimage;
-let backgroundX;
+let backgroundX; // backgorund image X
 
-let otherside;
-let osOpacity;
+let otherside; // the image showing up when player wins the game
+let osOpacity; // the opacity of this image
 
-let front;
+let front;  // add a front image to make game more meaningful
 let frontOpacity;
-let isWinner;
 
-let gameWinText;
+let gameWinText; // display when player wins
+let guide; // game instructions
 
-let healthDisplay;
-let guide;
+let isWinner; // check if player wins
 
-// setup()
-//
-// Sets up the basic elements of the game
+
 function preload(){
   backimage= loadImage('./assets/images/backimgtry.png'); // https://pixabay.com/images/search/egyption%20wall/
   //https://hiddenincatours.com/cholula-mexico-the-worlds-largest-ancient-pyramid/
-  //https://www.tes.com/teaching-resource/ancient-egyptian-clothing-6446514
-  playerimage= loadImage('./assets/images/player.png');
-  otherside= loadImage('./assets/images/altlantisa.png');
-    front= loadImage('./assets/images/front.png');
+  playerimage= loadImage('./assets/images/player.png'); //https://www.tes.com/teaching-resource/ancient-egyptian-clothing-6446514
+  otherside= loadImage('./assets/images/altlantisa.png'); //www.pinterest.ca/pin/612771093023538915/
+  front= loadImage('./assets/images/front.png');//pixabay.com/illustrations/pyramids-gizeh-night-caravan-camel-3913843/
 }
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   noisetime=0;
-  speedupX=0;
+  speedupX=0; // no speedup without key pressed
   speedupY=0;
   noStroke();
-osOpacity=0;
-gameState = 0;
-isWinner=false;
-   setupFront();
-  // We're using simple functions to separate code out
-  setupOrb();
+  osOpacity=0; // make the image invisible
+  gameState = 0; // use 0 represents before game starts
+  isWinner=false;
+  setupFront(); // show a front image of the game before it starts
+  setupOrb(); // change prey to orb
   setupPlayer();
 
- backgroundX=-3500;
+  backgroundX=-3500; // so the background image can move gradually from left to right
 
 }
 
-// setupPrey()
-//
-// Initialises prey's position, velocity, and health
-function setupFront(){imageMode(CORNER);
+// Initialises orb's position, velocity, and health
+function setupFront(){
+
+  imageMode(CORNER);
   frontOpacity=255;
-  tint(255,frontOpacity);
+  tint(255,frontOpacity); // use tint() to control front image's opacity
   image(front,0,0,windowWidth/1.5,windowHeight/1.5);
-  rectMode(CENTER);
+
+  rectMode(CENTER); // create a button to start game
   fill(252,219,3,frontOpacity-50);
   rect(windowWidth/2.7,windowHeight/3,160,50);
   textSize(12);
@@ -123,7 +120,6 @@ function setupOrb() {
 }
 
 // setupPlayer()
-//
 // Initialises player position and health
 function setupPlayer() {
   playerX = 4 * width / 5;
@@ -131,49 +127,36 @@ function setupPlayer() {
   playerHealth = playerMaxHealth;
 }
 
-// draw()
-//
-// While the game is active, checks input
-// updates positions of prey and player,
-// checks health (dying), checks eating (overlaps)
-// displays the two agents.
-// When the game is over, shows the game over screen.
+
 function draw() {
-  //background(100, 100, 200);
+// use gameState to check which functions should run
+  if (gameState===1)
+  { // While the game is active,
 
+    if(backgroundX<0)  // move the background image automatically
+    {backgroundX=backgroundX+0.5;} // background image stops moving when the left corner has moved to (0.0)
+                                    // this means the player has moved to the destination where the hole shows up
+  else if (backgroundX>0){backgroundX=0;}
+  console.log(backgroundX);
 
-
-    //imageMode(CORNER);
-  //noTint();
-//  image(backimage,backgroundX,0,3500+windowWidth,windowHeight);
-
-
-  if (gameState===1) {
-    if(backgroundX<0){
-    backgroundX=backgroundX+0.5;}
-    else if (backgroundX>0){backgroundX=0;}
-    console.log(playerX);
-    handleInput();
-
-    movePlayer();
-    moveOrb();
-
-    updateHealth();
-    checkOrbAbsorb();
-
-     drawbackground();
-     drawInstruction();
+    handleInput(); // set key controls
+    movePlayer(); // move player when press keys
+    moveOrb();   // set orb movement
+    updateHealth(); //continues check player's health to see if game ends
+    checkOrbAbsorb(); // check how many orbs player absorbs
+    drawbackground(); // set the backgorund image
+    drawInstruction(); // set instructions
     drawOrb();
-
     drawPlayer();
-   checkwin();
+    checkwin(); // check if player wins
 
   }
-  if(gameState===2){
+
+  if(gameState===2){ // 2 represents game over
     showGameOver();
 
   }
-  else if (gameState===3) {
+  else if (gameState===3) { // 3 represents player wins
     wintime();
 
   }
@@ -181,57 +164,48 @@ function draw() {
 }
 
 // handleInput()
-//
 // Checks arrow keys and adjusts player velocity accordingly
-
 
 function handleInput() {
   // Check for horizontal movement
   if (keyIsDown(LEFT_ARROW)) {
       playerVX = -playerMaxSpeed;
-      if (keyIsDown(SHIFT)){speedupX=-5;
-        playerHealth=playerHealth-1;
+      if (keyIsDown(SHIFT)){speedupX=-5;// increase player speed when both shift and left arrow presesed
+        playerHealth=playerHealth-1; // reduce player's health as the key is pressed
        }
-
 }
 
-
-  else if (keyIsDown(RIGHT_ARROW)) {
+else if (keyIsDown(RIGHT_ARROW)) {
     playerVX = playerMaxSpeed;
-    if (keyIsDown(SHIFT)){speedupX=5;
+    if (keyIsDown(SHIFT)){speedupX=5; // increase player speed corresponding to the moving direction
       playerHealth=playerHealth-1;
      }
-
-
 }
 
-
-  // Check for vertical movement
+// Check for vertical movement
   if (keyIsDown(UP_ARROW)) {
     playerVY = -playerMaxSpeed;
-    if (keyIsDown(SHIFT)){speedupY=-5;
+    if (keyIsDown(SHIFT)){speedupY=-5; // increase player speed corresponding to the moving direction
       playerHealth=playerHealth-1;
      }
   }
   else if (keyIsDown(DOWN_ARROW)) {
     playerVY = playerMaxSpeed;
-    if (keyIsDown(SHIFT)){speedupY=5;
+    if (keyIsDown(SHIFT)){speedupY=5; // increase player speed corresponding to the moving direction
       playerHealth=playerHealth-1;
      }
   }
 
 }
-// movePlayer()
-//
+
 // Updates player position based on velocity,
 // wraps around the edges.
 function movePlayer() {
   // Update position
-  playerX = playerX + playerVX + speedupX;
+  playerX = playerX + playerVX + speedupX; // allow player to speed up
   playerY = playerY + playerVY + speedupY;
 
-
-  // Wrap when player goes off the canvas
+// Wrap when player goes off the canvas
   if (playerX < 0) {
     // Off the left side, so add the width to reset to the right
     playerX = playerX + width;
@@ -268,9 +242,8 @@ function updateHealth() {
 
 }
 
-// checkEating()
-//
-// Check if the player overlaps the prey and updates health of both
+
+// Check if the player overlaps the orb and updates health of both
 function checkOrbAbsorb() {
   // Get distance of player to prey
   let d = dist(playerX, playerY, orbX, orbY);
@@ -298,18 +271,15 @@ function checkOrbAbsorb() {
   }
 }
 
-// movePrey()
-//
+
 // Moves the prey based on random velocity changes
 function moveOrb() {
-  // Change the prey's velocity
-  noisetime=noisetime+0.01;
-
+  // Change the orb's velocity
+  noisetime=noisetime+0.01;// make noisetime keep increasing so noise() returns different value
   orbVX = noise(noisetime)*7;
   orbVY = noise(noisetime)*5;
 
-
-  // Update prey position based on velocity
+// Update ord position based on velocity
   orbX = orbX + orbVX;
   orbY = orbY + orbVY;
 
@@ -329,63 +299,57 @@ function moveOrb() {
   }
 }
 
-// drawPrey()
-//
-// Draw the orb as an ellipse with alpha based on health
+
+// Draw the orb as an ellipse
 function drawOrb() {
 
-  fill(orbFill, 100);
+  fill(orbFill, 100);// to make the orb easier to notice, set its color to fixed value
   textSize(15);
+
   if(orbAbsorb<1){ // add an instruction of the Orb before players eat them
   text("Hello, I am an Orb!",orbX-10,orbY-10);}
 
-  orbRadius = noise(noisetime)*20;
-
+  orbRadius = noise(noisetime)*20; // use noise() to create changable size
   ellipse(orbX, orbY, orbRadius);
-
 
 }
 
-// drawPlayer()
-//
 // Draw the player as an ellipse with alpha value based on health
 function drawPlayer() {
-  //fill(playerFill, playerHealth);
-  //tint(255,100);
+
   tint(0, 153, 204,playerHealth);
   imageMode(CENTER);
   image(playerimage,playerX, playerY, playerSizeX,playerSizeY);
-  //playerRadius * 2
+
 }
 
 function drawbackground(){
-imageMode(CORNER);
-noTint();
-image(backimage,backgroundX,0,3500+windowWidth,windowHeight);}
+     imageMode(CORNER);
+     noTint();
+     image(backimage,backgroundX,0,3500+windowWidth,windowHeight);
+}
 
 function drawInstruction(){
-  if(backgroundX<0){
-textSize(12);
-fill(255,200);
-guide="Wanna run faster ? \n" + "Press Shift to speed up!\n";
-guide= guide + "But is it good for health ?";
-text(guide,windowWidth-200,20);
+   if(backgroundX<0){ // when player has not moved to destination
+    textSize(12);     // show game instructions
+    fill(255,200);
+    guide="Wanna run faster ? \n" + "Press Shift to speed up!\n";
+    guide= guide + "But is it good for health ?";
+    text(guide,windowWidth-200,20);
 
-//healthDisplay="Your health Index is " + playerHealth;
-  //text(healthDisplay,windowWidth-200,100);
-}
-else if(backgroundX===0){
-  guide="oh, what is inside the hole? Go and see ?";
-  textSize(20);
-  fill(255,200);
-  text(guide,windowWidth/2,50);
-}
+  }
+
+  else if(backgroundX===0){
+     guide="oh, what is inside the hole? Go and see ?";
+     textSize(20);
+     fill(255,200);
+     text(guide,windowWidth/2,50);
+
+  }
+
+}// end of drawInstruction
 
 
-}
-
-// showGameOver()
-//
 // Display text about the game being over!
 function showGameOver() {
   // Set up the font
@@ -400,30 +364,34 @@ function showGameOver() {
   text(gameOverText, width / 2, height / 2);
 }
 
-function keyReleased() {
-  speedupX=0;
-  speedupY=0;
+function keyReleased() { // set players moving speed to 0 when no key is pressed
+    speedupX=0;
+    speedupY=0;
 
     playerVX = 0;
     playerVY = 0;
 
   }
 
-function mousePressed()
-{gameState=1;
-frontOpacity=0;}
+function mousePressed(){ //start the game and hide front image when player click the button
+    gameState=1; // start game
+    frontOpacity=0;
+  }
 
-function wintime(){  tint(255,osOpacity);
-
-  if (osOpacity<255){
-  osOpacity=osOpacity+0.5;}
+function wintime(){
+  /// things to display when player wins
+  // firstly, change the backgorund image
+  tint(255,osOpacity);
+  if (osOpacity<255) {
+  osOpacity=osOpacity+0.5;
+}
   else {osOpacity=255;}
-   imageMode(CORNER);
-    image(otherside,0,0,width,height);
-   textSize(35);
 
+   imageMode(CORNER);  // display the new background
+   image(otherside,0,0,width,height);
+
+   textSize(35); // display text
    fill(252,244,3,osOpacity);
-   console.log(noisetime);
    gameWinText="Congratulations!\n" + "You've just passed the time tunnel\n";
    gameWinText=gameWinText + "Welcome Back to Atlantis!\n" + "Now you know the secret of the pyramid\n";
    gameWinText=gameWinText +  "Don't you?";
@@ -432,10 +400,11 @@ function wintime(){  tint(255,osOpacity);
  }
 
 
- function checkwin(){
+ function checkwin(){ // chekc if player wins by check if player has moved to the destination
+
    if (backgroundX===0 && playerX<140){
     isWinner=true;
-     gameState=3;}
-    else {isWinner=false;
-           }
+    gameState=3;
+  }
+    else {isWinner=false;}
  }
