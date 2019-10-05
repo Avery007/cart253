@@ -16,7 +16,7 @@ random movement, screen wrap.
 ******************************************************/
 
 // Track whether the game is over
-let gameOver = false;
+let gameState;
 
 // Player position, size, velocity
 let playerX;
@@ -62,6 +62,8 @@ let backgroundX;
 let otherside;
 let osOpacity;
 
+let front;
+let frontOpacity;
 // setup()
 //
 // Sets up the basic elements of the game
@@ -71,6 +73,7 @@ function preload(){
   //https://www.tes.com/teaching-resource/ancient-egyptian-clothing-6446514
   playerimage= loadImage('./assets/images/player.png');
   otherside= loadImage('./assets/images/altlantisa.png');
+    front= loadImage('./assets/images/frontimg.png');
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -79,7 +82,9 @@ function setup() {
   speedupY=0;
   noStroke();
 osOpacity=0;
+gameState = 0;
 
+   setupFront();
   // We're using simple functions to separate code out
   setupPrey();
   setupPlayer();
@@ -91,6 +96,17 @@ osOpacity=0;
 // setupPrey()
 //
 // Initialises prey's position, velocity, and health
+function setupFront(){imageMode(CORNER);
+  frontOpacity=200;
+  tint(255,frontOpacity);
+  image(front,0,0,windowWidth/1.5,windowHeight/1.5);
+  rectMode(CENTER);
+  fill(252,219,3,frontOpacity-50);
+  rect(windowWidth/2.7,windowHeight/3,160,50);
+  textSize(12);
+  fill(255,frontOpacity);
+  text("Enter the pyramid !",windowWidth/3,windowHeight/3); }
+
 function setupPrey() {
   preyX = width / 5;
   preyY = height / 2;
@@ -116,20 +132,21 @@ function setupPlayer() {
 // displays the two agents.
 // When the game is over, shows the game over screen.
 function draw() {
-  background(100, 100, 200);
+  //background(100, 100, 200);
 
 
-    imageMode(CORNER);
-  noTint();
-  image(backimage,backgroundX,0,3500+windowWidth,windowHeight);
+
+    //imageMode(CORNER);
+  //noTint();
+//  image(backimage,backgroundX,0,3500+windowWidth,windowHeight);
   tint(255,osOpacity);
   image(otherside,10,10,windowWidth,windowHeight);
-  if (backgroundX>-2500){osOpacity=osOpacity+1};
-  if (!gameOver) {
+  if (backgroundX===0 && playerX<140){osOpacity=osOpacity+1};
+  if (gameState===1) {
     if(backgroundX<0){
     backgroundX=backgroundX+1;}
     else if (backgroundX>0){backgroundX=0;}
-    console.log(backgroundX);
+    console.log(playerX);
     handleInput();
 
     movePlayer();
@@ -137,14 +154,15 @@ function draw() {
 
     updateHealth();
     checkEating();
-
+     drawbackground();
     drawPrey();
     drawPlayer();
   }
-  else {
+  else if(gameState===2){
     showGameOver();
 
   }
+  //else {};
 }
 
 // handleInput()
@@ -320,6 +338,11 @@ function drawPlayer() {
   //playerRadius * 2
 }
 
+function drawbackground(){
+imageMode(CORNER);
+noTint();
+image(backimage,backgroundX,0,3500+windowWidth,windowHeight);}
+
 // showGameOver()
 //
 // Display text about the game being over!
@@ -344,3 +367,7 @@ function keyReleased() {
     playerVY = 0;
 
   }
+
+function mousePressed()
+{gameState=1;
+frontOpacity=0;}
