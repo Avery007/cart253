@@ -114,7 +114,7 @@ function setupFront(){
   rect(windowWidth/2.7,windowHeight/3,160,50);
   textSize(12);
   fill(255,frontOpacity);
-  text("Enter the pyramid !",windowWidth/3,windowHeight/3); }
+  text("Enter The Pyramids",windowWidth/3,windowHeight/3); }
 
 function setupOrb() {
   orbX = width / 5;
@@ -164,6 +164,7 @@ function draw() {
 
   if(gameState===2){ // 2 represents game over
     showGameOver();
+    playerHealth=0;
     backgroundSound.stop();
   }
   else if (gameState===3) { // 3 represents player wins
@@ -262,15 +263,15 @@ function checkOrbAbsorb() {
     // Increase the player health
     playerHealth = playerHealth + absorbHealth;
     // Constrain to the possible range
-    playerHealth = constrain(playerHealth, 0, playerMaxHealth);
-    // Reduce the prey health
+   playerHealth = constrain(playerHealth, 0, playerMaxHealth);
+    // Reduce the orb health
     orbHealth = orbHealth - absorbHealth;
     // Constrain to the possible range
     orbHealth = constrain(orbHealth, 0, orbMaxHealth);
 
-    // Check if the prey died (health 0)
+    // Check if the orb died (health 0)
     if (orbHealth === 0) {
-      // Move the "new" prey to a random position
+      // Move the "new" orb to a random position
       orbX = random(0, width);
       orbY = random(0, height);
       // Give it full health
@@ -342,11 +343,12 @@ function drawbackground(){
 
 function drawInstruction(){
    if(backgroundX<0){ // when player has not moved to destination
-    textSize(12);     // show game instructions
+    textSize(14);     // show game instructions
     fill(255,200);
     guide="Wanna run faster ? \n" + "Press Shift to speed up!\n";
-    guide= guide + "But is it good for health ?";
-    text(guide,windowWidth-200,20);
+    guide= guide + "But it is bad for health \n\n";
+    guide=guide + "Your Health Index: " + playerHealth;
+    text(guide,windowWidth-190,30);
 
   }
 
