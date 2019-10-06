@@ -30,7 +30,7 @@ let playerVY = 0;
 let playerMaxSpeed = 3;
 // Player health
 let playerHealth;
-let playerMaxHealth = 200;
+let playerMaxHealth = 150;
 
 // orb position, size, velocity
 let orbX;
@@ -185,29 +185,29 @@ function handleInput() {
   // Check for horizontal movement
   if (keyIsDown(LEFT_ARROW)) {
       playerVX = -playerMaxSpeed;
-      if (keyIsDown(SHIFT)){speedupX=-5;// increase player speed when both shift and left arrow presesed
-        playerHealth=playerHealth-1; // reduce player's health as the key is pressed
+      if (keyIsDown(SHIFT)){speedupX=-9;// increase player speed when both shift and left arrow presesed
+        playerHealth=playerHealth-1.5; // reduce player's health as the key is pressed
        }
 }
 
 else if (keyIsDown(RIGHT_ARROW)) {
     playerVX = playerMaxSpeed;
-    if (keyIsDown(SHIFT)){speedupX=5; // increase player speed corresponding to the moving direction
-      playerHealth=playerHealth-1;
+    if (keyIsDown(SHIFT)){speedupX=9; // increase player speed corresponding to the moving direction
+      playerHealth=playerHealth-1.5;
      }
 }
 
 // Check for vertical movement
   if (keyIsDown(UP_ARROW)) {
     playerVY = -playerMaxSpeed;
-    if (keyIsDown(SHIFT)){speedupY=-5; // increase player speed corresponding to the moving direction
-      playerHealth=playerHealth-1;
+    if (keyIsDown(SHIFT)){speedupY=-9; // increase player speed corresponding to the moving direction
+      playerHealth=playerHealth-1.5;
      }
   }
   else if (keyIsDown(DOWN_ARROW)) {
     playerVY = playerMaxSpeed;
-    if (keyIsDown(SHIFT)){speedupY=5; // increase player speed corresponding to the moving direction
-      playerHealth=playerHealth-1;
+    if (keyIsDown(SHIFT)){speedupY=9; // increase player speed corresponding to the moving direction
+      playerHealth=playerHealth-1.5;
      }
   }
 
@@ -291,8 +291,8 @@ function checkOrbAbsorb() {
 function moveOrb() {
   // Change the orb's velocity
   noisetime=noisetime+0.01;// make noisetime keep increasing so noise() returns different value
-  orbVX = noise(noisetime)*7;
-  orbVY = noise(noisetime)*5;
+  orbVX = noise(noisetime)*12;
+  orbVY = noise(noisetime)*6;
 
 // Update ord position based on velocity
   orbX = orbX + orbVX;
@@ -318,7 +318,7 @@ function moveOrb() {
 // Draw the orb as an ellipse
 function drawOrb() {
 
-  fill(orbFill, 100);// to make the orb easier to notice, set its color to fixed value
+  fill(orbFill, 100+noise(noisetime));// randomly transparent
   textSize(15);
 
   if(orbAbsorb<1){ // add an instruction of the Orb before players eat them
@@ -349,8 +349,9 @@ function drawInstruction(){
    if(backgroundX<0){ // when player has not moved to destination
     textSize(14);     // show game instructions
     fill(255,200);
-    guide="Wanna run faster ? \n" + "Press Shift to speed up!\n";
-    guide= guide + "But it is bad for health \n\n";
+    guide="To catch the orbs,\n" + "Use the hands not the feet!\n";
+    guide=guide+ "Wanna run faster ? \n" + "Press Shift to speed up!\n";
+    guide= guide + "But it is bad for health! \n\n";
     guide=guide + "Your Health Index: " + playerHealth;
     text(guide,windowWidth-190,30);
 
