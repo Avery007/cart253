@@ -70,13 +70,16 @@ let guide; // game instructions
 
 let isWinner; // check if player wins
 
-
+let backgroundSound;
 function preload(){
+
+
   backimage= loadImage('./assets/images/backimgtry.png'); // https://pixabay.com/images/search/egyption%20wall/
   //https://hiddenincatours.com/cholula-mexico-the-worlds-largest-ancient-pyramid/
   playerimage= loadImage('./assets/images/player.png'); //https://www.tes.com/teaching-resource/ancient-egyptian-clothing-6446514
   otherside= loadImage('./assets/images/altlantisa.png'); //www.pinterest.ca/pin/612771093023538915/
   front= loadImage('./assets/images/front.png');//pixabay.com/illustrations/pyramids-gizeh-night-caravan-camel-3913843/
+    backgroundSound = loadSound("assets/sounds/insidepyramid.wav");
 }
 
 function setup() {
@@ -91,7 +94,6 @@ function setup() {
   setupFront(); // show a front image of the game before it starts
   setupOrb(); // change prey to orb
   setupPlayer();
-
   backgroundX=-3500; // so the background image can move gradually from left to right
 
 }
@@ -127,6 +129,15 @@ function setupPlayer() {
   playerHealth = playerMaxHealth;
 }
 
+function setupSound(){
+  //backgroundSound.setVolume();
+  backgroundSound.loop();
+}
+
+//function stopSound(){
+    //backgroundSound.stop();
+  //}
+//}
 
 function draw() {
 // use gameState to check which functions should run
@@ -154,11 +165,11 @@ function draw() {
 
   if(gameState===2){ // 2 represents game over
     showGameOver();
-
+    backgroundSound.stop();
   }
   else if (gameState===3) { // 3 represents player wins
     wintime();
-
+    backgroundSound.stop();
   }
   //else {};
 }
@@ -376,6 +387,7 @@ function keyReleased() { // set players moving speed to 0 when no key is pressed
 function mousePressed(){ //start the game and hide front image when player click the button
     gameState=1; // start game
     frontOpacity=0;
+    setupSound();
   }
 
 function wintime(){
