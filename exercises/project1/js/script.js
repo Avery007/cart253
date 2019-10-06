@@ -64,6 +64,8 @@ let osOpacity; // the opacity of this image
 
 let front;  // add a front image to make game more meaningful
 let frontOpacity;
+let frontSizeX;
+let frontSizeY;
 
 let gameWinText; // display when player wins
 let guide; // game instructions
@@ -104,17 +106,19 @@ function setup() {
 // Initialises orb's position, velocity, and health
 function setupFront(){
 
+  frontSizeX=windowWidth/1.5;
+  frontSizeY=windowHeight/1.5;
   imageMode(CORNER);
   frontOpacity=255;
   tint(255,frontOpacity); // use tint() to control front image's opacity
-  image(front,0,0,windowWidth/1.5,windowHeight/1.5);
+  image(front,0,0,frontSizeX,frontSizeY);
 
   rectMode(CENTER); // create a button to start game
   fill(252,219,3,frontOpacity-50);
-  rect(windowWidth/2.7,windowHeight/3,160,50);
+  rect(frontSizeX-300,frontSizeY/2,160,50); // adjust the button position based on frontSize
   textSize(12);
   fill(255,frontOpacity);
-  text("Enter The Pyramids",windowWidth/3,windowHeight/3); }
+  text("Enter The Pyramids",frontSizeX-354,frontSizeY/2); }
 
 function setupOrb() {
   orbX = width / 5;
