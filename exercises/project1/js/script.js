@@ -81,7 +81,7 @@ function preload(){
   otherside= loadImage('./assets/images/altlantisa.png'); //www.pinterest.ca/pin/612771093023538915/
   front= loadImage('./assets/images/front.png');//pixabay.com/illustrations/pyramids-gizeh-night-caravan-camel-3913843/
   backgroundSound = loadSound("assets/sounds/insidepyramid.wav"); // I created it
-  finalSound=loadSound("assets/sounds/final.wav"); // I created it
+  //finalSound=loadSound("assets/sounds/final.wav"); I created it
 
 }
 
