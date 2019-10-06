@@ -70,7 +70,8 @@ let guide; // game instructions
 
 let isWinner; // check if player wins
 
-let backgroundSound;
+let backgroundSound; // add background sound
+
 function preload(){
 
 
@@ -79,7 +80,9 @@ function preload(){
   playerimage= loadImage('./assets/images/player.png'); //https://www.tes.com/teaching-resource/ancient-egyptian-clothing-6446514
   otherside= loadImage('./assets/images/altlantisa.png'); //www.pinterest.ca/pin/612771093023538915/
   front= loadImage('./assets/images/front.png');//pixabay.com/illustrations/pyramids-gizeh-night-caravan-camel-3913843/
-    backgroundSound = loadSound("assets/sounds/insidepyramid.wav");
+  backgroundSound = loadSound("assets/sounds/insidepyramid.wav"); // I created it
+  finalSound=loadSound("assets/sounds/final.wav"); // I created it
+
 }
 
 function setup() {
@@ -129,15 +132,11 @@ function setupPlayer() {
   playerHealth = playerMaxHealth;
 }
 
-function setupSound(){
+function setupSound(){ // add sounds
   //backgroundSound.setVolume();
   backgroundSound.loop();
 }
 
-//function stopSound(){
-    //backgroundSound.stop();
-  //}
-//}
 
 function draw() {
 // use gameState to check which functions should run
@@ -328,7 +327,8 @@ function drawOrb() {
 // Draw the player as an ellipse with alpha value based on health
 function drawPlayer() {
 
-  tint(0, 153, 204,playerHealth);
+  //tint(0, 153, 204,playerHealth);
+  tint(250, 237, 0,playerHealth);
   imageMode(CENTER);
   image(playerimage,playerX, playerY, playerSizeX,playerSizeY);
 
@@ -387,7 +387,7 @@ function keyReleased() { // set players moving speed to 0 when no key is pressed
 function mousePressed(){ //start the game and hide front image when player click the button
     gameState=1; // start game
     frontOpacity=0;
-    setupSound();
+    setupSound();// play background sound when game starts
   }
 
 function wintime(){
