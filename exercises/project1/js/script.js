@@ -38,7 +38,7 @@ let orbY;
 let orbRadius;
 let orbVX;
 let orbVY;
-let orbMaxSpeed = 4;
+let orbMaxSpeed = 6;
 // orb health
 let orbHealth;
 let orbMaxHealth = 100;
@@ -70,8 +70,6 @@ let frontSizeY;
 let gameWinText; // display when player wins
 let guide; // game instructions
 
-let isWinner; // check if player wins
-
 let backgroundSound; // add background sound
 
 function preload(){
@@ -88,6 +86,7 @@ function preload(){
 }
 
 function setup() {
+
   createCanvas(windowWidth, windowHeight);
   noisetime=0;
   speedupX=0; // no speedup without key pressed
@@ -95,7 +94,7 @@ function setup() {
   noStroke();
   osOpacity=0; // make the image invisible
   gameState = 0; // use 0 represents before game starts
-  isWinner=false;
+
   setupFront(); // show a front image of the game before it starts
   setupOrb(); // change prey to orb
   setupPlayer();
@@ -291,8 +290,9 @@ function checkOrbAbsorb() {
 function moveOrb() {
   // Change the orb's velocity
   noisetime=noisetime+0.01;// make noisetime keep increasing so noise() returns different value
-  orbVX = noise(noisetime)*12;
-  orbVY = noise(noisetime)*6;
+
+  orbVX = map(noise(noisetime), 0, 1, -orbMaxSpeed, orbMaxSpeed);
+  orbVY = map(noise(noisetime), 0, 1, -orbMaxSpeed, orbMaxSpeed);
 
 // Update ord position based on velocity
   orbX = orbX + orbVX;
@@ -318,7 +318,7 @@ function moveOrb() {
 // Draw the orb as an ellipse
 function drawOrb() {
 
-  fill(orbFill, 100+noise(noisetime));// randomly transparent
+  fill(random(0,255), 170);// random color
   textSize(15);
 
   if(orbAbsorb<1){ // add an instruction of the Orb before players eat them
@@ -351,7 +351,7 @@ function drawInstruction(){
     fill(255,200);
     guide="To catch the orbs,\n" + "Use the hands not the feet!\n";
     guide=guide+ "Wanna run faster ? \n" + "Press Shift to speed up!\n";
-    guide= guide + "But it is bad for health! \n\n";
+    guide=guide+ "A surprise is waiting for you\n"+ "at the destination! \n\n";
     guide=guide + "Your Health Index: " + playerHealth;
     text(guide,windowWidth-190,30);
 
@@ -422,8 +422,7 @@ function wintime(){
  function checkwin(){ // chekc if player wins by check if player has moved to the destination
 
    if (backgroundX===0 && playerX<140){
-    isWinner=true;
     gameState=3;
   }
-    else {isWinner=false;}
+
  }
