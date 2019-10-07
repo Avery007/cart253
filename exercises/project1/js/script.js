@@ -6,7 +6,7 @@ Game - Chaser
 
 Modified by Qingyi Deng
 
-This game is based on the mystery of pyramid. The player is an engyptian walking inside the pyramid and can move with keys,
+This game is based on the mystery of the pyramids. The player is like an ancient engyptian walking inside the pyramid and can move with keys,
 Player has to overlap the (randomly moving) orb to keep healthy or they will die.
 The color of player image is corresponding to player's health state.
 There is a hole linked to the image of Atlantis at the end of the background image. Player will travel to another world when they success.
