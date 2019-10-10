@@ -71,7 +71,7 @@ let gameWinText; // display when player wins
 let guide; // game instructions
 
 let backgroundSound; // add background sound
-let atlantiSound;
+let atlantiSound; // add sound when player wins
 let gameOverSound;
 let absorbSound;
 
@@ -146,18 +146,33 @@ function setupBackSound(){ // add sounds
 
 }
 function setupEndSound(){ // add sounds
-  //backgroundSound.setVolume();
+
   gameOverSound.setVolume(0.2);
+
   if (!gameOverSound.isPlaying()){
   gameOverSound.loop();
 
-
-   }
-
-//  atlantiSound.setVolume(0.1);
+ }
 
 }
 
+function setupAbsorbSound(){ // add sounds
+
+  absorbSound.setVolume(0.1);
+
+  if (!absorbSound.isPlaying()){
+    absorbSound.play();
+
+ }
+
+}
+
+function setupWinSound(){ // add sounds
+  atlantiSound.setVolume(0.7);
+  if (!atlantiSound.isPlaying()){
+    atlantiSound.loop();
+  }
+}
 
 function draw() {
 // use gameState to check which functions should run
@@ -165,7 +180,7 @@ function draw() {
   { // While the game is active,
 
     if(backgroundX<0)  // move the background image automatically
-    {backgroundX=backgroundX+4.5;} // background image stops moving when the left corner has moved to (0.0)
+    {backgroundX=backgroundX+0.5;} // background image stops moving when the left corner has moved to (0.0)
                                     // this means the player has moved to the destination where the hole shows up
   else if (backgroundX>0){backgroundX=0;}
   console.log(backgroundX);
@@ -285,7 +300,7 @@ function checkOrbAbsorb() {
   // Check if it's an overlap
   if (d < playerSizeX/2 + orbRadius) {
     if(!absorbSound.isPlaying()){
-      absorbSound.play();}// add sound when player absorbs orb
+      setupAbsorbSound();}// add sound when player absorbs orb
     // Increase the player health
     playerHealth = playerHealth + absorbHealth;
     // Constrain to the possible range
@@ -430,7 +445,7 @@ function wintime(){
 }
   else {osOpacity=255;}
 
-if(!atlantiSound.isPlaying()){atlantiSound.loop();}
+if(!atlantiSound.isPlaying()){setupWinSound();}
 // start to play once play wins
 //use isPlaying() to avoid draw() load it repeatly
 
