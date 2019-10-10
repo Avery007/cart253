@@ -101,7 +101,7 @@ function preload() {
   spell = loadImage('./assets/images/spell.png'); //https://pixabay.com/vectors/egyptian-hieroglyphics-king-plaque-159708/
   backgroundSound = loadSound("assets/sounds/insidepyramid.wav"); // I created it
   absorbSound = loadSound("assets/sounds/absorb1.mp3"); //I created it
-  atlantiSound = loadSound("assets/sounds/atlantis0.wav"); // http://www.orangefreesounds.com/mysterious-piano/
+  atlantiSound = loadSound("assets/sounds/atlantis.wav"); // http://www.orangefreesounds.com/mysterious-piano/
   gameOverSound = loadSound("assets/sounds/end.wav"); //http://www.orangefreesounds.com/sonar-sound/
 }
 
@@ -208,7 +208,7 @@ function draw() {
 
     if (backgroundX < 0) // move the background image automatically
     {
-      backgroundX = backgroundX + 0.5;
+      backgroundX = backgroundX + 4.5;
     } // background image stops moving when the left corner has moved to (0.0)
     // this means the player has moved to the destination where the hole shows up
     else if (backgroundX > 0) {
