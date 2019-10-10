@@ -23,8 +23,9 @@ let gameState;
 // Player position, size, velocity
 let playerX;
 let playerY;
-let playerSizeX = 80;
-let playerSizeY = 150;
+let playerSizeX ;
+let playerSizeY ;
+
 let playerVX = 0;
 let playerVY = 0;
 let playerMaxSpeed = 3;
@@ -100,7 +101,9 @@ function setup() {
   noStroke();
   osOpacity = 0; // make the image invisible
   gameState = 0; // use 0 represents before game starts
-
+  playerSizeX = 40;
+  playerSizeY = 75;
+  
   setupFront(); // show a front image of the game before it starts
   setupOrb(); // change prey to orb
   setupPlayer();
@@ -308,7 +311,12 @@ function checkOrbAbsorb() {
     if (!absorbSound.isPlaying()) {
       AbsorbSound();
     } // add sound when player absorbs orb
-    // Increase the player health
+
+    // change playersize when player absorb orbs
+    playerSizeX=playerSizeX+0.5;
+    playerSizeY=playerSizeY+1;
+
+// Increase the player health
     playerHealth = playerHealth + absorbHealth;
     // Constrain to the possible range
     playerHealth = constrain(playerHealth, 0, playerMaxHealth);
