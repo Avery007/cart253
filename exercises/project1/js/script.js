@@ -30,7 +30,7 @@ let playerVY = 0;
 let playerMaxSpeed = 3;
 // Player health
 let playerHealth;
-let playerMaxHealth = 350;
+let playerMaxHealth = 150;
 
 // orb position, size, velocity
 let orbX;
@@ -145,7 +145,7 @@ function setupBackSound(){ // add sounds
   backgroundSound.loop();
 
 }
-function setupEndSound(){ // add sounds
+function gameEndSound(){ // add sounds
 
   gameOverSound.setVolume(0.2);
 
@@ -156,7 +156,7 @@ function setupEndSound(){ // add sounds
 
 }
 
-function setupAbsorbSound(){ // add sounds
+function AbsorbSound(){ // add sounds when player absorb orbs
 
   absorbSound.setVolume(0.1);
 
@@ -167,7 +167,8 @@ function setupAbsorbSound(){ // add sounds
 
 }
 
-function setupWinSound(){ // add sounds
+function WinSound(){ // add sounds when win
+
   atlantiSound.setVolume(0.7);
   if (!atlantiSound.isPlaying()){
     atlantiSound.loop();
@@ -202,7 +203,7 @@ function draw() {
     showGameOver();
     playerHealth=0;
     backgroundSound.stop();
-    setupEndSound();
+    gameEndSound();
 
   }
   else if (gameState===3) { // 3 represents player wins
@@ -295,12 +296,12 @@ function updateHealth() {
 
 // Check if the player overlaps the orb and updates health of both
 function checkOrbAbsorb() {
-  // Get distance of player to prey
+  // Get distance of player to orb
   let d = dist(playerX, playerY, orbX, orbY);
   // Check if it's an overlap
   if (d < playerSizeX/2 + orbRadius) {
     if(!absorbSound.isPlaying()){
-      setupAbsorbSound();}// add sound when player absorbs orb
+      AbsorbSound();}// add sound when player absorbs orb
     // Increase the player health
     playerHealth = playerHealth + absorbHealth;
     // Constrain to the possible range
@@ -317,14 +318,14 @@ function checkOrbAbsorb() {
       orbY = random(0, height);
       // Give it full health
       orbHealth = orbMaxHealth;
-      // Track how many prey were eaten
+      // Track how many orb were absorbed
       orbAbsorb = orbAbsorb + 1;
     }
   }
 }
 
 
-// Moves the prey based on random velocity changes
+// Moves the orb based on random velocity changes
 function moveOrb() {
   // Change the orb's velocity
   noisetime=noisetime+0.01;// make noisetime keep increasing so noise() returns different value
@@ -430,11 +431,12 @@ function keyReleased() { // set players moving speed to 0 when no key is pressed
   }
 
 function mousePressed(){ //start the game and hide front image when player click the button
+  if (frontOpacity===255){ // use frontOpacity to check game state
     gameState=1; // start game
     frontOpacity=0;
     setupBackSound();// play background sound when game starts
   }
-
+}
 function wintime(){
   /// things to display when player wins
   // firstly, change the backgorund image
@@ -445,7 +447,7 @@ function wintime(){
 }
   else {osOpacity=255;}
 
-if(!atlantiSound.isPlaying()){setupWinSound();}
+if(!atlantiSound.isPlaying()){WinSound();}
 // start to play once play wins
 //use isPlaying() to avoid draw() load it repeatly
 
