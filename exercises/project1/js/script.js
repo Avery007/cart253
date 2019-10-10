@@ -208,7 +208,7 @@ function draw() {
 
     if (backgroundX < 0) // move the background image automatically
     {
-      backgroundX = backgroundX + 4.5;
+      backgroundX = backgroundX + 0.5;
     } // background image stops moving when the left corner has moved to (0.0)
     // this means the player has moved to the destination where the hole shows up
     else if (backgroundX > 0) {
