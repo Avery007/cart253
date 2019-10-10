@@ -30,7 +30,7 @@ let playerVY = 0;
 let playerMaxSpeed = 3;
 // Player health
 let playerHealth;
-let playerMaxHealth = 150;
+let playerMaxHealth = 350;
 
 // orb position, size, velocity
 let orbX;
@@ -71,6 +71,9 @@ let gameWinText; // display when player wins
 let guide; // game instructions
 
 let backgroundSound; // add background sound
+let atlantiSound;
+let gameOverSound;
+let absorbSound;
 
 function preload(){
 
@@ -81,8 +84,9 @@ function preload(){
   otherside= loadImage('./assets/images/altlantisa.png'); //www.pinterest.ca/pin/612771093023538915/
   front= loadImage('./assets/images/front.png');//pixabay.com/illustrations/pyramids-gizeh-night-caravan-camel-3913843/
   backgroundSound = loadSound("assets/sounds/insidepyramid.wav"); // I created it
-  //finalSound=loadSound("assets/sounds/final.wav"); I created it
-
+  absorbSound= loadSound("assets/sounds/absorb1.mp3");//I created it
+  atlantiSound= loadSound("assets/sounds/atlantis0.wav");// http://www.orangefreesounds.com/mysterious-piano/
+  gameOverSound= loadSound("assets/sounds/end.wav");//http://www.orangefreesounds.com/sonar-sound/
 }
 
 function setup() {
@@ -98,6 +102,7 @@ function setup() {
   setupFront(); // show a front image of the game before it starts
   setupOrb(); // change prey to orb
   setupPlayer();
+  //setupEndSound();
   backgroundX=-3500; // so the background image can move gradually from left to right
 
 }
@@ -135,9 +140,22 @@ function setupPlayer() {
   playerHealth = playerMaxHealth;
 }
 
-function setupSound(){ // add sounds
+function setupBackSound(){ // add sounds
   //backgroundSound.setVolume();
   backgroundSound.loop();
+
+}
+function setupEndSound(){ // add sounds
+  //backgroundSound.setVolume();
+  gameOverSound.setVolume(0.2);
+  if (!gameOverSound.isPlaying()){
+  gameOverSound.loop();
+
+
+   }
+
+//  atlantiSound.setVolume(0.1);
+
 }
 
 
@@ -147,7 +165,7 @@ function draw() {
   { // While the game is active,
 
     if(backgroundX<0)  // move the background image automatically
-    {backgroundX=backgroundX+0.5;} // background image stops moving when the left corner has moved to (0.0)
+    {backgroundX=backgroundX+4.5;} // background image stops moving when the left corner has moved to (0.0)
                                     // this means the player has moved to the destination where the hole shows up
   else if (backgroundX>0){backgroundX=0;}
   console.log(backgroundX);
@@ -169,10 +187,13 @@ function draw() {
     showGameOver();
     playerHealth=0;
     backgroundSound.stop();
+    setupEndSound();
+
   }
   else if (gameState===3) { // 3 represents player wins
     wintime();
     backgroundSound.stop();
+
   }
   //else {};
 }
@@ -263,6 +284,8 @@ function checkOrbAbsorb() {
   let d = dist(playerX, playerY, orbX, orbY);
   // Check if it's an overlap
   if (d < playerSizeX/2 + orbRadius) {
+    if(!absorbSound.isPlaying()){
+      absorbSound.play();}// add sound when player absorbs orb
     // Increase the player health
     playerHealth = playerHealth + absorbHealth;
     // Constrain to the possible range
@@ -394,7 +417,7 @@ function keyReleased() { // set players moving speed to 0 when no key is pressed
 function mousePressed(){ //start the game and hide front image when player click the button
     gameState=1; // start game
     frontOpacity=0;
-    setupSound();// play background sound when game starts
+    setupBackSound();// play background sound when game starts
   }
 
 function wintime(){
@@ -403,8 +426,13 @@ function wintime(){
   tint(255,osOpacity);
   if (osOpacity<255) {
   osOpacity=osOpacity+0.5;
+
 }
   else {osOpacity=255;}
+
+if(!atlantiSound.isPlaying()){atlantiSound.loop();}
+// start to play once play wins
+//use isPlaying() to avoid draw() load it repeatly
 
    imageMode(CORNER);  // display the new background
    image(otherside,0,0,width,height);
