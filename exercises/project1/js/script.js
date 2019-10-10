@@ -7,7 +7,7 @@ Game - Chaser
 Modified by Qingyi Deng
 
 This game is based on the mystery of the pyramids. The player is like an ancient engyptian walking inside the pyramid and can move with keys,
-Player has to overlap the (randomly moving) orb to keep healthy or they will die.
+Player has to overlap the (randomly moving) orb to keep healthy or they will die. There are also spells with random movement that will reduce player's size and helath.
 The color of player image is corresponding to player's health state.
 There is a hole linked to the image of Atlantis at the end of the background image. Player will travel to another world when they success.
 
@@ -23,10 +23,11 @@ let gameState;
 // Player position, size, velocity
 let playerX;
 let playerY;
-let playerSizeX ;
-let playerSizeY ;
+// set the initial size of player
+let playerSizeX = 40;
+let playerSizeY = 80;
 
-let playerVX = 0;
+let playerVX = 0; // player movement
 let playerVY = 0;
 let playerMaxSpeed = 3;
 // Player health
@@ -51,18 +52,18 @@ let absorbHealth = 10;
 // Number of orb absorbed during the game (the "score")
 let orbAbsorb = 0;
 
-let noiseTimeX; // the value inside noise function
-let noiseTimeY;
+let noiseTimeX=0; // the value inside noise function
+let noiseTimeY=0;
 
-let speedupX; // increase player speed when press shift
-let speedupY;
+let speedupX=0; // increase player speed when press shift
+let speedupY=0;  // no speedup without key pressed
 
 let playerimage; // change the player from a cicrle to image
 let backimage;
 let backgroundX; // backgorund image X
 
 let otherside; // the image showing up when player wins the game
-let osOpacity; // the opacity of this image
+let osOpacity = 0;// make the image invisible
 
 let front; // add a front image to make game more meaningful
 let frontOpacity;
@@ -77,17 +78,20 @@ let atlantiSound; // add sound when player wins
 let gameOverSound;
 let absorbSound;
 
+// add a spell, set spell speed, movemment, and size
 let spell;
 let spellX;
 let spellY;
 let spellVX=0;
 let spellVY=0;
 let spellSize;
-
 let spellMaxSpeed=13;
+let noiseTimeXspell=0;
 
+let noiseTimeYspell=0; // make spell movememnt different from orb
+
+// function preload()
 function preload() {
-
 
   backimage = loadImage('./assets/images/backimgtry.png'); // https://pixabay.com/images/search/egyption%20wall/
   //https://hiddenincatours.com/cholula-mexico-the-worlds-largest-ancient-pyramid/
@@ -104,15 +108,9 @@ function preload() {
 function setup() {
 
   createCanvas(windowWidth, windowHeight);
-  noiseTimeX = 0;
-  noiseTimeY = 0;
-  speedupX = 0; // no speedup without key pressed
-  speedupY = 0;
+
   noStroke();
-  osOpacity = 0; // make the image invisible
   gameState = 0; // use 0 represents before game starts
-  playerSizeX = 40;
-  playerSizeY = 75;
 
   setupFront(); // show a front image of the game before it starts
   setupOrb(); // change prey to orb
@@ -122,11 +120,12 @@ function setup() {
 
 }
 
-// Initialises orb's position, velocity, and health
+// set the front image before game starts
 function setupFront() {
 
   frontSizeX = windowWidth / 1.5;
   frontSizeY = windowHeight / 1.5;
+
   imageMode(CORNER);
   frontOpacity = 255;
   tint(255, frontOpacity); // use tint() to control front image's opacity
@@ -140,6 +139,7 @@ function setupFront() {
   text("Enter The Pyramids", frontSizeX - 354, frontSizeY / 2);
 }
 
+// Initialises orb's position, velocity, and health
 function setupOrb() {
   orbX = width / 5;
   orbY = height / 2;
@@ -148,6 +148,7 @@ function setupOrb() {
   orbHealth = orbMaxHealth;
 }
 
+// Initialises spell's position, display and size
 function setupSpell(){
   spellX=0;
   spellY=0;
@@ -155,7 +156,7 @@ function setupSpell(){
   spellSize=100;
 
 }
-// setupPlayer()
+
 // Initialises player position and health
 function setupPlayer() {
   playerX = 4 * width / 5;
@@ -317,7 +318,7 @@ function updateHealth() {
   // Constrain the result to a sensible range
   playerHealth = constrain(playerHealth, 0, playerMaxHealth);
   // Check if the player is dead (0 health)
-  if (playerHealth === 0 || playerSizeX<0 || playerMaxSpeed<0) {
+  if (playerHealth === 0 || playerSizeX<0 ) {
     // If so, the game is over
     gameState = 2;
   }
@@ -362,28 +363,31 @@ function checkOrbAbsorb() {
   }
 }
 
+// make players lose size and  health when they run into the spell
 function checkSpell() {
   // Get distance of player to spell
   let dSpell = dist(playerX, playerY, spellX, spellY);
   // Check if it's an overlap
   if (dSpell < playerSizeX / 2 + spellSize/2) {
+    //firstly, reset spell position
      spellX = random(0, width);
      spellY = random(0, height);
-     playerSizeX=playerSizeX-5;
-     playerSizeY=playerSizeY-10;
+     // reduce player size
+     playerSizeX=playerSizeX-15;
+     playerSizeY=playerSizeY-30;
      playerHealth=playerHealth-10;
-     playerMaxSpeed=playerMaxSpeed-0.5;
-     console.log(playerSizeX);
 
   }
 
 }
-
+// set spell movement
 function moveSpell(){
    // make noisetime keep increasing so noise() returns different value
-
-  spellVX = map(noise(noiseTimeX), 0, 1, -spellMaxSpeed, spellMaxSpeed);
-  spellVY = map(noise(noiseTimeY), 0, 1, -spellMaxSpeed, spellMaxSpeed);
+  noiseTimeXspell=noiseTimeXspell+0.02;
+  noiseTimeYspell=noiseTimeYspell+0.01;
+  // random movement
+  spellVX = map(noise(noiseTimeXspell), 0, 1, -spellMaxSpeed, spellMaxSpeed);
+  spellVY = map(noise(noiseTimeYspell), 0, 1, -spellMaxSpeed, spellMaxSpeed);
 
   // Update ord position based on velocity
   spellX = spellX + spellVX;
@@ -404,8 +408,6 @@ function moveSpell(){
     spellY = spellY - height;
   }
 }
-
-
 
 
 // Moves the orb based on random velocity changes
@@ -481,6 +483,7 @@ function drawInstruction() {
     guide = guide + "Be careful of the ancient spells!\n"+ "Press Shift to speed up!\n";
     guide = guide + "A surprise is waiting for you\n" + "at the destination! \n\n";
     guide = guide + "Your Health Index: " + floor(playerHealth);
+    guide = guide + "\nYour Size: " + floor(playerSizeX);
     text(guide, windowWidth - 220, 30);
 
   } else if (backgroundX === 0) {
