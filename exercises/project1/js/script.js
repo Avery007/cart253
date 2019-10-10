@@ -77,6 +77,15 @@ let atlantiSound; // add sound when player wins
 let gameOverSound;
 let absorbSound;
 
+let spell;
+let spellX;
+let spellY;
+let spellVX=0;
+let spellVY=0;
+let spellSize;
+
+let spellMaxSpeed=13;
+
 function preload() {
 
 
@@ -85,6 +94,7 @@ function preload() {
   playerimage = loadImage('./assets/images/player.png'); //https://www.tes.com/teaching-resource/ancient-egyptian-clothing-6446514
   otherside = loadImage('./assets/images/altlantisa.png'); //www.pinterest.ca/pin/612771093023538915/
   front = loadImage('./assets/images/front.png'); //pixabay.com/illustrations/pyramids-gizeh-night-caravan-camel-3913843/
+  spell = loadImage('./assets/images/spell.png'); //https://pixabay.com/vectors/egyptian-hieroglyphics-king-plaque-159708/
   backgroundSound = loadSound("assets/sounds/insidepyramid.wav"); // I created it
   absorbSound = loadSound("assets/sounds/absorb1.mp3"); //I created it
   atlantiSound = loadSound("assets/sounds/atlantis0.wav"); // http://www.orangefreesounds.com/mysterious-piano/
@@ -103,11 +113,11 @@ function setup() {
   gameState = 0; // use 0 represents before game starts
   playerSizeX = 40;
   playerSizeY = 75;
-  
+
   setupFront(); // show a front image of the game before it starts
   setupOrb(); // change prey to orb
   setupPlayer();
-
+  setupSpell();
   backgroundX = -3500; // so the background image can move gradually from left to right
 
 }
@@ -138,6 +148,13 @@ function setupOrb() {
   orbHealth = orbMaxHealth;
 }
 
+function setupSpell(){
+  spellX=0;
+  spellY=0;
+  noTint();
+  spellSize=100;
+
+}
 // setupPlayer()
 // Initialises player position and health
 function setupPlayer() {
@@ -145,6 +162,8 @@ function setupPlayer() {
   playerY = height / 2;
   playerHealth = playerMaxHealth;
 }
+
+
 
 function setupBackSound() { // add sounds
   //backgroundSound.setVolume();
@@ -199,12 +218,16 @@ function draw() {
     handleInput(); // set key controls
     movePlayer(); // move player when press keys
     moveOrb(); // set orb movement
+    moveSpell();
     updateHealth(); //continues check player's health to see if game ends
     checkOrbAbsorb(); // check how many orbs player absorbs
+    checkSpell();
     drawbackground(); // set the backgorund image
     drawInstruction(); // set instructions
     drawOrb();
     drawPlayer();
+    drawSpell();
+
     checkwin(); // check if player wins
 
   }
@@ -294,7 +317,7 @@ function updateHealth() {
   // Constrain the result to a sensible range
   playerHealth = constrain(playerHealth, 0, playerMaxHealth);
   // Check if the player is dead (0 health)
-  if (playerHealth === 0) {
+  if (playerHealth === 0 || playerSizeX<0 || playerMaxSpeed<0) {
     // If so, the game is over
     gameState = 2;
   }
@@ -339,6 +362,51 @@ function checkOrbAbsorb() {
   }
 }
 
+function checkSpell() {
+  // Get distance of player to spell
+  let dSpell = dist(playerX, playerY, spellX, spellY);
+  // Check if it's an overlap
+  if (dSpell < playerSizeX / 2 + spellSize/2) {
+     spellX = random(0, width);
+     spellY = random(0, height);
+     playerSizeX=playerSizeX-5;
+     playerSizeY=playerSizeY-10;
+     playerHealth=playerHealth-10;
+     playerMaxSpeed=playerMaxSpeed-0.5;
+     console.log(playerSizeX);
+
+  }
+
+}
+
+function moveSpell(){
+   // make noisetime keep increasing so noise() returns different value
+
+  spellVX = map(noise(noiseTimeX), 0, 1, -spellMaxSpeed, spellMaxSpeed);
+  spellVY = map(noise(noiseTimeY), 0, 1, -spellMaxSpeed, spellMaxSpeed);
+
+  // Update ord position based on velocity
+  spellX = spellX + spellVX;
+  spellY = spellY + spellVY;
+
+  // Screen wrapping
+  if (spellX < 0) {
+    spellX = spellX + width;
+  }
+  else if (spellX > width) {
+    spellX = spellX - width;
+  }
+
+  if (spellY < 0) {
+    spellY = spellY + height;
+  }
+  else if (spellY > height) {
+    spellY = spellY - height;
+  }
+}
+
+
+
 
 // Moves the orb based on random velocity changes
 function moveOrb() {
@@ -382,6 +450,13 @@ function drawOrb() {
 
 }
 
+function drawSpell(){
+  noTint();
+  imageMode(CENTER);
+  image(spell,spellX,spellY,spellSize,spellSize);
+  console.log(spellX);
+}
+
 // Draw the player as an ellipse with alpha value based on health
 function drawPlayer() {
 
@@ -403,10 +478,10 @@ function drawInstruction() {
     textSize(14); // show game instructions
     fill(255, 200);
     guide = "To catch the orbs,\n" + "Use the hands not the feet!\n";
-    guide = guide + "Wanna run faster ? \n" + "Press Shift to speed up!\n";
+    guide = guide + "Be careful of the ancient spells!\n"+ "Press Shift to speed up!\n";
     guide = guide + "A surprise is waiting for you\n" + "at the destination! \n\n";
     guide = guide + "Your Health Index: " + floor(playerHealth);
-    text(guide, windowWidth - 190, 30);
+    text(guide, windowWidth - 220, 30);
 
   } else if (backgroundX === 0) {
     guide = "oh, what is inside the hole? Go and see ?";
