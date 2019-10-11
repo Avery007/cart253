@@ -32,7 +32,7 @@ let playerVY = 0;
 let playerMaxSpeed = 4;
 // Player health
 let playerHealth;
-let playerMaxHealth = 150;
+let playerMaxHealth = 200;
 
 // orb position, size, velocity
 let orbX;
@@ -241,9 +241,8 @@ function draw() {
 
   if (gameState === 2) { // 2 represents game over
     showGameOver(); // display game over
-    // reset player's data to zero
+    // reset player's health to zero
     playerHealth = 0;
-    playerSizeX = 0;
     backgroundSound.stop(); // Stop background music
     gameEndSound(); // start game over sound
 
@@ -326,7 +325,7 @@ function updateHealth() {
   // Constrain the result to a sensible range
   playerHealth = constrain(playerHealth, 0, playerMaxHealth);
   // Check if the player is dead (0 health)
-  if (playerHealth === 0 || playerSizeX < 0) {
+  if (playerHealth === 0 || playerSizeX <= 0) {
     // If so, the game is over
     gameState = 2;
   }
@@ -382,6 +381,7 @@ function checkSpell() {
     spellX = 0;
     spellY = random(0, height);
     // reduce player size and health
+
     playerSizeX = playerSizeX - 15;
     playerSizeY = playerSizeY - 30;
     playerHealth = playerHealth - 10;
@@ -492,6 +492,7 @@ function drawInstruction() {
     guide = guide + "Be careful of the ancient spells!\n" + "Press Shift to speed up!\n";
     guide = guide + "A surprise is waiting for you\n" + "at the destination! \n\n";
     guide = guide + "Your Health Index: " + floor(playerHealth);
+    if(playerSizeX<0){playerSizeX=0;}// set playerSizeX to zero when gome over
     guide = guide + "\nYour Size: " + floor(playerSizeX);
     text(guide, windowWidth - 220, 30);
 
