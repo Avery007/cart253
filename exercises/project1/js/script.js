@@ -384,7 +384,7 @@ function checkSpell() {
 
     playerSizeX = playerSizeX - 15;
     playerSizeY = playerSizeY - 30;
-    playerHealth = playerHealth - 10;
+    playerHealth = playerHealth - 25;
 
   }
 
