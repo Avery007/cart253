@@ -7,12 +7,12 @@ Game - Chaser
 Modified by Qingyi Deng
 
 This game is based on the mystery of the pyramids. The player is like an ancient engyptian walking inside the pyramid and can move with keys,
-Player has to overlap the (randomly moving) orb to keep healthy or they will die. There are also spells with random movement that will reduce player's size and helath.
-The color of player image is corresponding to player's health state.
-There is a hole linked to the image of Atlantis at the end of the background image. Player will travel to another world when they success.
+To win the game, player needs to reach the destination--There is a hole linked to the image of Atlantis which will show up when the background image stops movng. Player will travel to another world when they success.
+During the game, player has to overlap the (randomly moving) orb to keep healthy or they will die. There are also spells with random movement that will reduce player's size and helath.
+The color of player image is corresponding to player's health state. Player dies when both of their health index or size reduced to zero
 
 
-Includes: Physics-based movement, keyboard controls, health/stamina,
+Includes: Physics-based movement, keyboard controls, health/stamina, sounds
 random movement(noise), screen wrap. Using tint() to control image opacity.
 
 ******************************************************/
@@ -29,7 +29,7 @@ let playerSizeY = 80;
 
 let playerVX = 0; // player movement
 let playerVY = 0;
-let playerMaxSpeed = 3;
+let playerMaxSpeed = 4;
 // Player health
 let playerHealth;
 let playerMaxHealth = 150;
@@ -52,19 +52,20 @@ let absorbHealth = 10;
 // Number of orb absorbed during the game (the "score")
 let orbAbsorb = 0;
 
-let noiseTimeX=0; // the value inside noise function
-let noiseTimeY=0;
+let noiseTimeX = 0; // for orb movement, the value inside noise function,
+let noiseTimeY = 0;
 
-let speedupX=0; // increase player speed when press shift
-let speedupY=0;  // no speedup without key pressed
+let speedupX = 0; // increase player speed when press shift
+let speedupY = 0; // no speedup without key pressed
 
 let playerimage; // change the player from a cicrle to image
-let backimage;
+let backimage; // background image
 let backgroundX; // backgorund image X
 
-let otherside; // the image showing up when player wins the game
-let osOpacity = 0;// make the image invisible
+let atlantis; // the image showing up when player wins the game
+let atlantisOpacity = 0; // make the image invisible
 
+// set front image's size and visibility
 let front; // add a front image to make game more meaningful
 let frontOpacity;
 let frontSizeX;
@@ -76,19 +77,20 @@ let guide; // game instructions
 let backgroundSound; // add background sound
 let atlantiSound; // add sound when player wins
 let gameOverSound;
-let absorbSound;
+let absorbSound; // display when player absorbs orbs
+let spellSound; // display when player runs into the spell
 
 // add a spell, set spell speed, movemment, and size
 let spell;
 let spellX;
 let spellY;
-let spellVX=0;
-let spellVY=0;
+let spellVX = 0;
+let spellVY = 0;
 let spellSize;
-let spellMaxSpeed=13;
-let noiseTimeXspell=0;
-
-let noiseTimeYspell=0; // make spell movememnt different from orb
+let spellMaxSpeed = 13;
+// To make spell movememnt different from orb, use another noisetime
+let noiseTimeXspell = 0;
+let noiseTimeYspell = 0;
 
 // function preload()
 function preload() {
@@ -96,27 +98,30 @@ function preload() {
   backimage = loadImage('./assets/images/backimgtry.png'); // https://pixabay.com/images/search/egyption%20wall/
   //https://hiddenincatours.com/cholula-mexico-the-worlds-largest-ancient-pyramid/
   playerimage = loadImage('./assets/images/player.png'); //https://www.tes.com/teaching-resource/ancient-egyptian-clothing-6446514
-  otherside = loadImage('./assets/images/altlantisa.png'); //www.pinterest.ca/pin/612771093023538915/
+  atlantis = loadImage('./assets/images/altlantisa.png'); //www.pinterest.ca/pin/612771093023538915/
   front = loadImage('./assets/images/front.png'); //pixabay.com/illustrations/pyramids-gizeh-night-caravan-camel-3913843/
   spell = loadImage('./assets/images/spell.png'); //https://pixabay.com/vectors/egyptian-hieroglyphics-king-plaque-159708/
   backgroundSound = loadSound("assets/sounds/insidepyramid.wav"); // I created it
-  absorbSound = loadSound("assets/sounds/absorb1.mp3"); //I created it
+  absorbSound = loadSound("assets/sounds/absorb1.mp3"); // http://www.orangefreesounds.com/
   atlantiSound = loadSound("assets/sounds/atlantis.wav"); // http://www.orangefreesounds.com/mysterious-piano/
   gameOverSound = loadSound("assets/sounds/end.wav"); //http://www.orangefreesounds.com/sonar-sound/
+  spellSound = loadSound("assets/sounds/gasp.wav"); //https://www.freesoundeffects.com/free-sounds/human-sound-effects-10037/80/tot_sold/20/5/
 }
 
+// setup
 function setup() {
 
   createCanvas(windowWidth, windowHeight);
 
-  noStroke();
-  gameState = 0; // use 0 represents before game starts
+  backgroundX = -3500; // set the length of background image to negative number
+  // so the background image can move gradually from left to right
+  gameState = 0; // use 0 representing before game starts
 
+  noStroke();
   setupFront(); // show a front image of the game before it starts
   setupOrb(); // change prey to orb
   setupPlayer();
   setupSpell();
-  backgroundX = -3500; // so the background image can move gradually from left to right
 
 }
 
@@ -127,14 +132,15 @@ function setupFront() {
   frontSizeY = windowHeight / 1.5;
 
   imageMode(CORNER);
-  frontOpacity = 255;
+  frontOpacity = 255; // make front visible in the beginning
   tint(255, frontOpacity); // use tint() to control front image's opacity
   image(front, 0, 0, frontSizeX, frontSizeY);
 
   rectMode(CENTER); // create a button to start game
   fill(252, 219, 3, frontOpacity - 50);
   rect(frontSizeX - 300, frontSizeY / 2, 160, 50); // adjust the button position based on frontSize
-  textSize(12);
+
+  textSize(12); // set text within the button
   fill(255, frontOpacity);
   text("Enter The Pyramids", frontSizeX - 354, frontSizeY / 2);
 }
@@ -143,17 +149,17 @@ function setupFront() {
 function setupOrb() {
   orbX = width / 5;
   orbY = height / 2;
-  orbVX = -orbMaxSpeed;
+  orbVX = -orbMaxSpeed; // limit orb speed
   orbVY = orbMaxSpeed;
   orbHealth = orbMaxHealth;
 }
 
 // Initialises spell's position, display and size
-function setupSpell(){
-  spellX=0;
-  spellY=0;
-  noTint();
-  spellSize=100;
+function setupSpell() {
+  spellX = 0; // initial position
+  spellY = 0;
+  noTint(); // make spell look clear
+  spellSize = 100;
 
 }
 
@@ -167,16 +173,16 @@ function setupPlayer() {
 
 
 function setupBackSound() { // add sounds
-  //backgroundSound.setVolume();
+
   backgroundSound.loop();
 
 }
 
 function gameEndSound() { // add sounds
 
-  gameOverSound.setVolume(0.2);
+  gameOverSound.setVolume(0.2); // reduce sound volune
 
-  if (!gameOverSound.isPlaying()) {
+  if (!gameOverSound.isPlaying()) { // avoid loop
     gameOverSound.loop();
 
   }
@@ -185,9 +191,9 @@ function gameEndSound() { // add sounds
 
 function AbsorbSound() { // add sounds when player absorb orbs
 
-  absorbSound.setVolume(0.1);
+  absorbSound.setVolume(0.1); // reduce sound volune
 
-  if (!absorbSound.isPlaying()) {
+  if (!absorbSound.isPlaying()) { // avoid loop
     absorbSound.play();
 
   }
@@ -197,9 +203,9 @@ function AbsorbSound() { // add sounds when player absorb orbs
 function WinSound() { // add sounds when win
 
   atlantiSound.setVolume(0.7);
-  if (!atlantiSound.isPlaying()) {
-    atlantiSound.loop();
-  }
+  //if (!atlantiSound.isPlaying()) {
+  atlantiSound.loop();
+  //}
 }
 
 function draw() {
@@ -219,32 +225,34 @@ function draw() {
     handleInput(); // set key controls
     movePlayer(); // move player when press keys
     moveOrb(); // set orb movement
-    moveSpell();
+    moveSpell(); // move the image of spell
     updateHealth(); //continues check player's health to see if game ends
     checkOrbAbsorb(); // check how many orbs player absorbs
-    checkSpell();
+    checkSpell(); // check if player runs into spells
     drawbackground(); // set the backgorund image
     drawInstruction(); // set instructions
-    drawOrb();
-    drawPlayer();
-    drawSpell();
+    drawOrb(); // display orb
+    drawPlayer(); // display player
+    drawSpell(); // display spell
 
     checkwin(); // check if player wins
 
   }
 
   if (gameState === 2) { // 2 represents game over
-    showGameOver();
+    showGameOver(); // display game over
+    // reset player's data to zero
     playerHealth = 0;
-    backgroundSound.stop();
-    gameEndSound();
+    playerSizeX = 0;
+    backgroundSound.stop(); // Stop background music
+    gameEndSound(); // start game over sound
 
   } else if (gameState === 3) { // 3 represents player wins
-    wintime();
+    wintime(); // display when player wins
     backgroundSound.stop();
 
   }
-  //else {};
+
 }
 
 // handleInput()
@@ -318,7 +326,7 @@ function updateHealth() {
   // Constrain the result to a sensible range
   playerHealth = constrain(playerHealth, 0, playerMaxHealth);
   // Check if the player is dead (0 health)
-  if (playerHealth === 0 || playerSizeX<0 ) {
+  if (playerHealth === 0 || playerSizeX < 0) {
     // If so, the game is over
     gameState = 2;
   }
@@ -332,15 +340,13 @@ function checkOrbAbsorb() {
   let d = dist(playerX, playerY, orbX, orbY);
   // Check if it's an overlap
   if (d < playerSizeX / 2 + orbRadius) {
-    if (!absorbSound.isPlaying()) {
-      AbsorbSound();
-    } // add sound when player absorbs orb
+    AbsorbSound(); // add sound when player absorbs orb
 
     // change playersize when player absorb orbs
-    playerSizeX=playerSizeX+0.5;
-    playerSizeY=playerSizeY+1;
+    playerSizeX = playerSizeX + 0.5;
+    playerSizeY = playerSizeY + 1;
 
-// Increase the player health
+    // Increase the player health
     playerHealth = playerHealth + absorbHealth;
     // Constrain to the possible range
     playerHealth = constrain(playerHealth, 0, playerMaxHealth);
@@ -368,23 +374,26 @@ function checkSpell() {
   // Get distance of player to spell
   let dSpell = dist(playerX, playerY, spellX, spellY);
   // Check if it's an overlap
-  if (dSpell < playerSizeX / 2 + spellSize/2) {
-    //firstly, reset spell position
-     spellX = random(0, width);
-     spellY = random(0, height);
-     // reduce player size
-     playerSizeX=playerSizeX-15;
-     playerSizeY=playerSizeY-30;
-     playerHealth=playerHealth-10;
+  if (dSpell < playerSizeX / 2 + spellSize / 2) {
+    // play sound
+    spellSound.play();
+    spellSound.setVolume(0.5);
+    //reset spell position
+    spellX = 0;
+    spellY = random(0, height);
+    // reduce player size and health
+    playerSizeX = playerSizeX - 15;
+    playerSizeY = playerSizeY - 30;
+    playerHealth = playerHealth - 10;
 
   }
 
 }
 // set spell movement
-function moveSpell(){
-   // make noisetime keep increasing so noise() returns different value
-  noiseTimeXspell=noiseTimeXspell+0.02;
-  noiseTimeYspell=noiseTimeYspell+0.01;
+function moveSpell() {
+  // make noisetime keep increasing so noise() returns different value
+  noiseTimeXspell = noiseTimeXspell + 0.02;
+  noiseTimeYspell = noiseTimeYspell + 0.01;
   // random movement
   spellVX = map(noise(noiseTimeXspell), 0, 1, -spellMaxSpeed, spellMaxSpeed);
   spellVY = map(noise(noiseTimeYspell), 0, 1, -spellMaxSpeed, spellMaxSpeed);
@@ -396,15 +405,13 @@ function moveSpell(){
   // Screen wrapping
   if (spellX < 0) {
     spellX = spellX + width;
-  }
-  else if (spellX > width) {
+  } else if (spellX > width) {
     spellX = spellX - width;
   }
 
   if (spellY < 0) {
     spellY = spellY + height;
-  }
-  else if (spellY > height) {
+  } else if (spellY > height) {
     spellY = spellY - height;
   }
 }
@@ -448,18 +455,18 @@ function drawOrb() {
   }
 
   orbRadius = noise(noiseTimeX) * 20; // use noise() to create changable size
-  ellipse(orbX, orbY, orbRadius);
+  ellipse(orbX, orbY, orbRadius); // display orb
 
 }
-
-function drawSpell(){
-  noTint();
+// Draw the spell
+function drawSpell() {
+  noTint(); // make spell clear
   imageMode(CENTER);
-  image(spell,spellX,spellY,spellSize,spellSize);
-  console.log(spellX);
+  image(spell, spellX, spellY, spellSize, spellSize);
+
 }
 
-// Draw the player as an ellipse with alpha value based on health
+// Draw the player
 function drawPlayer() {
 
   //tint(0, 153, 204,playerHealth);
@@ -469,24 +476,26 @@ function drawPlayer() {
 
 }
 
+// display background
 function drawbackground() {
   imageMode(CORNER);
   noTint();
   image(backimage, backgroundX, 0, 3500 + windowWidth, windowHeight);
 }
 
+// display instuction
 function drawInstruction() {
   if (backgroundX < 0) { // when player has not moved to destination
     textSize(14); // show game instructions
     fill(255, 200);
     guide = "To catch the orbs,\n" + "Use the hands not the feet!\n";
-    guide = guide + "Be careful of the ancient spells!\n"+ "Press Shift to speed up!\n";
+    guide = guide + "Be careful of the ancient spells!\n" + "Press Shift to speed up!\n";
     guide = guide + "A surprise is waiting for you\n" + "at the destination! \n\n";
     guide = guide + "Your Health Index: " + floor(playerHealth);
     guide = guide + "\nYour Size: " + floor(playerSizeX);
     text(guide, windowWidth - 220, 30);
 
-  } else if (backgroundX === 0) {
+  } else if (backgroundX === 0) { // destination
     guide = "oh, what is inside the hole? Go and see ?";
     textSize(20);
     fill(255, 200);
@@ -511,6 +520,7 @@ function showGameOver() {
   text(gameOverText, width / 2, height / 2);
 }
 
+// when no key is pressed
 function keyReleased() { // set players moving speed to 0 when no key is pressed
   speedupX = 0;
   speedupY = 0;
@@ -528,27 +538,23 @@ function mousePressed() { //start the game and hide front image when player clic
   }
 }
 
+// applys when player wins
 function wintime() {
   /// things to display when player wins
   // firstly, change the backgorund image
-  tint(255, osOpacity);
-  if (osOpacity < 255) {
-    osOpacity = osOpacity + 0.5;
+  tint(255, atlantisOpacity);
+  if (atlantisOpacity < 255) { // increase wopacity hen opacity <255
+    atlantisOpacity = atlantisOpacity + 0.5;
 
+  } else {
+    atlantisOpacity = 255; // set max opacity to 255
   }
-   else {
-    osOpacity = 255;
-  }
-
-  //if(!atlantiSound.isPlaying()){WinSound();}
-  // start to play once play wins
-  //use isPlaying() to avoid draw() load it repeatly
 
   imageMode(CORNER); // display the new background
-  image(otherside, 0, 0, width, height);
+  image(atlantis, 0, 0, width, height); // display image of atlantis
 
   textSize(35); // display text
-  fill(252, 244, 3, osOpacity);
+  fill(252, 244, 3, atlantisOpacity);
   gameWinText = "Congratulations!\n" + "You've just passed the time tunnel\n";
   gameWinText = gameWinText + "Welcome Back to Atlantis!\n" + "Now you know the secret of the pyramid\n";
   gameWinText = gameWinText + "Don't you?";
@@ -560,7 +566,7 @@ function wintime() {
 function checkwin() { // chekc if player wins by check if player has moved to the destination
 
   if (backgroundX === 0 && playerX < 140) {
-    WinSound();
+    WinSound(); // play music
     gameState = 3;
   }
 
