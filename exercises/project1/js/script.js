@@ -98,9 +98,9 @@ function preload() {
   backimage = loadImage('./assets/images/backimgtry.png'); // https://pixabay.com/images/search/egyption%20wall/
   //https://hiddenincatours.com/cholula-mexico-the-worlds-largest-ancient-pyramid/
   playerimage = loadImage('./assets/images/player.png'); //https://www.tes.com/teaching-resource/ancient-egyptian-clothing-6446514
-  atlantis = loadImage('./assets/images/altlantisa.png'); //www.pinterest.ca/pin/612771093023538915/
+  atlantis = loadImage('./assets/images/atlantis.png'); //www.pinterest.ca/pin/612771093023538915/
   front = loadImage('./assets/images/front.png'); //pixabay.com/illustrations/pyramids-gizeh-night-caravan-camel-3913843/
-  spell = loadImage('./assets/images/spell.png'); //https://pixabay.com/vectors/egyptian-hieroglyphics-king-plaque-159708/
+  spell = loadImage('./assets/images/spell0.png'); //https://pixabay.com/vectors/egyptian-hieroglyphics-king-plaque-159708/
   backgroundSound = loadSound("assets/sounds/insidepyramid.wav"); // I created it
   absorbSound = loadSound("assets/sounds/absorb1.mp3"); // http://www.orangefreesounds.com/
   atlantiSound = loadSound("assets/sounds/atlantis.wav"); // http://www.orangefreesounds.com/mysterious-piano/
