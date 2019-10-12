@@ -16,6 +16,10 @@ let playing = false;
 let bgColor = 0;
 let fgColor = 255;
 
+let countCollision=0;
+let score=0;
+let lose=0;
+let scoreImage;
 // BALL
 
 // A ball object with the properties of
@@ -36,7 +40,7 @@ let ball = {
 let leftPaddle = {
   x: 0,
   y: 0,
-  w: 20,
+  w: 10,
   h: 70,
   vy: 0,
   speed: 5,
@@ -51,7 +55,7 @@ let leftPaddle = {
 let rightPaddle = {
   x: 0,
   y: 0,
-  w: 20,
+  w: 10,
   h: 70,
   vy: 0,
   speed: 5,
@@ -67,6 +71,7 @@ let beepSFX;
 // Loads the beep audio for the sound of bouncing
 function preload() {
   beepSFX = new Audio("assets/sounds/beep.wav");
+  scoreImage= loadImage('./assets/images/butterfly.png');
 }
 
 // setup()
@@ -77,9 +82,10 @@ function preload() {
 function setup() {
   // Create canvas and set drawing modes
   createCanvas(640, 480);
-  rectMode(CENTER);
+  rectMode(CORNER);
+
   noStroke();
-  fill(fgColor);
+  //fill(fgColor);
 
   setupPaddles();
   resetBall();
@@ -90,7 +96,7 @@ function setup() {
 // Sets the starting positions of the two paddles
 function setupPaddles() {
   // Initialise the left paddle position
-  leftPaddle.x = 0 + leftPaddle.w;
+  leftPaddle.x = 0 ;
   leftPaddle.y = height / 2;
 
   // Initialise the right paddle position
@@ -104,7 +110,7 @@ function setupPaddles() {
 // See how tidy it looks?!
 function draw() {
   // Fill the background
-  background(bgColor);
+  background(127,0,0,100);
 
   if (playing) {
     // If the game is in play, we handle input and move the elements around
@@ -117,6 +123,8 @@ function draw() {
     checkBallWallCollision();
     checkBallPaddleCollision(leftPaddle);
     checkBallPaddleCollision(rightPaddle);
+
+    displayScore();
 
     // Check if the ball went out of bounds and respond if so
     // (Note how we can use a function that returns a truth value
@@ -184,11 +192,14 @@ function updateBall() {
 // Returns true if so, false otherwise
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
-  if (ball.x < 0 || ball.x > width) {
+  if (ball.x < 0 || ball.x > width) {  lose=lose+1;
+  //  console.log(lose);
     return true;
+
   }
   else {
     return false;
+
   }
 }
 
@@ -202,6 +213,7 @@ function checkBallWallCollision() {
   if (ball.y < 0 || ball.y > height) {
     // It hit so reverse velocity
     ball.vy = -ball.vy;
+
     // Play our bouncing sound effect by rewinding and then playing
     beepSFX.currentTime = 0;
     beepSFX.play();
@@ -221,10 +233,10 @@ function checkBallPaddleCollision(paddle) {
   let ballLeft = ball.x - ball.size / 2;
   let ballRight = ball.x + ball.size / 2;
 
-  let paddleTop = paddle.y - paddle.h / 2;
-  let paddleBottom = paddle.y + paddle.h / 2;
-  let paddleLeft = paddle.x - leftPaddle.w / 2;
-  let paddleRight = paddle.x + paddle.w / 2;
+  let paddleTop = paddle.y ;
+  let paddleBottom = paddle.y + paddle.h;
+  let paddleLeft = paddle.x ;
+  let paddleRight = paddle.x+ paddle.w ;
 
   // First check the ball is in the vertical range of the paddle
   if (ballBottom > paddleTop && ballTop < paddleBottom) {
@@ -233,9 +245,15 @@ function checkBallPaddleCollision(paddle) {
       // Then the ball is touching the paddle
       // Reverse its vx so it starts travelling in the opposite direction
       ball.vx = -ball.vx;
+
+
       // Play our bouncing sound effect by rewinding and then playing
       beepSFX.currentTime = 0;
       beepSFX.play();
+
+      countCollision=countCollision+1;// count how many times the ball and paddle collise
+
+
     }
   }
 }
@@ -253,7 +271,17 @@ function displayPaddle(paddle) {
 // Draws the ball on screen as a square
 function displayBall() {
   // Draw the ball
-  rect(ball.x, ball.y, ball.size, ball.size);
+  ellipse(ball.x, ball.y, ball.size, ball.size);
+}
+
+function displayScore(){
+    score=countCollision-lose;
+
+    image(scoreImage,width/2+score*10,height/2,100,100);
+
+
+
+
 }
 
 // resetBall()
