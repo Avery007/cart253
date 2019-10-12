@@ -253,6 +253,11 @@ function checkBallPaddleCollision(paddle) {
 
       countCollision=countCollision+1;// count how many times the ball and paddle collise
 
+      if(ball.x>width-9 || ball.x<9){ // change vy direction when the ball hit paddle bottom or top
+        console.log(ball.x)
+        console.log(ball.y);
+        ball.vy = -ball.vy;
+      }
 
     }
   }
