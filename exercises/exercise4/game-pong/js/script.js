@@ -20,6 +20,7 @@ let countCollision=0;
 let score=0;
 let lose=0;
 let scoreImage;
+let backImage;
 // BALL
 
 let offScreen;
@@ -73,7 +74,8 @@ let beepSFX;
 // Loads the beep audio for the sound of bouncing
 function preload() {
   beepSFX = new Audio("assets/sounds/beep.wav");
-  scoreImage= loadImage('./assets/images/butterfly.png');
+  backImage = loadImage('./assets/images/background.png');
+  scoreImage = loadImage('./assets/images/ball.jpg');
 }
 
 // setup()
@@ -83,7 +85,7 @@ function preload() {
 // and velocities.
 function setup() {
   // Create canvas and set drawing modes
-  createCanvas(640, 480);
+  createCanvas(800, 500);
   rectMode(CORNER);
 
   noStroke();
@@ -113,6 +115,7 @@ function setupPaddles() {
 function draw() {
   // Fill the background
   background(127,0,0,100);
+image(backImage,0,0,800,500);
 
   if (playing) {
     // If the game is in play, we handle input and move the elements around
@@ -220,7 +223,7 @@ function checkBallWallCollision() {
     ball.vy = -ball.vy;
 
     // Play our bouncing sound effect by rewinding and then playing
-    beepSFX.currentTime = 0;
+   beepSFX.currentTime = 0;
     beepSFX.play();
   }
 }
@@ -253,7 +256,7 @@ function checkBallPaddleCollision(paddle) {
 
 
       // Play our bouncing sound effect by rewinding and then playing
-      beepSFX.currentTime = 0;
+     beepSFX.currentTime = 0;
       beepSFX.play();
 
       countCollision=countCollision+1;// count how many times the ball and paddle collise
@@ -281,16 +284,15 @@ function displayPaddle(paddle) {
 // Draws the ball on screen as a square
 function displayBall() {
   // Draw the ball
+  fill(252, 232, 3);
   ellipse(ball.x, ball.y, ball.size, ball.size);
+  console.log(score);
 }
 
 function displayScore(){
     score=countCollision-lose;
 
-    image(scoreImage,width/2+score*10,height/2,100,100);
-
-
-
+    image(scoreImage,width/3+score*10,height/2,100,100);
 
 }
 
@@ -299,6 +301,7 @@ function displayScore(){
 // Sets the starting position and velocity of the ball
 function resetBall() {
   // Initialise the ball's position and velocity
+  lose=lose+1;
   ball.x = width / 2;
   ball.y = height / 2;
   if(offScreen==="right"){
