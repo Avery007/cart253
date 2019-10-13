@@ -22,12 +22,14 @@ let lose=0;
 let scoreImage;
 // BALL
 
+let offScreen;
+
 // A ball object with the properties of
 // position, size, velocity, and speed
 let ball = {
   x: 0,
   y: 0,
-  size: 20,
+  size: 15,
   vx: 0,
   vy: 0,
   speed: 5
@@ -192,10 +194,13 @@ function updateBall() {
 // Returns true if so, false otherwise
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
-  if (ball.x < 0 || ball.x > width) {  lose=lose+1;
-  //  console.log(lose);
-    return true;
+  if (ball.x- ball.size/2 < 0 ) {
+    offScreen="left";
+    return true;}
 
+  else if(ball.x+ball.size/2>width ) {
+   offScreen="right";
+  return true;
   }
   else {
     return false;
@@ -253,7 +258,7 @@ function checkBallPaddleCollision(paddle) {
 
       countCollision=countCollision+1;// count how many times the ball and paddle collise
 
-      if(ball.x>width-9 || ball.x<9){ // change vy direction when the ball hit paddle bottom or top
+      if(ball.x>width-15 || ball.x<15){ // change vy direction when the ball hit paddle bottom or top
         console.log(ball.x)
         console.log(ball.y);
         ball.vy = -ball.vy;
@@ -296,8 +301,10 @@ function resetBall() {
   // Initialise the ball's position and velocity
   ball.x = width / 2;
   ball.y = height / 2;
-  ball.vx = ball.speed;
-  ball.vy = ball.speed;
+  if(offScreen==="right"){
+  ball.vx = -ball.speed;}
+  else{ball.vx=ball.speed;}
+  ball.vy = random(ball.speed-1,ball.speed+4);
 }
 
 // displayStartMessage()
