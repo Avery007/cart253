@@ -15,15 +15,28 @@ let playing = false;
 // Game colors (using hexadecimal)
 let bgColor = 0;
 let fgColor = 255;
+let bgMusic;
+let winSound;
+let yeahSound;
+let loseSound;
 
 let countCollision=0;
 let score=0;
 let lose=0;
+let result;
 let scoreImage;
 let backImage;
 // BALL
 
 let offScreen;
+
+let displayScoreX;
+let displayScoreY;
+
+
+
+
+
 
 // A ball object with the properties of
 // position, size, velocity, and speed
@@ -46,7 +59,7 @@ let leftPaddle = {
   w: 10,
   h: 70,
   vy: 0,
-  speed: 5,
+  speed: 7,
   upKey: 87,
   downKey: 83
 }
@@ -61,7 +74,7 @@ let rightPaddle = {
   w: 10,
   h: 70,
   vy: 0,
-  speed: 5,
+  speed: 7,
   upKey: 38,
   downKey: 40
 }
@@ -76,6 +89,10 @@ function preload() {
   beepSFX = new Audio("assets/sounds/beep.wav");
   backImage = loadImage('./assets/images/background.png');
   scoreImage = loadImage('./assets/images/ball.jpg');
+  bgMusic = loadSound("assets/sounds/backmusic.wav");
+  winSound= loadSound("assets/sounds/dragondie.mp3");
+  yeahSound= loadSound("assets/sounds/yeah.mp3");
+  loseSound= loadSound("assets/sounds/lose.mp3");
 }
 
 // setup()
@@ -90,7 +107,7 @@ function setup() {
 
   noStroke();
   //fill(fgColor);
-
+displayStartMessage();
   setupPaddles();
   resetBall();
 }
@@ -117,7 +134,7 @@ function draw() {
   background(127,0,0,100);
 image(backImage,0,0,800,500);
 
-  if (playing) {
+  if (result===0) {
     // If the game is in play, we handle input and move the elements around
     handleInput(leftPaddle);
     handleInput(rightPaddle);
@@ -129,7 +146,7 @@ image(backImage,0,0,800,500);
     checkBallPaddleCollision(leftPaddle);
     checkBallPaddleCollision(rightPaddle);
 
-    displayScore();
+    checkResult();
 
     // Check if the ball went out of bounds and respond if so
     // (Note how we can use a function that returns a truth value
@@ -141,15 +158,14 @@ image(backImage,0,0,800,500);
       // the ball went off...
     }
   }
-  else {
-    // Otherwise we display the message to start the game
-    displayStartMessage();
-  }
 
+    // Otherwise we display the message to start the game
+  
   // We always display the paddles and ball so it looks like Pong!
   displayPaddle(leftPaddle);
   displayPaddle(rightPaddle);
   displayBall();
+  displayScore();
 }
 
 // handleInput()
@@ -286,13 +302,15 @@ function displayBall() {
   // Draw the ball
   fill(252, 232, 3);
   ellipse(ball.x, ball.y, ball.size, ball.size);
-  console.log(score);
+
 }
 
 function displayScore(){
     score=countCollision-lose;
+    displayScoreX=width/3+score*20;
+    displayScoreY=height/2;
 
-    image(scoreImage,width/3+score*10,height/2,100,100);
+    image(scoreImage,displayScoreX,displayScoreY,100,100);
 
 }
 
@@ -326,5 +344,20 @@ function displayStartMessage() {
 // Here to require a click to start playing the game
 // Which will help us be allowed to play audio in the browser
 function mousePressed() {
-  playing = true;
+  result = 0;
+  bgMusic.loop();
+}
+
+function checkResult(){
+  if(displayScoreX<80){
+    result=1;
+    loseSound.loop();
+  }
+  else if (displayScoreX>530) {
+    result=2;
+  winSound.loop();
+  yeahSound.loop();
+
+  }
+console.log(displayScoreX);
 }
