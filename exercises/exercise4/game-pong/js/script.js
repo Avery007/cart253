@@ -1,42 +1,42 @@
 "use strict";
 
 // Pong
-// by Pippin Barr
+// by Qingyi Deng
 //
 // A "simple" implementation of Pong with no scoring system
-// just the ability to play the game with the keyboard.
-//
+// paddle the ball to move the fireball
+// to win the game, player needs to move the fireball toward the dragon in order to kill it.
+// when player fails to paddle, the fireball will move left, when it approachs the player, game loses
 // Up and down keys control the right hand paddle, W and S keys control
 // the left hand paddle
 
-// Whether the game has started
-let playing = false;
 
-// Game colors (using hexadecimal)
-let bgColor = 0;
-let fgColor = 255;
-let bgMusic;
-let winSound;
-let yeahSound;
-let loseSound;
 
-let countCollision=0;
-let score=0;
-let lose=0;
-let result;
-let scoreImage;
-let backImage;
-// BALL
 
-let offScreen;
 
+
+//game music
+let bgMusic; // background music
+let winSound; // sound when player wins
+let yeahSound; // sound when player wins
+let loseSound; // sound when player loses
+
+let result=0; // used to track game state
+
+let countCollision=0;// count how mnay time paddle
+let score=0; // caculate score
+let lose=0;//count how many times player fails
+
+let scoreImage; // display the score by a fireball image
+let backImage; //background image
+
+let offScreen; // check when ball off screen
+
+// display the score as an image
 let displayScoreX;
 let displayScoreY;
 
-
-
-
-
+let message;// display instruction
 
 // A ball object with the properties of
 // position, size, velocity, and speed
@@ -106,8 +106,7 @@ function setup() {
   rectMode(CORNER);
 
   noStroke();
-  //fill(fgColor);
-displayStartMessage();
+
   setupPaddles();
   resetBall();
 }
@@ -130,11 +129,15 @@ function setupPaddles() {
 // Calls the appropriate functions to run the game
 // See how tidy it looks?!
 function draw() {
-  // Fill the background
-  background(127,0,0,100);
-image(backImage,0,0,800,500);
 
-  if (result===0) {
+  // display the background
+    image(backImage,0,0,800,500);
+
+if(result===0){ // before game starts, showing introduction
+  displayStartMessage();
+}
+
+  if (result===1) { // game starts
     // If the game is in play, we handle input and move the elements around
     handleInput(leftPaddle);
     handleInput(rightPaddle);
@@ -159,13 +162,11 @@ image(backImage,0,0,800,500);
     }
   }
 
-    // Otherwise we display the message to start the game
-  
-  // We always display the paddles and ball so it looks like Pong!
+  // We always display the paddles and ball so it looks cool!
   displayPaddle(leftPaddle);
   displayPaddle(rightPaddle);
-  displayBall();
-  displayScore();
+  displayBall(); // display the moving ball
+  displayScore(); // display the fireball as score
 }
 
 // handleInput()
@@ -214,7 +215,7 @@ function updateBall() {
 function ballIsOutOfBounds() {
   // Check for ball going off the sides
   if (ball.x- ball.size/2 < 0 ) {
-    offScreen="left";
+    offScreen="left";// record which direction it runs off
     return true;}
 
   else if(ball.x+ball.size/2>width ) {
@@ -305,12 +306,16 @@ function displayBall() {
 
 }
 
-function displayScore(){
+function displayScore(){ // showing score by the location of the fireball
+
+  // count score,so the firball move right when player successifully paddle
+  // and it move left when player misses
     score=countCollision-lose;
-    displayScoreX=width/3+score*20;
+
+    displayScoreX=width/3+score*20; // set the score image, making the location corresponding to the score
     displayScoreY=height/2;
 
-    image(scoreImage,displayScoreX,displayScoreY,100,100);
+    image(scoreImage,displayScoreX,displayScoreY,100,100); // display score image
 
 }
 
@@ -319,13 +324,16 @@ function displayScore(){
 // Sets the starting position and velocity of the ball
 function resetBall() {
   // Initialise the ball's position and velocity
-  lose=lose+1;
+  lose=lose+1; //count how mnay times player fails to paddle
+  // reset the location, moveing direction of the fireball
   ball.x = width / 2;
   ball.y = height / 2;
-  if(offScreen==="right"){
+
+  if(offScreen==="right"){ // set the moving direction based on where it runs off last time
   ball.vx = -ball.speed;}
   else{ball.vx=ball.speed;}
-  ball.vy = random(ball.speed-1,ball.speed+4);
+
+  ball.vy = random(ball.speed-1,ball.speed+4); // reset a random speed
 }
 
 // displayStartMessage()
@@ -334,8 +342,11 @@ function resetBall() {
 function displayStartMessage() {
   push();
   textAlign(CENTER, CENTER);
-  textSize(32);
-  text("CLICK TO START", width / 2, height / 2);
+  textSize(20);
+  message="Can you kill the dragon?\n" + "Paddle the jumping ball to move the fireball\n";
+  message=message + "You must move it towards the dragon\n"
+  message=message +"Or you will be killed!\n" + "Click to start!";
+  text(message, width / 2, 100);
   pop();
 }
 
@@ -344,20 +355,20 @@ function displayStartMessage() {
 // Here to require a click to start playing the game
 // Which will help us be allowed to play audio in the browser
 function mousePressed() {
-  result = 0;
-  bgMusic.loop();
+  result = 1; // start the game when mouse is clicked
+  bgMusic.loop();// and play background music
 }
 
-function checkResult(){
-  if(displayScoreX<80){
-    result=1;
+function checkResult(){ // check ig player wins or lose
+  if(displayScoreX<80){ // means player loses the game
+    result="lose";
     loseSound.loop();
   }
-  else if (displayScoreX>530) {
-    result=2;
+  else if (displayScoreX>530) { // means dragon is killed and players win
+    result="win";
   winSound.loop();
   yeahSound.loop();
 
   }
-console.log(displayScoreX);
+
 }
