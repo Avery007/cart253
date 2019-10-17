@@ -10,7 +10,7 @@ class Predator {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, fillColor, radius) {
+  constructor(x, y, speed, fillColor, radius,player) {
     // Position
     this.x = x;
     this.y = y;
@@ -27,10 +27,17 @@ class Predator {
     this.fillColor = fillColor;
     this.radius = this.health; // Radius is defined in terms of health
     // Input properties
-    this.upKey = UP_ARROW;
-    this.downKey = DOWN_ARROW;
-    this.leftKey = LEFT_ARROW;
-    this.rightKey = RIGHT_ARROW;
+    this.p1upKey = UP_ARROW;
+    this.p1downKey = DOWN_ARROW;
+    this.p1leftKey = LEFT_ARROW;
+    this.p1rightKey = RIGHT_ARROW;
+
+    this.p2upKey = 87;
+    this.p2downKey = 83;
+    this.p2leftKey = 65;
+    this.p2rightKey = 68;
+
+    this.playerNumber=player;
   }
 
   // handleInput
@@ -39,20 +46,21 @@ class Predator {
   // velocity appropriately.
   handleInput() {
     // Horizontal movement
-    if (keyIsDown(this.leftKey)) {
+    if(this.playerNumber===1){
+    if (keyIsDown(this.p1leftKey)) {
       this.vx = -this.speed;
     }
-    else if (keyIsDown(this.rightKey)) {
+    else if (keyIsDown(this.p1rightKey)) {
       this.vx = this.speed;
     }
     else {
       this.vx = 0;
     }
     // Vertical movement
-    if (keyIsDown(this.upKey)) {
+    if (keyIsDown(this.p1upKey)) {
       this.vy = -this.speed;
     }
-    else if (keyIsDown(this.downKey)) {
+    else if (keyIsDown(this.p1downKey)) {
       this.vy = this.speed;
     }
     else {
@@ -60,6 +68,30 @@ class Predator {
     }
   }
 
+  if(this.playerNumber===2){
+    if (keyIsDown(this.p2leftKey)) {
+      this.vx = -this.speed;
+    }
+    else if (keyIsDown(this.p2rightKey)) {
+      this.vx = this.speed;
+    }
+    else {
+      this.vx = 0;
+    }
+    // Vertical movement
+    if (keyIsDown(this.p2upKey)) {
+      this.vy = -this.speed;
+    }
+    else if (keyIsDown(this.p2downKey)) {
+      this.vy = this.speed;
+    }
+    else {
+      this.vy = 0;
+    }
+  }
+  
+
+}
   // move
   //
   // Updates the position according to velocity
