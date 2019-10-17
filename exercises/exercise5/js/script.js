@@ -34,7 +34,7 @@ function setup() {
 
   tiger = new Predator(100, 100, 5, 40,1,p1);
 
-  wolf = new Predator(200, 200, 5, 40,2,p2);
+  eagle = new Predator(200, 200, 5, 40,2,p2);
   //antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
   zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);
   //bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
@@ -49,14 +49,17 @@ function draw() {
 instruction();
   // Handle input for the tiger
   tiger.handleInput();
-  wolf.handleInput();
+  eagle.handleInput();
 
   // Move all the "animals"
   tiger.move();
-  wolf.move();
+  eagle.move();
 //  antelope.move();
   zebra.move();
 //  bee.move();
+
+tiger.checkState();
+eagle.checkState();
 
   // Handle the tiger eating any of the prey
 //  tiger.handleEating(antelope);
@@ -64,19 +67,23 @@ instruction();
   //tiger.handleEating(bee);
 
   //wolf.handleEating(antelope);
-  wolf.handleEating(zebra);
+  eagle.handleEating(zebra);
   //wolf.handleEating(bee);
 
   // Display all the "animals"
   tiger.display();
-  wolf.display();
+  eagle.display();
   //antelope.display();
   zebra.display();
   //bee.display();
 }
 function instruction(){
+
+
+
   player1Info="tiger eats:"+ tiger.eat;
-  player2Info="wolf eats"+ wolf.eat;
+
+  player2Info="wolf eats"+ eagle.eat;
   textSize(20);
   fill(255);
   text(player1Info,300,100);

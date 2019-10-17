@@ -42,6 +42,7 @@ class Predator {
     this.playerNumber=player;
 
     this.playerImg=img;
+    this.isDead=false;
 
     this.eat=0;
   }
@@ -121,11 +122,17 @@ class Predator {
     this.x += this.vx;
     this.y += this.vy;
     // Update health
+    if(this.isDead)
+    { this.health=0;this.radius=0;}
+
+    else{
     this.health = this.health - this.healthLossPerMove;
     this.health = constrain(this.health, 0, this.maxHealth);
+    console.log(this.health);
     // Handle wrapping
     this.handleWrapping();
   }
+}
 
   // handleWrapping
   //
@@ -175,16 +182,28 @@ class Predator {
     }
   }
 
+
+  checkState(){
+
+    if(this.health<1){
+      this.isDead=true;
+      this.radius=0;
+    }
+  }
+
   // display
   //
   // Draw the predator as an ellipse on the canvas
   // with a radius the same size as its current health.
   display() {
-    push();
-    noStroke();
-    imageMode(CENTER);
-    this.radius = this.health;
-    image(this.playerImg,this.x, this.y, 2*this.radius,2*this.radius);
-    pop();
+    if(!this.isDead){
+      push();
+      noStroke();
+      imageMode(CENTER);
+      this.radius = this.health;
+      image(this.playerImg,this.x, this.y, 2*this.radius,2*this.radius);
+      console.log(this.radius);
+      pop();
+    }
   }
 }
