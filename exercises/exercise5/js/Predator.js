@@ -37,6 +37,8 @@ class Predator {
     this.p2leftKey = 65;
     this.p2rightKey = 68;
 
+    this.p1speedup=32;
+    this.p2speedup=SHIFT;
     this.playerNumber=player;
 
     this.eat=0;
@@ -68,6 +70,12 @@ class Predator {
     else {
       this.vy = 0;
     }
+
+    if(keyIsDown(this.p1speedup)){
+      this.vy=this.vy*3;
+      this.vx=this.vx*3;
+
+    }
   }
 
   if(this.playerNumber===2){
@@ -90,7 +98,14 @@ class Predator {
     else {
       this.vy = 0;
     }
+
+    if(keyIsDown(this.p2speedup)){
+      this.vy=this.vy*3;
+      this.vx=this.vx*3;
+
+    }
   }
+
 
 
 }

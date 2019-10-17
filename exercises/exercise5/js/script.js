@@ -64,8 +64,8 @@ instruction();
   //bee.display();
 }
 function instruction(){
-  player1Info=tiger.eat;
-  player2Info=wolf.eat;
+  player1Info="tiger eats:"+ tiger.eat;
+  player2Info="wolf eats"+ wolf.eat;
   textSize(20);
   fill(255);
   text(player1Info,300,100);
