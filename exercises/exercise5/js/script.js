@@ -16,14 +16,25 @@ let bee;
 let player1Info;
 let player2Info;
 
+let p1;
+let p2;
+
 // setup()
 //
 // Sets up a canvas
 // Creates objects for the predator and three prey
+
+function preload(){
+
+    p1= loadImage('./assets/images/tiger.png');
+    p2= loadImage('./assets/images/eagle.jpg');
+}
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  tiger = new Predator(100, 100, 5, color(200, 200, 0), 40,1);
-  wolf = new Predator(200, 200, 5, color(150, 200, 0), 40,2);
+
+  tiger = new Predator(100, 100, 5, 40,1,p1);
+
+  wolf = new Predator(200, 200, 5, 40,2,p2);
   //antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
   zebra = new Prey(100, 100, 8, color(255, 255, 255), 60);
   //bee = new Prey(100, 100, 20, color(255, 255, 0), 10);

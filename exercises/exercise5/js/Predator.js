@@ -10,7 +10,7 @@ class Predator {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, fillColor, radius, player) {
+  constructor(x, y, speed, radius, player,img) {
     // Position
     this.x = x;
     this.y = y;
@@ -24,7 +24,7 @@ class Predator {
     this.healthLossPerMove = 0.1;
     this.healthGainPerEat = 1;
     // Display properties
-    this.fillColor = fillColor;
+
     this.radius = this.health; // Radius is defined in terms of health
     // Input properties
     this.p1upKey = UP_ARROW;
@@ -40,6 +40,8 @@ class Predator {
     this.p1speedup=32;
     this.p2speedup=SHIFT;
     this.playerNumber=player;
+
+    this.playerImg=img;
 
     this.eat=0;
   }
@@ -180,9 +182,9 @@ class Predator {
   display() {
     push();
     noStroke();
-    fill(this.fillColor);
+    imageMode(CENTER);
     this.radius = this.health;
-    ellipse(this.x, this.y, this.radius * 2);
+    image(this.playerImg,this.x, this.y, 2*this.radius,2*this.radius);
     pop();
   }
 }
