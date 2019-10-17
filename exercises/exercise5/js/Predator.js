@@ -10,7 +10,7 @@ class Predator {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, fillColor, radius,player) {
+  constructor(x, y, speed, fillColor, radius, player) {
     // Position
     this.x = x;
     this.y = y;
@@ -38,6 +38,8 @@ class Predator {
     this.p2rightKey = 68;
 
     this.playerNumber=player;
+
+    this.eat=0;
   }
 
   // handleInput
@@ -89,7 +91,7 @@ class Predator {
       this.vy = 0;
     }
   }
-  
+
 
 }
   // move
@@ -142,11 +144,16 @@ class Predator {
       // Increase predator health and constrain it to its possible range
       this.health += this.healthGainPerEat;
       this.health = constrain(this.health, 0, this.maxHealth);
+
       // Decrease prey health by the same amount
       prey.health -= this.healthGainPerEat;
+
       // Check if the prey died and reset it if so
       if (prey.health < 0) {
+        this.eat = this.eat+1;
+        console.log(this.eat);
         prey.reset();
+
       }
     }
   }
