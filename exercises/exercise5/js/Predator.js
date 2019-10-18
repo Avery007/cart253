@@ -21,7 +21,7 @@ class Predator {
     // Health properties
     this.maxHealth = radius;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
-    this.healthLossPerMove = 0.1;
+    this.healthLossPerMove = 0.05;
     this.healthGainPerEat = 1;
     // Display properties
 
@@ -37,7 +37,7 @@ class Predator {
     this.p2leftKey = 65;
     this.p2rightKey = 68;
 
-    this.p1speedup=32;
+    this.p1speedup=13;
     this.p2speedup=SHIFT;
     this.playerNumber=player;
 
@@ -128,7 +128,6 @@ class Predator {
     else{
     this.health = this.health - this.healthLossPerMove;
     this.health = constrain(this.health, 0, this.maxHealth);
-    console.log(this.health);
     // Handle wrapping
     this.handleWrapping();
   }
@@ -175,7 +174,6 @@ class Predator {
       // Check if the prey died and reset it if so
       if (prey.health < 0) {
         this.eat = this.eat+1;
-        console.log(this.eat);
         prey.reset();
 
       }
