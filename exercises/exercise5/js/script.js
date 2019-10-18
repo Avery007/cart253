@@ -13,7 +13,7 @@ let eagle;
 // The three prey
 let antelope;
 let zebra;
-let bee;
+let rabbit;
 
 // display how many preys eaten
 let player1Info;
@@ -50,9 +50,9 @@ function setup() {
 
   tiger = new Predator(100, 100, 5, 40, 1, tigerImg); // source pixably
   eagle = new Predator(200, 200, 5, 40, 2, eagleImg); // source pixably
-  antelope = new Prey(100, 100, 10, color(255, 100, 10), 50, "antelope");
-  zebra = new Prey(100, 100, 8, color(255, 255, 255), 60, "zabra");
-  bee = new Prey(100, 100, 20, color(255, 255, 0), 10, "bee");
+  antelope = new Prey(100, 100, 10, color(255, 100, 10), 20, "antelope");
+  zebra = new Prey(100, 100, 8, color(255, 255, 255), 25, "zabra");
+  rabbit = new Prey(100, 100, 20, color(255, 255, 0), 10, "rabbit");
 }
 
 // draw()
@@ -78,7 +78,7 @@ function draw() {
     eagle.move();
     antelope.move();
     zebra.move();
-    bee.move();
+    rabbit.move();
 
     // tracking if predators are dead
     tiger.checkState();
@@ -87,18 +87,18 @@ function draw() {
     // Handle the tiger eating any of the prey
     tiger.handleEating(antelope);
     tiger.handleEating(zebra);
-    tiger.handleEating(bee);
+    tiger.handleEating(rabbit);
 
     eagle.handleEating(antelope);
     eagle.handleEating(zebra);
-    eagle.handleEating(bee);
+    eagle.handleEating(rabbit);
 
     // Display all the "animals"
     tiger.display();
     eagle.display();
     antelope.display();
     zebra.display();
-    bee.display();
+    rabbit.display();
   }
 
 
