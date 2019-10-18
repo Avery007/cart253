@@ -10,7 +10,7 @@ class Prey {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, fillColor, radius,name) {
+  constructor(x, y, speed, fillColor, radius, name) {
     // Position
     this.x = x;
     this.y = y;
@@ -27,7 +27,7 @@ class Prey {
     // Display properties
     this.fillColor = fillColor;
     this.radius = this.health;
-    this.preyName=name;
+    this.preyName = name; // prey name
   }
 
   // move
@@ -56,15 +56,13 @@ class Prey {
     // Off the left or right
     if (this.x < 0) {
       this.x += width;
-    }
-    else if (this.x > width) {
+    } else if (this.x > width) {
       this.x -= width;
     }
     // Off the top or bottom
     if (this.y < 0) {
       this.y += height;
-    }
-    else if (this.y > height) {
+    } else if (this.y > height) {
       this.y -= height;
     }
   }
@@ -80,8 +78,9 @@ class Prey {
     this.radius = this.health;
     ellipse(this.x, this.y, this.radius * 2);
 
-    textSize(this.radius*2);
-    text(this.preyName,this.x,this.y-this.radius);
+    // display preys' name with prey image
+    textSize(this.radius * 2);
+    text(this.preyName, this.x, this.y - this.radius);
     pop();
   }
 
