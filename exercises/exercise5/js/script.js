@@ -19,6 +19,7 @@ let player2Info;
 let p1;
 let p2;
 let background;
+let backMusic;
 
 let result=0; // tracking game state
 
@@ -30,9 +31,10 @@ let result=0; // tracking game state
 function preload(){
 
     p1= loadImage('./assets/images/tiger.png');
-    p2= loadImage('./assets/images/eagle.jpg');
+    p2= loadImage('./assets/images/eagle.png');
     background=loadImage('./assets/images/forest.jpg');
     front=loadImage('./assets/images/front.png');
+    backMusic=loadSound('./assets/sounds/music.wav');
 }
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -123,5 +125,6 @@ function gameOver(){
 function mousePressed() {
   if (result===0){
   result = 1; // start the game when mouse is clicked
+  backMusic.loop();
  }
 }
