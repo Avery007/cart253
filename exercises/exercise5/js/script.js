@@ -1,7 +1,7 @@
 // Predator-Prey Simulation
 // by Qingyi Deng
 //
-// two players player as predators-eagle and tiger, with different key controls
+// two players play as predators：eagle and tiger, with different key controls
 //and three prey (of different sizes and speeds)
 // The predator should chase the prey and consumes them.
 // The predator loses health over time, so must keep eating to survive.
@@ -51,7 +51,7 @@ function setup() {
   tiger = new Predator(100, 100, 5, 40, 1, tigerImg); // source pixably
   eagle = new Predator(200, 200, 5, 40, 2, eagleImg); // source pixably
   antelope = new Prey(100, 100, 10, color(255, 100, 10), 20, "antelope");
-  zebra = new Prey(100, 100, 8, color(255, 255, 255), 25, "zabra");
+  zebra = new Prey(100, 100, 8, color(255, 255, 255), 25, "zebra");
   rabbit = new Prey(100, 100, 20, color(255, 255, 0), 10, "rabbit");
 }
 
