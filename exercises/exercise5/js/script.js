@@ -101,7 +101,6 @@ function draw() {
     rabbit.display();
   }
 
-
 }
 
 function instruction() {
