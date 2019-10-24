@@ -39,10 +39,13 @@ class Predator {
 
     this.p1speedup = 13; // enter key
     this.p2speedup = SHIFT;
+    this.cheat=32; // Space key to call the hidden boss, same for both player
     this.playerNumber = player; // used to check which player
 
     this.playerImg = img; // display player as images
     this.isDead = false; // check if players are dead
+    this.callBoss=0;// count how many times the boss is called
+
 
     this.eat = 0; // prey eaten number
   }
@@ -177,6 +180,15 @@ class Predator {
     if (this.health < 1) {
       this.isDead = true;
     }
+  }
+
+// function to count how mnay times the boss is called
+  countBosscall(){
+    if(keyIsDown(this.cheat)){
+      this.callBoss=this.callBoss+1;
+    }
+
+    return this.callBoss;
   }
 
   // display
