@@ -52,7 +52,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-  boss=new HiddenBoss(200,50,"boss1",bossImg);
+//  boss=new HiddenBoss(200,50,"boss1",bossImg);
   tiger = new Predator(100, 100, 5, 40, 1, tigerImg); // source pixably
   eagle = new Predator(200, 200, 5, 40, 2, eagleImg); // source pixably
   antelope = new Prey(100, 100, 10, color(255, 100, 10), 20, "antelope");
@@ -65,7 +65,7 @@ function setup() {
 //
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
-
+  boss=new HiddenBoss(70,100,"boss1",bossImg);
   if (result === 0) { // before game starts, display the front image
 
     image(front, 0, 0, width, height);

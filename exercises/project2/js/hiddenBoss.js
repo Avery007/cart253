@@ -4,11 +4,10 @@ class HiddenBoss {
   // constructor
   constructor(size, power, name, img) {
     // Position
-    //  this.x = random(10,800);
-    //this.y = random(10,500);
+  
     // Velocity and speed
-    this.x = 100;
-    this.y = 200;
+    this.x = random(0,1000);
+    this.y = random(0,500);
     this.vx = 0;
     this.vy = 0;
 
