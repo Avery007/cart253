@@ -45,14 +45,15 @@ function preload() {
   background = loadImage('./assets/images/forest.jpg');
   front = loadImage('./assets/images/front.png');
   backMusic = loadSound('./assets/sounds/music.wav');
-  bossImg = loadImage('./assets/images/boss.png');
+  bossImg = loadImage('./assets/images/boss1.png');
 }
 
 // function set up
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
+  //boss=new HiddenBoss(70,100,"boss1",bossImg);
 //  boss=new HiddenBoss(200,50,"boss1",bossImg);
+  boss=new HiddenBoss(10,"boss1",bossImg);
   tiger = new Predator(100, 100, 5, 40, 1, tigerImg); // source pixably
   eagle = new Predator(200, 200, 5, 40, 2, eagleImg); // source pixably
   antelope = new Prey(100, 100, 10, color(255, 100, 10), 20, "antelope");
@@ -65,13 +66,15 @@ function setup() {
 //
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
-  boss=new HiddenBoss(70,100,"boss1",bossImg);
+
+
   if (result === 0) { // before game starts, display the front image
 
     image(front, 0, 0, width, height);
   }
   // when game starts
   else if (result === 1) {
+    imageMode(CORNER);
     image(background, 0, 0, windowWidth, windowHeight); // display background
     instruction(); // show player's information
     gameOver(); //check if game over and display text when it is true
@@ -99,15 +102,20 @@ function draw() {
     eagle.handleEating(zebra);
     eagle.handleEating(rabbit);
 
+    boss.bossGain(antelope);
+      boss.bossGain(zebra);
+  boss.bossGain(rabbit);
     // Display all the "animals"
     tiger.display();
     eagle.display();
     antelope.display();
     zebra.display();
     rabbit.display();
-  boss.blackBoxState=tiger.isCalled;
+  //boss.blackBoxState=tiger.isCalled;
+    boss.keyControl();
     boss.display();
-    tiger.countBosscall();
+    boss.bossPower();
+
 
 }
 
@@ -121,6 +129,8 @@ function instruction() {
   fill(255);
   text(player1Info, windowWidth / 2, 70);
   text(player2Info, windowWidth / 2, 100);
+  text(boss.bossEat, windowWidth / 2, 120);
+  console.log(boss.bossEat);
 
 }
 
