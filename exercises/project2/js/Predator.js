@@ -21,7 +21,7 @@ class Predator {
     // Health properties
     this.maxHealth = radius;
     this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
-    this.healthLossPerMove = 0.05;
+    this.healthLossPerMove = 0.01;
     this.healthGainPerEat = 1;
     // Display properties
 
@@ -48,6 +48,8 @@ class Predator {
   // this.isCalled=false;// check if player press the key to call boss
 
     this.eat = 0; // prey eaten number
+
+    this.bonus=0;
   }
 
   // handleInput
@@ -178,6 +180,14 @@ class Predator {
     }
   }
 
+  bossConnect(bossEat,check){
+    if(check){ // when key V for calling boss is pressed
+this.health=this.health-0.1; // reduce player' health
+
+this.bonus= floor(bossEat/3);     //this.eat=getEat+floor(bossEat/3);
+
+  }
+}
   // chekc if player is dead
   checkState() {
 

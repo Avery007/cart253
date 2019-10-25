@@ -53,12 +53,14 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   //boss=new HiddenBoss(70,100,"boss1",bossImg);
 //  boss=new HiddenBoss(200,50,"boss1",bossImg);
-  boss=new HiddenBoss(10,"boss1",bossImg);
+  boss=new HiddenBoss(0,"boss1",bossImg);
   tiger = new Predator(100, 100, 5, 40, 1, tigerImg); // source pixably
   eagle = new Predator(200, 200, 5, 40, 2, eagleImg); // source pixably
   antelope = new Prey(100, 100, 10, color(255, 100, 10), 20, "antelope");
   zebra = new Prey(100, 100, 8, color(255, 255, 255), 25, "zebra");
   rabbit = new Prey(100, 100, 20, color(255, 255, 0), 10, "rabbit");
+  health=tiger.health;
+  eat=tiger.eat;
 
 }
 
@@ -93,8 +95,8 @@ function draw() {
     tiger.checkState();
     eagle.checkState();
 
-    // Handle the tiger eating any of the prey
-    tiger.handleEating(antelope);
+  //  Handle the tiger eating any of the prey
+  tiger.handleEating(antelope);
     tiger.handleEating(zebra);
     tiger.handleEating(rabbit);
 
@@ -115,6 +117,10 @@ function draw() {
     boss.keyControl();
     boss.display();
     boss.bossPower();
+    tiger.bossConnect(boss.bossEat,boss.bossManipulation);
+    console.log(tiger.health);
+    //boss.bonus(health,eat);
+
 
 
 }
@@ -123,14 +129,14 @@ function draw() {
 
 function instruction() {
   // show how many preys players eat
-  player1Info = "tiger eats:" + tiger.eat;
-  player2Info = "eagle eats:" + eagle.eat;
+  player1Info = "tiger eats: " + tiger.eat + " bonus：" + tiger.bonus;
+  player2Info = "eagle eats: " + eagle.eat + " bonus：" + eagle.bonus;
   textSize(20);
   fill(255);
   text(player1Info, windowWidth / 2, 70);
   text(player2Info, windowWidth / 2, 100);
   text(boss.bossEat, windowWidth / 2, 120);
-  console.log(boss.bossEat);
+
 
 }
 
@@ -140,6 +146,8 @@ function gameOver() {
     text("Game over ! now you know who ate more !", windowWidth / 2, 150); // display when game over
   }
 }
+
+
 
 function mousePressed() {
   if (result === 0) {

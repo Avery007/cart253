@@ -20,6 +20,7 @@ class HiddenBoss {
     this.bossEat=0;
     this.bossCall=86; // Space key to call the hidden boss, same for both player
     this.callCount=0;
+
   }
 
 // function to count how mnay times the boss is called
@@ -27,13 +28,14 @@ class HiddenBoss {
     if(this.bossManipulation){
 
       this.callCount=this.callCount+1;
-     this.power=this.callCount/5;
+     this.power=floor(this.callCount-this.callCount/1.1);
 
 
     }
 
 
   }
+
 
 
 bossGain(prey){
@@ -46,14 +48,15 @@ bossGain(prey){
 
       // Check if the prey died and reset it if so
     //  if (prey.health < 0) {
-        push();
+
         this.bossEat = this.bossEat + 1; // track how mnay preys the player eat
-          //  console.log(this.bossEat);
-          pop();
+
+
         prey.reset();
 
 
 }
+
 
 }
 
