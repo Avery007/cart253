@@ -10,6 +10,8 @@
 // Our predator
 let tiger;
 let eagle;
+
+let boss;
 // The three prey
 let antelope;
 let zebra;
@@ -24,6 +26,7 @@ let tigerImg; //tiger image
 let eagleImg; // eagle image
 let background; // background img
 let front; // front image
+let bossImg;
 
 // add background musci
 let backMusic;
@@ -42,17 +45,20 @@ function preload() {
   background = loadImage('./assets/images/forest.jpg');
   front = loadImage('./assets/images/front.png');
   backMusic = loadSound('./assets/sounds/music.wav');
+  bossImg = loadImage('./assets/images/boss.png');
 }
 
 // function set up
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
+  boss=new HiddenBoss(200,50,"boss1",bossImg);
   tiger = new Predator(100, 100, 5, 40, 1, tigerImg); // source pixably
   eagle = new Predator(200, 200, 5, 40, 2, eagleImg); // source pixably
   antelope = new Prey(100, 100, 10, color(255, 100, 10), 20, "antelope");
   zebra = new Prey(100, 100, 8, color(255, 255, 255), 25, "zebra");
   rabbit = new Prey(100, 100, 20, color(255, 255, 0), 10, "rabbit");
+
 }
 
 // draw()
@@ -99,7 +105,11 @@ function draw() {
     antelope.display();
     zebra.display();
     rabbit.display();
-  }
+  boss.blackBoxState=tiger.isCalled;
+    boss.display();
+    tiger.countBosscall();
+
+}
 
 }
 
