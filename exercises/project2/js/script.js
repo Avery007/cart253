@@ -32,7 +32,8 @@ let bossImg;
 let backMusic;
 
 let result = 0; // tracking game state
-
+let numPrey = 10; // How many Prey to simulate
+let prey = [];
 // setup()
 //
 // Sets up a canvas
@@ -51,8 +52,23 @@ function preload() {
 // function set up
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  //boss=new HiddenBoss(70,100,"boss1",bossImg);
-//  boss=new HiddenBoss(200,50,"boss1",bossImg);
+
+// An empty array to store them in (we'll create them in setup())
+
+  // Run a for loop numPrey times to generate each Prey and put it in the array
+  for (let i = 0; i < numPrey; i++) {
+    // Generate (mostly) random values for the arguments of the Prey constructor
+    let preyX = random(0, 500);
+    let preyY = random(0, 500);
+    let preySpeed = random(2, 10);
+    let preyColor = color(0, 100, 100);
+    let preyRadius = random(3, 50);
+    // Create a new Prey objects with the random values
+    let newPrey = new Prey(preyX, preyY, preySpeed, preyColor, preyRadius);
+    // Add the new Prey object to the END of our array using push()
+    prey.push(newPrey);
+  }
+
   boss1=new HiddenBoss(0,"boss1",bossImg,1);
   boss2=new HiddenBoss(0,"boss2",bossImg,2);
   tiger = new Predator(100, 100, 5, 40, 1, tigerImg); // source pixably
@@ -76,9 +92,19 @@ function draw() {
     image(front, 0, 0, width, height);
   }
   // when game starts
-  else if (result === 1) {
-    imageMode(CORNER);
-    image(background, 0, 0, windowWidth, windowHeight); // display background
+  else if (result === 1) {imageMode(CORNER);
+  image(background, 0, 0, windowWidth, windowHeight);
+
+    for (let i = 0; i < prey.length; i++) {
+  // And for each one, move it and display it
+  prey[i].move();
+  prey[i].display();
+  tiger.handleEating(prey[i]);
+  eagle.handleEating(prey[i]);
+  boss1.bossGain(prey[i]);
+  boss2.bossGain(prey[i]);
+}
+     // display background
     instruction(); // show player's information
     gameOver(); //check if game over and display text when it is true
     // Handle input for the tiger
@@ -97,7 +123,7 @@ function draw() {
     eagle.checkState();
 
   //  Handle the tiger eating any of the prey
-  tiger.handleEating(antelope);
+    tiger.handleEating(antelope);
     tiger.handleEating(zebra);
     tiger.handleEating(rabbit);
 
