@@ -10,6 +10,8 @@ class Cheerleader{
     this.x = x;
     this.y = y;
 
+    this.xv=0;
+    this.yv=0;
     this.img = img;
 
 
@@ -27,7 +29,26 @@ class Cheerleader{
   }
 
 
+move(moveX){ /// move used to determine the moving direction of cheerleader
+  if (this.activeState) {
+  this.x=this.x+ moveX;
+  this.y=this.y+this.yv;
+  this.yv=5;
 
+  if(this.y<0 || this.y>400){
+
+   this.yv=-200;
+
+    }
+  if(this.x>1000) {
+    this.x=10;
+
+    }
+  if(this.x<0)  {
+    this.x=1000;
+  }
+  }
+}
 
 keyControl(){
                                           /// why only one key is effective
@@ -48,7 +69,7 @@ else{this.activeState=false;
   if (this.activeState) { // check if the key is pressed
 
 
-    
+
        imageMode(CENTER);
        image(this.img, this.x, this.y, this.size, this.size);
     //  fill(255);

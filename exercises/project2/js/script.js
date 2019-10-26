@@ -82,6 +82,8 @@ function setup() {
     let cheerleaderX =100+n*100;
     let cheerleaderY =50+n*50;
     let attraction=100;
+    let moveX=1;
+
     //let  clOpacity = color(0, 100, 100);
     //let cheerleaderSize = random(50, 200);
     // Create a new Prey objects with the random values
@@ -94,7 +96,9 @@ function setup() {
   for (let m = 0; m< numCheerleader; m++) {
     // Generate (mostly) random values for the arguments of the Prey constructor
     let cheerleader1X =1000-m*100;
-    let cheerleader1Y =500-m*50;
+    let cheerleader1Y =m*50;
+    let moveX=-1
+
     //let attraction=100;
     //let  clOpacity = color(0, 100, 100);
     //let cheerleaderSize = random(50, 200);
@@ -152,6 +156,7 @@ function draw() {
 
   cheerleader[n].display();
   cheerleader[n].keyControl();
+  cheerleader[n].move(1);
   console.log(cheerleader[1].activeState);
 
 }
@@ -161,6 +166,7 @@ for (let m = 0; m< cheerleader.length; m++) {
 
 cheerleader1[m].display();
 cheerleader1[m].keyControl();
+cheerleader1[m].move(-1);
 //console.log(cheerleader1[1].activeState);
 
 }
