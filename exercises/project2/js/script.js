@@ -34,6 +34,12 @@ let backMusic;
 let result = 0; // tracking game state
 let numPrey = 10; // How many Prey to simulate
 let prey = [];
+
+let numCheerleader = 5; // How many Prey to simulate
+let cheerleader= [];
+let cheerleader1= [];
+
+
 // setup()
 //
 // Sets up a canvas
@@ -47,6 +53,8 @@ function preload() {
   front = loadImage('./assets/images/front.png');
   backMusic = loadSound('./assets/sounds/music.wav');
   bossImg = loadImage('./assets/images/boss1.png');
+  clImage=loadImage('./assets/images/cheerleader.png');
+cl1Image=loadImage('./assets/images/cheerleader1.png');
 }
 
 // function set up
@@ -67,6 +75,34 @@ function setup() {
     let newPrey = new Prey(preyX, preyY, preySpeed, preyColor, preyRadius);
     // Add the new Prey object to the END of our array using push()
     prey.push(newPrey);
+  }
+
+  for (let n = 0; n < numCheerleader; n++) {
+    // Generate (mostly) random values for the arguments of the Prey constructor
+    let cheerleaderX =100+n*100;
+    let cheerleaderY =50+n*50;
+    let attraction=100;
+    //let  clOpacity = color(0, 100, 100);
+    //let cheerleaderSize = random(50, 200);
+    // Create a new Prey objects with the random values
+    let newCheerleader = new Cheerleader(cheerleaderX, cheerleaderY,attraction,clImage, 90);
+    // Add the new Prey object to the END of our array using push()
+    cheerleader.push(newCheerleader);
+
+  }
+
+  for (let m = 0; m< numCheerleader; m++) {
+    // Generate (mostly) random values for the arguments of the Prey constructor
+    let cheerleader1X =1000-m*100;
+    let cheerleader1Y =500-m*50;
+    //let attraction=100;
+    //let  clOpacity = color(0, 100, 100);
+    //let cheerleaderSize = random(50, 200);
+    // Create a new Prey objects with the random values
+    let otherCheerleader = new Cheerleader(cheerleader1X, cheerleader1Y,100,cl1Image, 78);
+    // Add the new Prey object to the END of our array using push()
+    cheerleader1.push(otherCheerleader);
+
   }
 
   boss1=new HiddenBoss(0,"boss1",bossImg,1);
@@ -103,7 +139,35 @@ function draw() {
   eagle.handleEating(prey[i]);
   boss1.bossGain(prey[i]);
   boss2.bossGain(prey[i]);
+  tiger.handleEating(prey[i]);
+  eagle.handleEating(prey[i]);
+  boss1.bossGain(prey[i]);
+  boss2.bossGain(prey[i]);
 }
+
+
+  for (let n = 0; n< cheerleader.length; n++) {
+  // And for each one, move it and display it
+  //cheerleader[i].move();
+
+  cheerleader[n].display();
+  cheerleader[n].keyControl();
+  console.log(cheerleader[1].activeState);
+
+}
+for (let m = 0; m< cheerleader.length; m++) {
+// And for each one, move it and display it
+//cheerleader[i].move();
+
+cheerleader1[m].display();
+cheerleader1[m].keyControl();
+//console.log(cheerleader1[1].activeState);
+
+}
+
+
+
+
      // display background
     instruction(); // show player's information
     gameOver(); //check if game over and display text when it is true
