@@ -183,7 +183,6 @@ class Predator {
   bossConnect(bossEat,check){
     if(check){ // when key V for calling boss is pressed
 this.health=this.health-0.1; // reduce player' health
-
 this.bonus= floor(bossEat/3);     //this.eat=getEat+floor(bossEat/3);
 
   }

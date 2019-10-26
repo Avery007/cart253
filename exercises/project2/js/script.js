@@ -53,7 +53,8 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   //boss=new HiddenBoss(70,100,"boss1",bossImg);
 //  boss=new HiddenBoss(200,50,"boss1",bossImg);
-  boss=new HiddenBoss(0,"boss1",bossImg);
+  boss1=new HiddenBoss(0,"boss1",bossImg,1);
+  boss2=new HiddenBoss(0,"boss2",bossImg,2);
   tiger = new Predator(100, 100, 5, 40, 1, tigerImg); // source pixably
   eagle = new Predator(200, 200, 5, 40, 2, eagleImg); // source pixably
   antelope = new Prey(100, 100, 10, color(255, 100, 10), 20, "antelope");
@@ -104,9 +105,13 @@ function draw() {
     eagle.handleEating(zebra);
     eagle.handleEating(rabbit);
 
-    boss.bossGain(antelope);
-      boss.bossGain(zebra);
-  boss.bossGain(rabbit);
+    boss1.bossGain(antelope);
+      boss1.bossGain(zebra);
+  boss1.bossGain(rabbit);
+
+  boss2.bossGain(antelope);
+    boss2.bossGain(zebra);
+boss2.bossGain(rabbit);
     // Display all the "animals"
     tiger.display();
     eagle.display();
@@ -114,10 +119,15 @@ function draw() {
     zebra.display();
     rabbit.display();
   //boss.blackBoxState=tiger.isCalled;
-    boss.keyControl();
-    boss.display();
-    boss.bossPower();
-    tiger.bossConnect(boss.bossEat,boss.bossManipulation);
+    boss1.keyControl();
+    boss1.display();
+    boss1.bossPower();
+    boss2.keyControl();
+    boss2.display();
+    boss2.bossPower();
+
+    tiger.bossConnect(boss1.bossEat,boss1.bossManipulation);
+    eagle.bossConnect(boss2.bossEat,boss2.bossManipulation);
     console.log(tiger.health);
     //boss.bonus(health,eat);
 
@@ -135,7 +145,8 @@ function instruction() {
   fill(255);
   text(player1Info, windowWidth / 2, 70);
   text(player2Info, windowWidth / 2, 100);
-  text(boss.bossEat, windowWidth / 2, 120);
+  text(boss1.bossEat, windowWidth / 2, 120);
+  text(boss2.bossEat, windowWidth / 2, 140);
 
 
 }
