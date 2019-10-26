@@ -68,9 +68,9 @@ function setup() {
     // Generate (mostly) random values for the arguments of the Prey constructor
     let preyX = random(0, 500);
     let preyY = random(0, 500);
-    let preySpeed = random(2, 10);
+    let preySpeed = random(7, 15);
     let preyColor = color(0, 100, 100);
-    let preyRadius = random(3, 50);
+    let preyRadius = random(3, 30);
     // Create a new Prey objects with the random values
     let newPrey = new Prey(preyX, preyY, preySpeed, preyColor, preyRadius);
     // Add the new Prey object to the END of our array using push()
@@ -103,7 +103,7 @@ function setup() {
     //let  clOpacity = color(0, 100, 100);
     //let cheerleaderSize = random(50, 200);
     // Create a new Prey objects with the random values
-    let otherCheerleader = new Cheerleader(cheerleader1X, cheerleader1Y,100,cl1Image, 78);
+    let otherCheerleader = new Cheerleader(cheerleader1X, cheerleader1Y,100,cl1Image, 78,moveX);
     // Add the new Prey object to the END of our array using push()
     cheerleader1.push(otherCheerleader);
 
@@ -139,6 +139,10 @@ function draw() {
   // And for each one, move it and display it
   prey[i].move();
   prey[i].display();
+  //prey[i].mesmerizing(cheerleader.activeState);
+  prey[i].mesmerizing(random(3,10),90,78);// reduce prey's speed when cheerleader is active
+
+  console.log(prey[1].speed);
   tiger.handleEating(prey[i]);
   eagle.handleEating(prey[i]);
   boss1.bossGain(prey[i]);
@@ -157,7 +161,7 @@ function draw() {
   cheerleader[n].display();
   cheerleader[n].keyControl();
   cheerleader[n].move(1);
-  console.log(cheerleader[1].activeState);
+
 
 }
 for (let m = 0; m< cheerleader.length; m++) {
@@ -167,11 +171,13 @@ for (let m = 0; m< cheerleader.length; m++) {
 cheerleader1[m].display();
 cheerleader1[m].keyControl();
 cheerleader1[m].move(-1);
-//console.log(cheerleader1[1].activeState);
+
+
+
+
+
 
 }
-
-
 
 
      // display background
@@ -224,7 +230,7 @@ boss2.bossGain(rabbit);
 
     tiger.bossConnect(boss1.bossEat,boss1.bossManipulation);
     eagle.bossConnect(boss2.bossEat,boss2.bossManipulation);
-    console.log(tiger.health);
+
     //boss.bonus(health,eat);
 
 

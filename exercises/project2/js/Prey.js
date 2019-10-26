@@ -27,6 +27,7 @@ class Prey {
     // Display properties
     this.fillColor = fillColor;
     this.radius = this.health;
+    this.checkConfusion=false;
     //this.preyName = name; // prey name
   }
 
@@ -46,6 +47,17 @@ class Prey {
     this.ty += 0.01;
     // Handle wrapping
     this.handleWrapping();
+  }
+
+  mesmerizing(initialSpeed,key1,key2){// reduce prey's speed when cheerleader is active
+   if(keyIsDown(key1)||keyIsDown(key2)){ // key to activate cheerleader
+      //if(this.preyRadius>20){
+       this.speed=1; // reset speed
+       this.speed=1;
+
+  }
+    else{this.speed=initialSpeed;}
+
   }
 
   // handleWrapping
