@@ -24,6 +24,7 @@ class Cheerleader{
     this.keyActivate=activeKey; // key control to activate cheerleader
 
     this.callCount=0;
+    this.sober=1;
   //  this.CheerleaderN=cheerleaderN;
 
   }
@@ -42,10 +43,11 @@ move(moveX){ /// move used to determine the moving direction of cheerleader
     }
   if(this.x>1000) {
     this.x=10;
-
+    this.sober=this.sober+3;
     }
   if(this.x<0)  {
     this.x=1000;
+    this.sober=this.sober+3;
   }
   }
 }
@@ -62,6 +64,8 @@ else{this.activeState=false;
 
 }
 }
+
+
 
 
   display() { // display Cheerleader

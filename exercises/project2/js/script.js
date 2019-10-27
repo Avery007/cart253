@@ -82,7 +82,7 @@ function setup() {
     let cheerleaderX =100+n*100;
     let cheerleaderY =50+n*50;
     let attraction=100;
-    let moveX=1;
+    let moveX=3;
 
     //let  clOpacity = color(0, 100, 100);
     //let cheerleaderSize = random(50, 200);
@@ -97,7 +97,7 @@ function setup() {
     // Generate (mostly) random values for the arguments of the Prey constructor
     let cheerleader1X =1000-m*100;
     let cheerleader1Y =m*50;
-    let moveX=-1
+    let moveX=-3;
 
     //let attraction=100;
     //let  clOpacity = color(0, 100, 100);
@@ -139,10 +139,11 @@ function draw() {
   // And for each one, move it and display it
   prey[i].move();
   prey[i].display();
-  //prey[i].mesmerizing(cheerleader.activeState);
-  prey[i].mesmerizing(random(3,10),90,78);// reduce prey's speed when cheerleader is active
 
-  console.log(prey[1].speed);
+  prey[i].mesmerizing(random(3,10),90,78,cheerleader[1].sober,cheerleader1[1].sober);// reduce prey's speed when cheerleader is active
+  console.log(cheerleader[1].sober);
+  console.log(cheerleader1[1].sober);
+  //console.log(prey[1].speed);
   tiger.handleEating(prey[i]);
   eagle.handleEating(prey[i]);
   boss1.bossGain(prey[i]);
@@ -166,7 +167,7 @@ function draw() {
 }
 for (let m = 0; m< cheerleader.length; m++) {
 // And for each one, move it and display it
-//cheerleader[i].move();
+
 
 cheerleader1[m].display();
 cheerleader1[m].keyControl();

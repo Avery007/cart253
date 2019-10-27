@@ -49,14 +49,25 @@ class Prey {
     this.handleWrapping();
   }
 
-  mesmerizing(initialSpeed,key1,key2){// reduce prey's speed when cheerleader is active
-   if(keyIsDown(key1)||keyIsDown(key2)){ // key to activate cheerleader
+  mesmerizing(initialSpeed,key1,key2,soberIndex1,soberIndex2){// reduce prey's speed when cheerleader is active
+   if(keyIsDown(key1)){ // key to activate cheerleader
       //if(this.preyRadius>20){
-       this.speed=1; // reset speed
-       this.speed=1;
+      if(initialSpeed>soberIndex1){
+       this.speed=soberIndex1; // reset speed
 
+}
   }
-    else{this.speed=initialSpeed;}
+  else if(keyIsDown(key2)){ // key to activate cheerleader
+     //if(this.preyRadius>20){
+     if(initialSpeed>soberIndex2){
+      this.speed=soberIndex2; // reset speed
+
+}
+ }
+   else{this.speed=initialSpeed;}
+
+
+
 
   }
 
