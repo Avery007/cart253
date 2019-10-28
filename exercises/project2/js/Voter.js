@@ -97,12 +97,12 @@ class Voter {
   display() {
     push();
     noStroke();
-    fill(this.fillColor);
+    fill(random(0,255));
     this.radius = this.health;
     ellipse(this.x, this.y, this.radius * 2);
     fill(150);
     textSize(this.radius);
-    text("vote",this.x,this.y);
+    text("vote",this.x-this.radius,this.y-this.radius);
 
 
     // display preys' name with prey image

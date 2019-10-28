@@ -32,8 +32,8 @@ let bossImg;
 let backMusic;
 
 let result = 0; // tracking game state
-let numPrey = 10; // How many Prey to simulate
-let prey = [];
+let numVoter = 10; // How many Prey to simulate
+let voter = [];
 
 let numCheerleader = 5; // How many Prey to simulate
 let cheerleader= [];
@@ -64,17 +64,17 @@ function setup() {
 // An empty array to store them in (we'll create them in setup())
 
   // Run a for loop numPrey times to generate each Prey and put it in the array
-  for (let i = 0; i < numPrey; i++) {
+  for (let i = 0; i < numVoter; i++) {
     // Generate (mostly) random values for the arguments of the Prey constructor
-    let preyX = random(0, 500);
-    let preyY = random(0, 500);
-    let preySpeed = random(7, 15);
-    let preyColor = color(0, 100, 100);
-    let preyRadius = random(3, 30);
+    let voterX = random(0, 500);
+    let voterY = random(0, 500);
+    let voterSpeed = random(7, 15);
+    let voterColor = color(100, 100, 100);
+    let voterRadius = random(3, 30);
     // Create a new Prey objects with the random values
-    let newPrey = new Prey(preyX, preyY, preySpeed, preyColor, preyRadius);
+    let newVoter = new Voter(voterX, voterY, voterSpeed, voterColor, voterRadius);
     // Add the new Prey object to the END of our array using push()
-    prey.push(newPrey);
+    voter.push(newVoter);
   }
 
   for (let n = 0; n < numCheerleader; n++) {
@@ -113,9 +113,9 @@ function setup() {
   boss2=new HiddenBoss(0,"boss2",bossImg,90);
   donkey = new Predator(100, 100, 5, 40, 1, donkeyImg); // source pixably
   elephant = new Predator(200, 200, 5, 40, 2, elephantImg); // source pixably
-  antelope = new Prey(100, 100, 10, color(255, 100, 10), 20, "antelope");
-  zebra = new Prey(100, 100, 8, color(255, 255, 255), 25, "zebra");
-  rabbit = new Prey(100, 100, 20, color(255, 255, 0), 10, "rabbit");
+  antelope = new Voter(100, 100, 10, color(255, 100, 10), 20, "antelope");
+  zebra = new Voter(100, 100, 8, color(255, 255, 255), 25, "zebra");
+  rabbit = new Voter(100, 100, 20, color(255, 255, 0), 10, "rabbit");
   //health=tiger.health;
 //  eat=tiger.eat;
 
@@ -135,23 +135,23 @@ function draw() {
   else if (result === 1) {imageMode(CORNER);
   image(background, 0, 0, windowWidth, windowHeight);
 
-    for (let i = 0; i < prey.length; i++) {
+    for (let i = 0; i < voter.length; i++) {
   // And for each one, move it and display it
-  prey[i].move();
-  prey[i].display();
+  voter[i].move();
+  voter[i].display();
 
-  prey[i].mesmerizing(random(3,10),88,78,cheerleader[1].sober,cheerleader1[1].sober);// reduce prey's speed when cheerleader is active
+  voter[i].mesmerizing(random(3,10),88,78,cheerleader[1].sober,cheerleader1[1].sober);// reduce prey's speed when cheerleader is active
   console.log(cheerleader[1].sober);
   console.log(cheerleader1[1].sober);
   //console.log(prey[1].speed);
-  donkey.handleEating(prey[i]);
-  elephant.handleEating(prey[i]);
-  boss1.bossGain(prey[i]);
-  boss2.bossGain(prey[i]);
-  donkey.handleEating(prey[i]);
-  elephant.handleEating(prey[i]);
-  boss1.bossGain(prey[i]);
-  boss2.bossGain(prey[i]);
+  donkey.handleEating(voter[i]);
+  elephant.handleEating(voter[i]);
+  boss1.bossGain(voter[i]);
+  boss2.bossGain(voter[i]);
+  donkey.handleEating(voter[i]);
+  elephant.handleEating(voter[i]);
+  boss1.bossGain(voter[i]);
+  boss2.bossGain(voter[i]);
 }
 
 
@@ -242,8 +242,8 @@ boss2.bossGain(rabbit);
 
 function instruction() {
   // show how many preys players eat
-  player1Info = "tiger eats: " + donkey.eat + " bonus：" + donkey.bonus;
-  player2Info = "eagle eats: " + elephant.eat + " bonus：" + elephant.bonus;
+  player1Info = "Donkey's votes: " + donkey.eat + " bonus：" + donkey.bonus;
+  player2Info = "Elephant's votes: " + elephant.eat + " bonus：" + elephant.bonus;
   textSize(20);
   fill(255);
   text(player1Info, windowWidth / 2, 70);
@@ -257,7 +257,7 @@ function instruction() {
 function gameOver() {
   if (donkey.isDead && elephant.isDead) { // check if both of the predators are dead,if so, game over
     result === 2; // change game state , game over
-    text("Game over ! now you know who ate more !", windowWidth / 2, 150); // display when game over
+    text("Game over ! now you know who is the winner more !", windowWidth / 2, 150); // display when game over
   }
 }
 
