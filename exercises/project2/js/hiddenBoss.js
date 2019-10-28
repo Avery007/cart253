@@ -2,7 +2,7 @@ class HiddenBoss {
 
 
   // constructor
-  constructor(power, name, img,bossN) {
+  constructor(power, name, img,activateKey) {
     // Position
 
     // Velocity and speed
@@ -21,7 +21,7 @@ class HiddenBoss {
     this.bossCall=86; // Space key to call the hidden boss, same for both player
     this.bossCall0=77;
     this.callCount=0;
-    this.bossN=bossN;
+    this.activateKey=activateKey;
 
   }
 
@@ -64,20 +64,20 @@ bossGain(prey){
 
 // set up key control to call boss, different player uses different key control
 keyControl(){
- if(this.bossN===1){ // player 1
-if(keyIsDown(this.bossCall0)){
+ //if(this.bossN===1){ // player 1
+if(keyIsDown(this.activateKey)){
   this.bossManipulation=true;}
 else{this.bossManipulation=false;}
 }
 //console.log(this.isCalled);
 
-if(this.bossN===2){ // player 2
-if(keyIsDown(this.bossCall)){
-  this.bossManipulation=true;}
-else{this.bossManipulation=false;}
-}
+//if(this.bossN===2){ // player 2
+//if(keyIsDown(this.bossCall)){
+  //this.bossManipulation=true;}
+//else{this.bossManipulation=false;}
+//}
 
-}
+//}
   display() { // display boss and black box
 
     if (this.bossManipulation) { // check if the key is pressed

@@ -8,8 +8,8 @@
 // The winter is the one who eat most preys
 
 // Our predator
-let tiger;
-let eagle;
+let donkey;
+let elephant;
 
 let boss;
 // The three prey
@@ -22,8 +22,8 @@ let player1Info;
 let player2Info;
 
 // display players and background by image
-let tigerImg; //tiger image
-let eagleImg; // eagle image
+let donkeyImg; //tiger image
+let elephantImg; // eagle image
 let background; // background img
 let front; // front image
 let bossImg;
@@ -47,10 +47,10 @@ let cheerleader1= [];
 
 function preload() {
 
-  tigerImg = loadImage('./assets/images/tiger.png');
-  eagleImg = loadImage('./assets/images/eagle.png');
+  donkeyImg = loadImage('./assets/images/donkey.png');
+  elephantImg = loadImage('./assets/images/elephant.png');
   background = loadImage('./assets/images/forest.jpg');
-  front = loadImage('./assets/images/front.png');
+  front = loadImage('./assets/images/p2front.png');
   backMusic = loadSound('./assets/sounds/music.wav');
   bossImg = loadImage('./assets/images/boss1.png');
   clImage=loadImage('./assets/images/cheerleader.png');
@@ -82,12 +82,12 @@ function setup() {
     let cheerleaderX =100+n*100;
     let cheerleaderY =50+n*50;
     let attraction=100;
-    let moveX=3;
+
 
     //let  clOpacity = color(0, 100, 100);
     //let cheerleaderSize = random(50, 200);
     // Create a new Prey objects with the random values
-    let newCheerleader = new Cheerleader(cheerleaderX, cheerleaderY,attraction,clImage, 90);
+    let newCheerleader = new Cheerleader(cheerleaderX, cheerleaderY,attraction,clImage, 88);
     // Add the new Prey object to the END of our array using push()
     cheerleader.push(newCheerleader);
 
@@ -97,27 +97,27 @@ function setup() {
     // Generate (mostly) random values for the arguments of the Prey constructor
     let cheerleader1X =1000-m*100;
     let cheerleader1Y =m*50;
-    let moveX=-3;
+
 
     //let attraction=100;
     //let  clOpacity = color(0, 100, 100);
     //let cheerleaderSize = random(50, 200);
     // Create a new Prey objects with the random values
-    let otherCheerleader = new Cheerleader(cheerleader1X, cheerleader1Y,100,cl1Image, 78,moveX);
+    let otherCheerleader = new Cheerleader(cheerleader1X, cheerleader1Y,100,cl1Image, 78);
     // Add the new Prey object to the END of our array using push()
     cheerleader1.push(otherCheerleader);
 
   }
 
-  boss1=new HiddenBoss(0,"boss1",bossImg,1);
-  boss2=new HiddenBoss(0,"boss2",bossImg,2);
-  tiger = new Predator(100, 100, 5, 40, 1, tigerImg); // source pixably
-  eagle = new Predator(200, 200, 5, 40, 2, eagleImg); // source pixably
+  boss1=new HiddenBoss(0,"boss1",bossImg,77);
+  boss2=new HiddenBoss(0,"boss2",bossImg,90);
+  donkey = new Predator(100, 100, 5, 40, 1, donkeyImg); // source pixably
+  elephant = new Predator(200, 200, 5, 40, 2, elephantImg); // source pixably
   antelope = new Prey(100, 100, 10, color(255, 100, 10), 20, "antelope");
   zebra = new Prey(100, 100, 8, color(255, 255, 255), 25, "zebra");
   rabbit = new Prey(100, 100, 20, color(255, 255, 0), 10, "rabbit");
-  health=tiger.health;
-  eat=tiger.eat;
+  //health=tiger.health;
+//  eat=tiger.eat;
 
 }
 
@@ -140,16 +140,16 @@ function draw() {
   prey[i].move();
   prey[i].display();
 
-  prey[i].mesmerizing(random(3,10),90,78,cheerleader[1].sober,cheerleader1[1].sober);// reduce prey's speed when cheerleader is active
+  prey[i].mesmerizing(random(3,10),88,78,cheerleader[1].sober,cheerleader1[1].sober);// reduce prey's speed when cheerleader is active
   console.log(cheerleader[1].sober);
   console.log(cheerleader1[1].sober);
   //console.log(prey[1].speed);
-  tiger.handleEating(prey[i]);
-  eagle.handleEating(prey[i]);
+  donkey.handleEating(prey[i]);
+  elephant.handleEating(prey[i]);
   boss1.bossGain(prey[i]);
   boss2.bossGain(prey[i]);
-  tiger.handleEating(prey[i]);
-  eagle.handleEating(prey[i]);
+  donkey.handleEating(prey[i]);
+  elephant.handleEating(prey[i]);
   boss1.bossGain(prey[i]);
   boss2.bossGain(prey[i]);
 }
@@ -161,7 +161,7 @@ function draw() {
 
   cheerleader[n].display();
   cheerleader[n].keyControl();
-  cheerleader[n].move(1);
+  cheerleader[n].move(3);
 
 
 }
@@ -171,7 +171,7 @@ for (let m = 0; m< cheerleader.length; m++) {
 
 cheerleader1[m].display();
 cheerleader1[m].keyControl();
-cheerleader1[m].move(-1);
+cheerleader1[m].move(-3);
 
 
 
@@ -185,28 +185,28 @@ cheerleader1[m].move(-1);
     instruction(); // show player's information
     gameOver(); //check if game over and display text when it is true
     // Handle input for the tiger
-    tiger.handleInput();
-    eagle.handleInput();
+    donkey.handleInput();
+    elephant.handleInput();
 
     // Move all the "animals"
-    tiger.move();
-    eagle.move();
+    donkey.move();
+    elephant.move();
     antelope.move();
     zebra.move();
     rabbit.move();
 
     // tracking if predators are dead
-    tiger.checkState();
-    eagle.checkState();
+    donkey.checkState();
+    elephant.checkState();
 
   //  Handle the tiger eating any of the prey
-    tiger.handleEating(antelope);
-    tiger.handleEating(zebra);
-    tiger.handleEating(rabbit);
+    donkey.handleEating(antelope);
+    donkey.handleEating(zebra);
+    donkey.handleEating(rabbit);
 
-    eagle.handleEating(antelope);
-    eagle.handleEating(zebra);
-    eagle.handleEating(rabbit);
+    elephant.handleEating(antelope);
+    elephant.handleEating(zebra);
+    elephant.handleEating(rabbit);
 
     boss1.bossGain(antelope);
       boss1.bossGain(zebra);
@@ -216,8 +216,8 @@ cheerleader1[m].move(-1);
     boss2.bossGain(zebra);
 boss2.bossGain(rabbit);
     // Display all the "animals"
-    tiger.display();
-    eagle.display();
+    donkey.display();
+    elephant.display();
     antelope.display();
     zebra.display();
     rabbit.display();
@@ -229,8 +229,8 @@ boss2.bossGain(rabbit);
     boss2.display();
     boss2.bossPower();
 
-    tiger.bossConnect(boss1.bossEat,boss1.bossManipulation);
-    eagle.bossConnect(boss2.bossEat,boss2.bossManipulation);
+    donkey.bossConnect(boss1.bossEat,boss1.bossManipulation);
+    elephant.bossConnect(boss2.bossEat,boss2.bossManipulation);
 
     //boss.bonus(health,eat);
 
@@ -242,8 +242,8 @@ boss2.bossGain(rabbit);
 
 function instruction() {
   // show how many preys players eat
-  player1Info = "tiger eats: " + tiger.eat + " bonus：" + tiger.bonus;
-  player2Info = "eagle eats: " + eagle.eat + " bonus：" + eagle.bonus;
+  player1Info = "tiger eats: " + donkey.eat + " bonus：" + donkey.bonus;
+  player2Info = "eagle eats: " + elephant.eat + " bonus：" + elephant.bonus;
   textSize(20);
   fill(255);
   text(player1Info, windowWidth / 2, 70);
@@ -255,7 +255,7 @@ function instruction() {
 }
 
 function gameOver() {
-  if (tiger.isDead && eagle.isDead) { // check if both of the predators are dead,if so, game over
+  if (donkey.isDead && elephant.isDead) { // check if both of the predators are dead,if so, game over
     result === 2; // change game state , game over
     text("Game over ! now you know who ate more !", windowWidth / 2, 150); // display when game over
   }
