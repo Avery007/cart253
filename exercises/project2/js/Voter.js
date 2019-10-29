@@ -22,11 +22,11 @@ class Voter {
     this.tx = random(0, 1000); // To make x and y noise different
     this.ty = random(0, 1000); // we use random starting values
     // Health properties
-    this.maxEffect = radius;
+    this.maxEffect = radius/2;
     this.effect= this.maxEffect; // Must be AFTER defining this.maxHealth
     // Display properties
     this.fillColor = fillColor;
-    this.radius = this.effect;
+    this.radius = radius;
     this.checkConfusion=false;
     //this.preyName = name; // prey name
   }
@@ -104,7 +104,7 @@ shapeShifting(){ fill(random(200,255),255,100);
     noStroke();
   //  fill(0,random(50,200),250);
     fill(random(100,255));
-    this.radius = this.effect;
+    this.radius = 2*this.effect;
     ellipse(this.x, this.y, this.radius * 2);
     fill(150);
     textSize(this.radius);
