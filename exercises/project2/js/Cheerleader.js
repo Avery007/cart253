@@ -87,4 +87,18 @@ else{this.activeState=false;
 
   }
 
+
+  musicPlay(music){
+   if  (this.activeState){
+     if(!music.isPlaying()){
+   music.play();
+
+  }
+
+
+
+}
+//else{music.pause();}
+}
+
 }

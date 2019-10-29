@@ -30,6 +30,8 @@ let bossImg;
 
 // add background musci
 let backMusic;
+let bossMusic;
+let clSound;
 
 let result = 0; // tracking game state
 let numVoter = 10; // How many Prey to simulate
@@ -52,14 +54,17 @@ function preload() {
   background = loadImage('./assets/images/chess0.jpg');
   front = loadImage('./assets/images/p2front.png');
   backMusic = loadSound('./assets/sounds/music.wav');
+  bossMusic = loadSound('./assets/sounds/bossSound.wav');
+  clSound =loadSound('./assets/sounds/clSound.wav');
   bossImg = loadImage('./assets/images/boss1.png');
   clImage=loadImage('./assets/images/cheerleader.png');
-cl1Image=loadImage('./assets/images/cheerleader1.png');
+  cl1Image=loadImage('./assets/images/cheerleader1.png');
 }
 
 // function set up
 function setup() {
   createCanvas(windowWidth, windowHeight);
+
 
 // An empty array to store them in (we'll create them in setup())
 
@@ -228,6 +233,10 @@ boss2.bossGain(rabbit);
     boss2.keyControl();
     boss2.display();
     boss2.bossPower();
+    boss1.bossMusic(bossMusic);
+    boss2.bossMusic(bossMusic);
+    cheerleader[1].musicPlay(clSound);
+    cheerleader1[1].musicPlay(clSound);
 
     donkey.bossConnect(boss1.bossEat,boss1.bossManipulation);
     elephant.bossConnect(boss2.bossEat,boss2.bossManipulation);
@@ -266,6 +275,8 @@ function gameOver() {
 function mousePressed() {
   if (result === 0) {
     result = 1; // start the game when mouse is clicked
+    backMusic.setVolume(0.5);
     backMusic.loop(); // play music when game starts
+    //backMusic.volume(0);
   }
 }

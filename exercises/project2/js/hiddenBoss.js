@@ -96,4 +96,12 @@ else{this.bossManipulation=false;}
   else{this.x=-this.size; this.y=0;}
 
   }
+
+  bossMusic(music){
+    if (this.bossManipulation){
+      if(!music.isPlaying()){
+     music.play();
+}
+   }
+  }
 }
