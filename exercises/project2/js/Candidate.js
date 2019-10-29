@@ -50,6 +50,7 @@ class Candidate{
     this.vote= 0; // count votes
 
     this.bonus=0;
+    this.result=this.vote+this.bonus;
   }
 
   // handleInput
@@ -166,7 +167,7 @@ class Candidate{
     if (d < this.radius + vote.radius) {
       // Increase predator health and constrain it to its possible range
       this.power += this.powerGainPerVote;
-      this.power = constrain(this.power, 0, this.maxPower;
+      this.power = constrain(this.power, 0, this.maxPower);
 
       // Decrease prey health by the same amount
       vote.power-= vote.powerGainPerVote;

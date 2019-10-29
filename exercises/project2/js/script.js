@@ -116,8 +116,8 @@ function setup() {
 
   boss1=new HiddenBoss(0,"boss1",bossImg,77);
   boss2=new HiddenBoss(0,"boss2",bossImg,90);
-  donkey = new Predator(100, 100, 5, 40, 1, donkeyImg); // source pixably
-  elephant = new Predator(200, 200, 5, 40, 2, elephantImg); // source pixably
+  donkey = new Candidate(100, 100, 5, 40, 1, donkeyImg); // source pixably
+  elephant = new Candidate(200, 200, 5, 40, 2, elephantImg); // source pixably
   antelope = new Voter(100, 100, 10, fill(0,random(50,200),250), "antelope");
   zebra = new Voter(100, 100, 8, color(255, 255, 255), 25, "zebra");
   rabbit = new Voter(100, 100, 20, color(255, 255, 0), 10, "rabbit");
@@ -251,8 +251,8 @@ boss2.bossGain(rabbit);
 
 function instruction() {
   // show how many preys players eat
-  player1Info = "Donkey's votes: " + donkey.eat + " bonus：" + donkey.bonus;
-  player2Info = "Elephant's votes: " + elephant.eat + " bonus：" + elephant.bonus;
+  player1Info = "Donkey's votes: " + donkey.vote + " bonus：" + donkey.bonus;
+  player2Info = "Elephant's votes: " + elephant.vote + " bonus：" + elephant.bonus;
   textSize(20);
   fill(255);
   text(player1Info, windowWidth / 2, 70);
@@ -264,7 +264,7 @@ function instruction() {
 }
 
 function gameOver() {
-  if (donkey.isDead && elephant.isDead) { // check if both of the predators are dead,if so, game over
+  if (donkey.isFailed && elephant.isFailed) { // check if both of the predators are dead,if so, game over
     result === 2; // change game state , game over
     text("Game over ! now you know who is the winner more !", windowWidth / 2, 150); // display when game over
   }
