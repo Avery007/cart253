@@ -13,9 +13,8 @@ let elephant;
 
 let boss;
 // The three prey
-let antelope;
-let zebra;
-let rabbit;
+let elites;
+
 
 // display how many preys eaten
 let player1Info;
@@ -118,9 +117,9 @@ function setup() {
   boss2=new HiddenBoss(0,"boss2",bossImg,90);
   donkey = new Candidate(100, 100, 5, 40, 1, donkeyImg); // source pixably
   elephant = new Candidate(200, 200, 5, 40, 2, elephantImg); // source pixably
-  antelope = new Voter(100, 100, 10, fill(0,random(50,200),250), "antelope");
-  zebra = new Voter(100, 100, 8, color(255, 255, 255), 25, "zebra");
-  rabbit = new Voter(100, 100, 20, color(255, 255, 0), 10, "rabbit");
+  elites = new Elites(100, 100, 20, fill(0,random(50,200),250), 10);
+  //superElite= new Voter(100, 100, 30, color(255, 255, 255), 25, "zebra");
+   //= new Voter(100, 100, 20, color(255, 255, 0), 10, "rabbit");
   //health=tiger.health;
 //  eat=tiger.eat;
 
@@ -196,36 +195,35 @@ cheerleader1[m].move(-3);
     // Move all the "animals"
     donkey.move();
     elephant.move();
-    antelope.move();
-    zebra.move();
-    rabbit.move();
+    elites.move();
+    
 
     // tracking if predators are dead
     donkey.checkState();
     elephant.checkState();
 
   //  Handle the tiger eating any of the prey
-    donkey.handleEating(antelope);
-    donkey.handleEating(zebra);
-    donkey.handleEating(rabbit);
+  //  donkey.handleEating(elite);
+    //donkey.handleEating(zebra);
+    //donkey.handleEating(rabbit);
 
-    elephant.handleEating(antelope);
-    elephant.handleEating(zebra);
-    elephant.handleEating(rabbit);
+    //elephant.handleEating(antelope);
+    //elephant.handleEating(zebra);
+    //elephant.handleEating(rabbit);
 
-    boss1.bossGain(antelope);
-      boss1.bossGain(zebra);
-  boss1.bossGain(rabbit);
+    //boss1.bossGain(antelope);
+      //boss1.bossGain(zebra);
+  //boss1.bossGain(elite);
 
-  boss2.bossGain(antelope);
-    boss2.bossGain(zebra);
-boss2.bossGain(rabbit);
+  //boss2.bossGain(elites);
+  //  boss2.bossGain(zebra);
+//boss2.bossGain(rabbit);
     // Display all the "animals"
     donkey.display();
     elephant.display();
-    antelope.display();
-    zebra.display();
-    rabbit.display();
+  //  antelope.display();
+    //zebra.display();
+    elites.display();
   //boss.blackBoxState=tiger.isCalled;
     boss1.keyControl();
     boss1.display();
@@ -280,3 +278,9 @@ function mousePressed() {
     //backMusic.volume(0);
   }
 }
+//function compare(){
+ //if (elephant.result>donkey.result){
+   //let winner ="elephant";
+ //}
+
+//}
