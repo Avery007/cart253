@@ -23,6 +23,7 @@ let player2Info;
 // display players and background by image
 let donkeyImg; //tiger image
 let elephantImg; // eagle image
+let eliteImage;
 let background; // background img
 let front; // front image
 let bossImg;
@@ -58,6 +59,7 @@ function preload() {
   bossImg = loadImage('./assets/images/boss1.png');
   clImage=loadImage('./assets/images/cheerleader.png');
   cl1Image=loadImage('./assets/images/cheerleader1.png');
+  eliteImage=loadImage('./assets/images/superElite.png');
 }
 
 // function set up
@@ -117,7 +119,7 @@ function setup() {
   boss2=new HiddenBoss(0,"boss2",bossImg,90);
   donkey = new Candidate(100, 100, 5, 40, 1, donkeyImg); // source pixably
   elephant = new Candidate(200, 200, 5, 40, 2, elephantImg); // source pixably
-  elites = new Elites(100, 100, 20, fill(0,random(50,200),250), 10);
+  elites = new Elites(100, 100, 20, eliteImage, 10);
   //superElite= new Voter(100, 100, 30, color(255, 255, 255), 25, "zebra");
    //= new Voter(100, 100, 20, color(255, 255, 0), 10, "rabbit");
   //health=tiger.health;
@@ -196,7 +198,7 @@ cheerleader1[m].move(-3);
     donkey.move();
     elephant.move();
     elites.move();
-    
+
 
     // tracking if predators are dead
     donkey.checkState();

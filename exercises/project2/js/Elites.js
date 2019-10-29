@@ -3,7 +3,7 @@ class Elites{
 
 
 
-constructor(x, y, speed, fillColor,radius) {
+constructor(x, y, speed,img,radius) {
   // Position
   this.x = x;
   this.y = y;
@@ -18,8 +18,9 @@ constructor(x, y, speed, fillColor,radius) {
   this.maxPower= 50;
   this.power= this.maxPower; // Must be AFTER defining this.maxHealth
   // Display properties
-  this.fillColor = fillColor;
+
   this.radius = radius;
+  this.img=img;
 
   //this.preyName = name; // prey name
 }
@@ -69,13 +70,14 @@ handleWrapping() {
 // with a radius the same size as its current health.
 display() {
   push();
-  noStroke();
+//  NoStroke();
 //  fill(0,random(50,200),250);
-  fill(random(0,255),255,255);
-  ellipse(this.x, this.y, this.radius * 2);
+
+
+image(this.img, this.x, this.y, this.radius*2,this.radius*2);
   fill(150);
   textSize(this.radius);
-  text("vote",this.x-this.radius,this.y-this.radius);
+  text("Elites",this.x-this.radius,this.y-this.radius);
 
 
   // display preys' name with prey image
@@ -95,7 +97,7 @@ reset() {
   // Default health
   this.power = this.maxPower;
   // Default radius
-  
+
 }
 
 
