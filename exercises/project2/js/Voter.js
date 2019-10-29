@@ -97,7 +97,8 @@ class Voter {
   display() {
     push();
     noStroke();
-    fill(random(0,255));
+  //  fill(0,random(50,200),250);
+    fill(random(0,255),255,255);
     this.radius = this.health;
     ellipse(this.x, this.y, this.radius * 2);
     fill(150);

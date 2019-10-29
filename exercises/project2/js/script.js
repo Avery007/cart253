@@ -47,9 +47,9 @@ let cheerleader1= [];
 
 function preload() {
 
-  donkeyImg = loadImage('./assets/images/donkey.png');
-  elephantImg = loadImage('./assets/images/elephant.png');
-  background = loadImage('./assets/images/forest.jpg');
+  donkeyImg = loadImage('./assets/images/donkey1.png');
+  elephantImg = loadImage('./assets/images/elephant0.png');
+  background = loadImage('./assets/images/chess0.jpg');
   front = loadImage('./assets/images/p2front.png');
   backMusic = loadSound('./assets/sounds/music.wav');
   bossImg = loadImage('./assets/images/boss1.png');
@@ -113,7 +113,7 @@ function setup() {
   boss2=new HiddenBoss(0,"boss2",bossImg,90);
   donkey = new Predator(100, 100, 5, 40, 1, donkeyImg); // source pixably
   elephant = new Predator(200, 200, 5, 40, 2, elephantImg); // source pixably
-  antelope = new Voter(100, 100, 10, color(255, 100, 10), 20, "antelope");
+  antelope = new Voter(100, 100, 10, fill(0,random(50,200),250), "antelope");
   zebra = new Voter(100, 100, 8, color(255, 255, 255), 25, "zebra");
   rabbit = new Voter(100, 100, 20, color(255, 255, 0), 10, "rabbit");
   //health=tiger.health;
