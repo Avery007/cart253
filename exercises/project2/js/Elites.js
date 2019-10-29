@@ -16,12 +16,15 @@ constructor(x, y, speed,img,radius) {
   this.tx = random(500, 1000); // To make x and y noise different
   this.ty = random(0, 1000); // we use random starting values
   // Health properties
-  this.maxPower= 40;
+  this.maxPower= 60;
   this.power= this.maxPower; // Must be AFTER defining this.maxHealth
+  this.resetPower=this.power;
+  this.noElites=false;
   // Display properties
   this.visibility=70;
   this.radius = radius;
   this.img=img;
+  this.countElites=0;// count how many times player meets elites
 
   //this.preyName = name; // prey name
 }
@@ -76,6 +79,7 @@ display() {
 //this.visibility=200-this.power;// make elites more visible when their power is reducing
 this.radius=this.power;
 tint(255,this.visibility);
+imageMode(CENTER);
 image(this.img, this.x, this.y, this.radius*2,this.radius*2);
   fill(150);
   textSize(this.radius);
@@ -100,6 +104,8 @@ handleVote(candidate) {
 
 
       candidate.vote= candidate.vote+ elites.power;
+      candidate.maxPower=candidate.maxPower+floor(elites.power/3);
+      this.countElites=this.countElites+1;
       this.reset();
 
 
@@ -114,22 +120,39 @@ else{this.reset();}
 }
 
 
+checkElites(){
+if(this.resetPower<1){
+this.noElites=true;
+this.power=0;
+this.radius=0;
+}
 
+}
 
 // reset
 //
 // Set the position to a random location and reset health
 // and radius back to default
 reset() {
+  this.resetPower = this.maxPower-5*this.countElites;
+  if(this.resetPower<0){
+  this.noElites=true;
+  this.power=0;
+  this.radius=0;
+  this.x=-this.radius;
+  this.y=-this.radius;
+  }
+  else{
   // Random position
   this.x = random(0, width);
   this.y = random(0, height);
   // Default health
-  this.power = this.maxPower;
-  this.visibility=70;
+
+  this.power=this.resetPower;
+  this.visibility=100;
   this.speed=this.originalSpeed;
   // Default radius
-
+}
 }
 
 

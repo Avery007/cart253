@@ -40,11 +40,11 @@ class HiddenBoss {
 
 
 
-bossGain(prey){
+bossGain(vote){
     // Calculate distance from this predator to the prey
-    let d = dist(this.x, this.y, prey.x, prey.y);
+    let d = dist(this.x, this.y, vote.x, vote.y);
     // Check if the distance is less than their two radii (an overlap)
-    if (d < this.size/2 + prey.radius) {
+    if (d < this.size/2 + vote.radius) {
 
     //  prey.health=prey.health-20;
 
@@ -54,7 +54,7 @@ bossGain(prey){
         this.bossEat = this.bossEat + 1; // track how mnay preys the player eat
 
 
-        prey.reset();
+        vote.reset();
 
 
 }

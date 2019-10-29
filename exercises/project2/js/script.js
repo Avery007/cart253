@@ -261,7 +261,7 @@ function instruction() {
   text(player2Info, windowWidth / 2, 100);
   text(boss1.bossEat, windowWidth / 2, 120);
   text(boss2.bossEat, windowWidth / 2, 140);
-
+  console.log(elites.countElites);
 
 }
 
