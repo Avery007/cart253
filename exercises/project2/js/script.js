@@ -199,6 +199,10 @@ cheerleader1[m].move(-3);
     elephant.move();
     elites.move();
 
+  elites.handleVote(elephant);
+  elites.handleVote(donkey);
+  console.log(elites.radius);
+  elites.elitesPowerUpdate();
 
     // tracking if predators are dead
     donkey.checkState();

@@ -15,10 +15,10 @@ constructor(x, y, speed,img,radius) {
   this.tx = random(0, 1000); // To make x and y noise different
   this.ty = random(0, 1000); // we use random starting values
   // Health properties
-  this.maxPower= 50;
+  this.maxPower= 70;
   this.power= this.maxPower; // Must be AFTER defining this.maxHealth
   // Display properties
-
+  this.visibility=200-this.power;
   this.radius = radius;
   this.img=img;
 
@@ -72,12 +72,13 @@ display() {
   push();
 //  NoStroke();
 //  fill(0,random(50,200),250);
-
-
-image(this.img, this.x, this.y, this.radius*2,this.radius*2);
+this.visibility=200-this.power;// make elites more visible when their power is reducing
+this.radius=this.power;
+tint(255,this.visibility);
+image(this.img, this.x, this.y, this.radius,this.radius);
   fill(150);
-  textSize(this.radius);
-  text("Elites",this.x-this.radius,this.y-this.radius);
+  textSize(this.radius/2);
+  text("Elites",this.x,this.y);
 
 
   // display preys' name with prey image
@@ -85,6 +86,30 @@ image(this.img, this.x, this.y, this.radius*2,this.radius*2);
   //text(this.preyName, this.x, this.y - this.radius);
   pop();
 }
+
+handleVote(candidate) {
+  // Calculate distance from this predator to the prey
+  let d = dist(this.x, this.y, candidate.x, candidate.y);
+  // Check if the distance is less than their two radii (an overlap)
+  if (d < this.radius/2 + candidate.radius) {
+
+
+      candidate.vote= candidate.vote+ elites.power;
+      this.reset();
+
+
+  }
+}
+
+elitesPowerUpdate(){ // reduce elites power gradually as game is active
+  if(this.power>1){
+  this.power=this.power-0.5;
+}
+else{this.reset();}
+}
+
+
+
 
 // reset
 //
