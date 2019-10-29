@@ -150,14 +150,12 @@ function draw() {
   //console.log(cheerleader[1].sober);
   //console.log (cheerleader1[1].sober);
   //console.log(prey[1].speed);
-  donkey.handleEating(voter[i]);
-  elephant.handleEating(voter[i]);
+  donkey.gainVote(voter[i]);
+  elephant.gainVote(voter[i]);
   boss1.bossGain(voter[i]);
   boss2.bossGain(voter[i]);
-  donkey.handleEating(voter[i]);
-  elephant.handleEating(voter[i]);
-  boss1.bossGain(voter[i]);
-  boss2.bossGain(voter[i]);
+
+
 }
 
 

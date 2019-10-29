@@ -22,11 +22,11 @@ class Voter {
     this.tx = random(0, 1000); // To make x and y noise different
     this.ty = random(0, 1000); // we use random starting values
     // Health properties
-    this.maxHealth = radius;
-    this.health = this.maxHealth; // Must be AFTER defining this.maxHealth
+    this.maxEffect = radius;
+    this.effect= this.maxEffect; // Must be AFTER defining this.maxHealth
     // Display properties
     this.fillColor = fillColor;
-    this.radius = this.health;
+    this.radius = this.effect;
     this.checkConfusion=false;
     //this.preyName = name; // prey name
   }
@@ -71,6 +71,11 @@ class Voter {
 
   }
 
+shapeShifting(){ fill(random(200,255),255,100);
+  rectMode(CENTER);
+  rect(this.x, this.y, this.radius * 2,this.radius*2);
+
+}
   // handleWrapping
   //
   // Checks if the prey has gone off the canvas and
@@ -98,8 +103,8 @@ class Voter {
     push();
     noStroke();
   //  fill(0,random(50,200),250);
-    fill(random(0,255),255,255);
-    this.radius = this.health;
+    fill(random(100,255));
+    this.radius = this.effect;
     ellipse(this.x, this.y, this.radius * 2);
     fill(150);
     textSize(this.radius);
@@ -121,8 +126,8 @@ class Voter {
     this.x = random(0, width);
     this.y = random(0, height);
     // Default health
-    this.health = this.maxHealth;
+    this.effect = this.maxEffect;
     // Default radius
-    this.radius = this.health;
+    this.radius = this.effect;
   }
 }

@@ -21,7 +21,7 @@ class Candidate{
     // Health properties
     this.maxPower = radius;
     this.power = this.maxPower; // Must be AFTER defining this.maxHealth
-    this.powerLossPerMove = 0.01;
+    this.powerLossPerMove = 0.05;
     this.powerGainPerVote = 1;
     // Display properties
 
@@ -79,7 +79,7 @@ class Candidate{
       if (keyIsDown(this.p1speedup)) { // speedup when shift is pressed
         this.vy = this.vy * 3;
         this.vx = this.vx * 3;
-
+  this.power=this.power-0.1;
       }
     }
 
@@ -103,7 +103,7 @@ class Candidate{
       if (keyIsDown(this.p2speedup)) { // speedup when enter key is pressed
         this.vy = this.vy * 3;
         this.vx = this.vx * 3;
-
+        this.power=this.power-0.1;
       }
     }
 
@@ -124,11 +124,12 @@ class Candidate{
     this.x += this.vx;
     this.y += this.vy;
     // Update health
-    if (this.isDead) // rest player health and size when it is dead
+    if (this.isFailed) // rest player health and size when it is dead
     {
       this.power = 0;
       this.radius = 0;
-    } else { // reudce play health when game is active
+    }
+     else { // reudce play health when game is active
       this.power = this.power- this.powerLossPerMove;
       this.power = constrain(this.power, 0, this.maxPower);
       // Handle wrapping
@@ -160,20 +161,23 @@ class Candidate{
   // Takes a Prey object as an argument and checks if the predator
   // overlaps it. If so, reduces the prey's health and increases
   // the predator's. If the prey dies, it gets reset.
-  handleEating(vote) {
+  gainVote(vote) {
     // Calculate distance from this predator to the prey
     let d = dist(this.x, this.y, vote.x, vote.y);
     // Check if the distance is less than their two radii (an overlap)
+      if (d < this.radius*2 + vote.radius*2){
+      vote.shapeShifting();
+}
     if (d < this.radius + vote.radius) {
       // Increase predator health and constrain it to its possible range
       this.power += this.powerGainPerVote;
       this.power = constrain(this.power, 0, this.maxPower);
 
       // Decrease prey health by the same amount
-      vote.power-= vote.powerGainPerVote;
+      vote.effect= vote.effect-this.powerGainPerVote;
 
       // Check if the prey died and reset it if so
-      if (vote.health < 0) {
+      if (vote.effect< 0) {
         this.vote= this.vote+ 1; // track how mnay preys the player eat
         vote.reset();
 
