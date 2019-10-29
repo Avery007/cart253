@@ -10,15 +10,16 @@ constructor(x, y, speed,img,radius) {
   // Velocity and speed
   this.vx = 0;
   this.vy = 0;
-  this.speed = speed;
+  this.originalSpeed = speed;
+  this.speed=this.originalSpeed;
   // Time properties for noise() function
-  this.tx = random(0, 1000); // To make x and y noise different
+  this.tx = random(500, 1000); // To make x and y noise different
   this.ty = random(0, 1000); // we use random starting values
   // Health properties
-  this.maxPower= 70;
+  this.maxPower= 40;
   this.power= this.maxPower; // Must be AFTER defining this.maxHealth
   // Display properties
-  this.visibility=200-this.power;
+  this.visibility=70;
   this.radius = radius;
   this.img=img;
 
@@ -72,12 +73,12 @@ display() {
   push();
 //  NoStroke();
 //  fill(0,random(50,200),250);
-this.visibility=200-this.power;// make elites more visible when their power is reducing
+//this.visibility=200-this.power;// make elites more visible when their power is reducing
 this.radius=this.power;
 tint(255,this.visibility);
-image(this.img, this.x, this.y, this.radius,this.radius);
+image(this.img, this.x, this.y, this.radius*2,this.radius*2);
   fill(150);
-  textSize(this.radius/2);
+  textSize(this.radius);
   text("Elites",this.x,this.y);
 
 
@@ -88,9 +89,13 @@ image(this.img, this.x, this.y, this.radius,this.radius);
 }
 
 handleVote(candidate) {
-  // Calculate distance from this predator to the prey
+  // Calculate distance from this elite to the candidate
   let d = dist(this.x, this.y, candidate.x, candidate.y);
   // Check if the distance is less than their two radii (an overlap)
+    if (d < this.radius *2+ candidate.radius*2) {
+    this.visibility=this.visibility+5;// make elites more visible when their power is reducing
+    this.speed=this.speed-1; // change their speed so that they woild avoid run into players
+}
   if (d < this.radius/2 + candidate.radius) {
 
 
@@ -121,6 +126,8 @@ reset() {
   this.y = random(0, height);
   // Default health
   this.power = this.maxPower;
+  this.visibility=70;
+  this.speed=this.originalSpeed;
   // Default radius
 
 }

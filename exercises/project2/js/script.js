@@ -147,8 +147,8 @@ function draw() {
   voter[i].display();
 
   voter[i].mesmerizing(random(3,10),88,78,cheerleader[1].sober,cheerleader1[1].sober);// reduce prey's speed when cheerleader is active
-  console.log(cheerleader[1].sober);
-  console.log(cheerleader1[1].sober);
+  //console.log(cheerleader[1].sober);
+  //console.log (cheerleader1[1].sober);
   //console.log(prey[1].speed);
   donkey.handleEating(voter[i]);
   elephant.handleEating(voter[i]);
@@ -201,7 +201,7 @@ cheerleader1[m].move(-3);
 
   elites.handleVote(elephant);
   elites.handleVote(donkey);
-  console.log(elites.radius);
+  console.log(elites.speed);
   elites.elitesPowerUpdate();
 
     // tracking if predators are dead
