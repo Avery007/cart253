@@ -49,7 +49,7 @@ class Voter {
     this.handleWrapping();
   }
 
-  mesmerizing(initialSpeed,key1,key2,soberIndex1,soberIndex2){// reduce prey's speed when cheerleader is active
+mesmerizing(initialSpeed,key1,key2,soberIndex1,soberIndex2){// reduce prey's speed when cheerleader is active
    if(keyIsDown(key1)){ // key to activate cheerleader
       //if(this.preyRadius>20){
       if(initialSpeed>soberIndex1){
@@ -106,7 +106,7 @@ shapeShifting(){ fill(random(200,255),255,100);
     fill(random(100,255));
     this.radius = 2*this.effect;
     ellipse(this.x, this.y, this.radius * 2);
-    fill(150);
+    fill(random(70,170),random(50,200), 255);
     textSize(this.radius);
     text("vote",this.x-this.radius,this.y-this.radius);
 

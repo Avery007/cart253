@@ -87,10 +87,10 @@ else{this.bossManipulation=false;}
        this.y = random(0,500);
        imageMode(CENTER);
        image(this.img, this.x, this.y, this.size, this.size);
-      fill(255);
+      fill(random(190,255));
       textSize(60);
-      text(this.name, 500, 100);
-      console.log(this.size);
+      text("Boss Power !", 500, 150);
+
 
     }
   else{this.x=-this.size; this.y=0;}

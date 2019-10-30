@@ -78,7 +78,7 @@ function setup() {
     let voterX = random(0, 500);
     let voterY = random(0, 500);
     let voterSpeed = random(7, 15);
-    let voterColor = color(100, 100, 100);
+    let voterColor = color(38, 18, 255);
     let voterRadius = random(3, 30);
     // Create a new Prey objects with the random values
     let newVoter = new Voter(voterX, voterY, voterSpeed, voterColor, voterRadius);
@@ -90,13 +90,8 @@ function setup() {
     // Generate (mostly) random values for the arguments of the Prey constructor
     let cheerleaderX =100+n*100;
     let cheerleaderY =50+n*50;
-    let attraction=100;
 
-
-    //let  clOpacity = color(0, 100, 100);
-    //let cheerleaderSize = random(50, 200);
-    // Create a new Prey objects with the random values
-    let newCheerleader = new Cheerleader(cheerleaderX, cheerleaderY,attraction,clImage, 88);
+    let newCheerleader = new Cheerleader(cheerleaderX, cheerleaderY,100,clImage, 88);
     // Add the new Prey object to the END of our array using push()
     cheerleader.push(newCheerleader);
 
@@ -104,7 +99,7 @@ function setup() {
 
   for (let m = 0; m< numCheerleader; m++) {
     // Generate (mostly) random values for the arguments of the Prey constructor
-    let cheerleader1X =1000-m*100;
+    let cheerleader1X =width-m*100;
     let cheerleader1Y =m*50;
 
     let otherCheerleader = new Cheerleader(cheerleader1X, cheerleader1Y,100,cl1Image, 78);
@@ -115,8 +110,8 @@ function setup() {
 
   boss1=new HiddenBoss(0,"boss1",bossImg,77);
   boss2=new HiddenBoss(0,"boss2",bossImg,90);
-  donkey = new Candidate(100, 100, 5, 40, 1, donkeyImg); // source pixably
-  elephant = new Candidate(200, 200, 5, 40, 2, elephantImg); // source pixably
+  donkey = new Candidate(width-200, 200, 5, 50, 1, donkeyImg); // source pixably
+  elephant = new Candidate(200, 200, 5, 40, 50, elephantImg); // source pixably
   elites = new Elites(100, 100, 20, eliteImage, 10);
 
 }
@@ -159,7 +154,7 @@ function draw() {
 
   cheerleader[n].display();
   cheerleader[n].keyControl();
-  cheerleader[n].move(3);
+  cheerleader[n].move(1.5);
 
 
 }
@@ -169,7 +164,7 @@ for (let m = 0; m< cheerleader.length; m++) {
 
 cheerleader1[m].display();
 cheerleader1[m].keyControl();
-cheerleader1[m].move(-3);
+cheerleader1[m].move(-1.5);
 
 
 }
@@ -189,7 +184,6 @@ cheerleader1[m].move(-3);
 
   elites.handleVote(elephant);
   elites.handleVote(donkey);
-  console.log(donkey.isFailed);
   elites.elitesPowerUpdate();
 
     // tracking if predators are dead
@@ -197,12 +191,10 @@ cheerleader1[m].move(-3);
     elephant.checkState();
 
 
-  //boss1.bossGain(elite);
+    boss1.bossGain(elites);
 
-  //boss2.bossGain(elites);
-  //  boss2.bossGain(zebra);
-//boss2.bossGain(rabbit);
-    // Display all the "animals"
+    boss2.bossGain(elites);
+
     donkey.display();
     elephant.display();
   //  antelope.display();
@@ -242,6 +234,7 @@ function instruction() {
   player2Info = "Elephant's votes: " + elephant.vote + " bonus：" + elephant.bonus+ " total:" + elephant.result;
   textSize(20);
   fill(195, 181, 255,255);
+  text("Get 450 votes or beat your rival to win!", windowWidth / 2, 40);
   text(player1Info, windowWidth / 2, 70);
   text(player2Info, windowWidth / 2, 100);
   //text(boss1.bossEat, windowWidth / 2, 120);
@@ -296,9 +289,3 @@ function mousePressed() {
   }
 
 }
-//function compare(){
- //if (elephant.result>donkey.result){
-   //let winner ="elephant";
- //}
-
-//}
