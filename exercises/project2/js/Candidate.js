@@ -50,7 +50,7 @@ class Candidate{
     this.vote= 0; // count votes
 
     this.bonus=0;
-    this.result=this.vote+this.bonus;
+    this.result=0;
   }
 
   // handleInput
@@ -58,6 +58,7 @@ class Candidate{
   // Checks if an arrow key is pressed and sets the predator's
   // velocity appropriately.
   handleInput() {
+
     // Horizontal movement
     if (this.playerNumber === 1) { // players as a tiger
       if (keyIsDown(this.p1leftKey)) {
@@ -185,11 +186,12 @@ class Candidate{
     }
   }
 
-  bossConnect(bossEat,check){
-    if(check){ // when key V for calling boss is pressed
+  bossConnect(bossPower,bossIsActive){
+     if(!this.isFailed){// firstly check if play is active
+    if(bossIsActive){ // when key V for calling boss is pressed
 this.power=this.power-0.5; // reduce player' health
-this.bonus= floor(bossEat/3);     //this.eat=getEat+floor(bossEat/3);
-
+this.bonus= floor(bossPower/3);     //this.eat=getEat+floor(bossEat/3);
+}
   }
 }
   // chekc if player is dead
@@ -198,6 +200,7 @@ this.bonus= floor(bossEat/3);     //this.eat=getEat+floor(bossEat/3);
     if (this.power < 1) {
       this.isFailed = true;
     }
+      this.result=this.vote+this.bonus;
   }
 
 

@@ -27,13 +27,14 @@ let eliteImage;
 let background; // background img
 let front; // front image
 let bossImg;
+let finalBossImg;
 
 // add background musci
 let backMusic;
 let bossMusic;
 let clSound;
 
-let result = 0; // tracking game state
+let gameState = 0; // tracking game state
 let numVoter = 10; // How many Prey to simulate
 let voter = [];
 
@@ -58,6 +59,7 @@ function preload() {
   bossMusic = loadSound('./assets/sounds/bossSound.wav');
   clSound =loadSound('./assets/sounds/clSound.wav');
   bossImg = loadImage('./assets/images/boss1.png');
+  finalBossImg = loadImage('./assets/images/boss.png');
   clImage=loadImage('./assets/images/cheerleader.png');
   cl1Image=loadImage('./assets/images/cheerleader1.png');
   eliteImage=loadImage('./assets/images/superElite.png');
@@ -105,11 +107,6 @@ function setup() {
     let cheerleader1X =1000-m*100;
     let cheerleader1Y =m*50;
 
-
-    //let attraction=100;
-    //let  clOpacity = color(0, 100, 100);
-    //let cheerleaderSize = random(50, 200);
-    // Create a new Prey objects with the random values
     let otherCheerleader = new Cheerleader(cheerleader1X, cheerleader1Y,100,cl1Image, 78);
     // Add the new Prey object to the END of our array using push()
     cheerleader1.push(otherCheerleader);
@@ -121,32 +118,23 @@ function setup() {
   donkey = new Candidate(100, 100, 5, 40, 1, donkeyImg); // source pixably
   elephant = new Candidate(200, 200, 5, 40, 2, elephantImg); // source pixably
   elites = new Elites(100, 100, 20, eliteImage, 10);
-  //superElite= new Voter(100, 100, 30, color(255, 255, 255), 25, "zebra");
-   //= new Voter(100, 100, 20, color(255, 255, 0), 10, "rabbit");
-  //health=tiger.health;
-//  eat=tiger.eat;
 
 }
 
 
-function setupEnd (){
-
-
-
-
-}
 // draw()
 //
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
 
 
-  if (result === 0) { // before game starts, display the front image
+  if (gameState=== 0) { // before game starts, display the front image
 
     image(front, 0, 0, width, height);
   }
   // when game starts
-  else if (result === 1) {imageMode(CORNER);
+  else if (gameState === 1) {
+    imageMode(CORNER);
   image(background, 0, 0, windowWidth, windowHeight);
 
     for (let i = 0; i < voter.length; i++) {
@@ -155,9 +143,7 @@ function draw() {
   voter[i].display();
 
   voter[i].mesmerizing(random(3,10),88,78,cheerleader[1].sober,cheerleader1[1].sober);// reduce prey's speed when cheerleader is active
-  //console.log(cheerleader[1].sober);
-  //console.log (cheerleader1[1].sober);
-  //console.log(prey[1].speed);
+
   donkey.gainVote(voter[i]);
   elephant.gainVote(voter[i]);
   boss1.bossGain(voter[i]);
@@ -186,15 +172,11 @@ cheerleader1[m].keyControl();
 cheerleader1[m].move(-3);
 
 
-
-
-
-
 }
 
 
      // display background
-    instruction(); // show player's information
+  // show player's information
     gameOver(); //check if game over and display text when it is true
     // Handle input for the tiger
     donkey.handleInput();
@@ -207,24 +189,14 @@ cheerleader1[m].move(-3);
 
   elites.handleVote(elephant);
   elites.handleVote(donkey);
-  console.log(elites.speed);
+  console.log(donkey.isFailed);
   elites.elitesPowerUpdate();
 
     // tracking if predators are dead
     donkey.checkState();
     elephant.checkState();
 
-  //  Handle the tiger eating any of the prey
-  //  donkey.handleEating(elite);
-    //donkey.handleEating(zebra);
-    //donkey.handleEating(rabbit);
 
-    //elephant.handleEating(antelope);
-    //elephant.handleEating(zebra);
-    //elephant.handleEating(rabbit);
-
-    //boss1.bossGain(antelope);
-      //boss1.bossGain(zebra);
   //boss1.bossGain(elite);
 
   //boss2.bossGain(elites);
@@ -247,7 +219,7 @@ cheerleader1[m].move(-3);
     boss2.bossMusic(bossMusic);
     cheerleader[1].musicPlay(clSound);
     cheerleader1[1].musicPlay(clSound);
-
+  instruction();
     donkey.bossConnect(boss1.bossEat,boss1.bossManipulation);
     elephant.bossConnect(boss2.bossEat,boss2.bossManipulation);
 
@@ -256,30 +228,35 @@ cheerleader1[m].move(-3);
 
 
 }
+else if(gameState===2){
+  setupEnd();
 
+   console.log(gameState);
+
+}
 }
 
 function instruction() {
   // show how many preys players eat
-  player1Info = "Donkey's votes: " + donkey.vote + " bonus：" + donkey.bonus;
-  player2Info = "Elephant's votes: " + elephant.vote + " bonus：" + elephant.bonus;
+  player1Info = "Donkey's votes: " + donkey.vote + " bonus：" + donkey.bonus + "  total:" + donkey.result;
+  player2Info = "Elephant's votes: " + elephant.vote + " bonus：" + elephant.bonus+ " total:" + elephant.result;
   textSize(20);
-  fill(255);
+  fill(195, 181, 255,255);
   text(player1Info, windowWidth / 2, 70);
   text(player2Info, windowWidth / 2, 100);
-  text(boss1.bossEat, windowWidth / 2, 120);
-  text(boss2.bossEat, windowWidth / 2, 140);
-  console.log(elites.countElites);
+  //text(boss1.bossEat, windowWidth / 2, 120);
+  //text(boss2.bossEat, windowWidth / 2, 140);
+
 
 }
 
 /// set gameOver condition
 function gameOver() {
   if (donkey.isFailed && elephant.isFailed) { // check if both of the predators are dead,if so, game over
-    result === 2; // change game state , game over
+    gameState = 2; // change game state , game over
 }
   else if(donkey.result>450  || elephant.result>450){ // the one who firstly reaches 450 wins!
-    result===2;
+  gameState=2;
 
   }
   //  text("Game over ! now you know who is the winner more !", windowWidth / 2, 150); // display when game over
@@ -291,17 +268,33 @@ function getWinner(){
   if(donkey.result>elephant.result)
   { winner="Donkey !";}
   else{winner="Elephant";}
+  console.log(donkey.result);
+
+  return winner;
   }
 
+  function setupEnd (){
+    noStroke();
+    fill(255, 253, 181,3);
+    rect(width/2,200,width/1.5,height/1.5);
+    imageMode(CENTER);
+    image(finalBossImg,width/2,200,width/3,height/3)
+    fill(random(120,255), random(126,200), 252);
+    textSize(40);
+    textAlign(CENTER,CENTER);
+    text("Game over! the winner is "+ getWinner(),width/2,height/2);
 
+
+  }
 
 function mousePressed() {
-  if (result === 0) {
-    result = 1; // start the game when mouse is clicked
+  if (gameState === 0) {
+    gameState = 1; // start the game when mouse is clicked
     backMusic.setVolume(0.5);
     backMusic.loop(); // play music when game starts
     //backMusic.volume(0);
   }
+
 }
 //function compare(){
  //if (elephant.result>donkey.result){
