@@ -38,8 +38,9 @@ let numVoter = 10; // How many Prey to simulate
 let voter = [];
 
 let numCheerleader = 5; // How many Prey to simulate
-let cheerleader= [];
-let cheerleader1= [];
+let cheerleader = [];
+let cheerleader1 = [];
+let winner;
 
 
 // setup()
@@ -127,6 +128,13 @@ function setup() {
 
 }
 
+
+function setupEnd (){
+
+
+
+
+}
 // draw()
 //
 // Handles input, movement, eating, and displaying for the system's objects
@@ -265,12 +273,25 @@ function instruction() {
 
 }
 
+/// set gameOver condition
 function gameOver() {
   if (donkey.isFailed && elephant.isFailed) { // check if both of the predators are dead,if so, game over
     result === 2; // change game state , game over
-    text("Game over ! now you know who is the winner more !", windowWidth / 2, 150); // display when game over
-  }
 }
+  else if(donkey.result>450  || elephant.result>450){ // the one who firstly reaches 450 wins!
+    result===2;
+
+  }
+  //  text("Game over ! now you know who is the winner more !", windowWidth / 2, 150); // display when game over
+
+}
+
+// get who is the the winner and display it then
+function getWinner(){
+  if(donkey.result>elephant.result)
+  { winner="Donkey !";}
+  else{winner="Elephant";}
+  }
 
 
 
