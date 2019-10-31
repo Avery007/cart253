@@ -111,7 +111,7 @@ function setup() {
   boss1=new HiddenBoss(0,"boss1",bossImg,77);
   boss2=new HiddenBoss(0,"boss2",bossImg,90);
   donkey = new Candidate(width-200, 200, 5, 50, 1, donkeyImg); // source pixably
-  elephant = new Candidate(200, 200, 5, 40, 50, elephantImg); // source pixably
+  elephant = new Candidate(200, 200, 5, 50,2,elephantImg); // source pixably
   elites = new Elites(100, 100, 20, eliteImage, 10);
 
 }
