@@ -185,9 +185,24 @@ function draw() {
   // sounds effects
   //music when boss is called
     boss1.bossMusic(bossMusic);
+
+   // pause music when no key is pressed
     boss2.bossMusic(bossMusic);
+    if(boss1.bossManipulation===false&&boss2.bossManipulation===false){
+    bossMusic.pause();
+
+    }
+
     cheerleader[1].musicPlay(clSound);
     cheerleader1[1].musicPlay(clSound);
+
+// pause music when no key is pressed
+    if(cheerleader[1].activeState===false && cheerleader1[1].activeState===false){
+    clSound.pause();
+
+    }
+
+
 
     instruction(); // show instruction
     gameOver(); //check if game over and display text when it is true
