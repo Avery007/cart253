@@ -1,14 +1,14 @@
-// Prey
+// Voter
 //
-// A class that represents a simple prey that moves
+// A class that represents voters that moves
 // on screen based on a noise() function. It can move around
-// the screen and be consumed by Predator objects.
+
 
 class Voter {
 
   // constructor
   //
-  // Sets the initial values for the Predator's properties
+  // Sets the initial values for the voter's properties
   // Either sets default values or uses the arguments provided
   constructor(x, y, speed, fillColor, radius) {
     // Position
@@ -21,14 +21,14 @@ class Voter {
     // Time properties for noise() function
     this.tx = random(0, 1000); // To make x and y noise different
     this.ty = random(0, 1000); // we use random starting values
-    // Health properties
+    // effect properties
     this.maxEffect = radius/2;
     this.effect= this.maxEffect; // Must be AFTER defining this.maxHealth
     // Display properties
     this.fillColor = fillColor;
     this.radius = radius;
-    this.checkConfusion=false;
-    //this.preyName = name; // prey name
+    this.checkConfusion=false; // check if the cheerleader is called
+
   }
 
   // move
@@ -49,36 +49,35 @@ class Voter {
     this.handleWrapping();
   }
 
-mesmerizing(initialSpeed,key1,key2,soberIndex1,soberIndex2){// reduce prey's speed when cheerleader is active
+mesmerizing(initialSpeed,key1,key2,soberIndex1,soberIndex2){// reduce voters's speed when cheerleader is active
    if(keyIsDown(key1)){ // key to activate cheerleader
-      //if(this.preyRadius>20){
-      if(initialSpeed>soberIndex1){
+      if(initialSpeed>soberIndex1){ //when initial speed is larger than the sober index which is related to the movement of cheerleader
        this.speed=soberIndex1; // reset speed
 
 }
   }
   else if(keyIsDown(key2)){ // key to activate cheerleader
-     //if(this.preyRadius>20){
-     if(initialSpeed>soberIndex2){
+
+     if(initialSpeed>soberIndex2){//when initial speed is larger than the sober index which is related to the movement of cheerleader
       this.speed=soberIndex2; // reset speed
 
 }
  }
-   else{this.speed=initialSpeed;}
+   else{this.speed=initialSpeed;} // if soberIndex is larger than orgiinal speed, no long reduce speed
 
 
+}
 
-
-  }
-
-shapeShifting(){ fill(random(200,255),255,100);
+// change shape when getting close to the players
+shapeShifting(){
+  fill(random(200,255),255,100);// change color
   rectMode(CENTER);
-  rect(this.x, this.y, this.radius * 2,this.radius*2);
+  rect(this.x, this.y, this.radius * 2,this.radius*2);// reset shape
 
 }
   // handleWrapping
   //
-  // Checks if the prey has gone off the canvas and
+  // Checks if the voter has gone off the canvas and
   // wraps it to the other side if so
   handleWrapping() {
     // Off the left or right
@@ -100,32 +99,27 @@ shapeShifting(){ fill(random(200,255),255,100);
   // Draw the prey as an ellipse on the canvas
   // with a radius the same size as its current health.
   display() {
+
     push();
     noStroke();
-  //  fill(0,random(50,200),250);
     fill(random(100,255));
-    this.radius = 2*this.effect;
+    this.radius = 2*this.effect; // make the effectivity related to its size
     ellipse(this.x, this.y, this.radius * 2);
-    fill(random(70,170),random(50,200), 255);
-    textSize(this.radius);
+    fill(random(70,170),random(50,200), 255); // text color
+    textSize(this.radius);// text size related to vote size
     text("vote",this.x-this.radius,this.y-this.radius);
-
-
-    // display preys' name with prey image
-    //textSize(this.radius * 2);
-    //text(this.preyName, this.x, this.y - this.radius);
     pop();
   }
 
   // reset
   //
-  // Set the position to a random location and reset health
+  // Set the position to a random location and reset effect
   // and radius back to default
   reset() {
     // Random position
     this.x = random(0, width);
     this.y = random(0, height);
-    // Default health
+    // Default effect
     this.effect = this.maxEffect;
     // Default radius
     this.radius = this.effect;

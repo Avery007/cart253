@@ -1,14 +1,13 @@
-// Predator
-//
-// A class that represents a simple predator
+// candidates
+// A class that represents candidates
 // controlled by the arrow keys. It can move around
-// the screen and consume Prey objects to maintain its health.
 
-class Candidate{
+
+class Candidate {
 
   // constructor
   //
-  // Sets the initial values for the Predator's properties
+  // Sets the initial values for the candidates properties
   // Either sets default values or uses the arguments provided
   constructor(x, y, speed, radius, player, img) {
     // Position
@@ -18,15 +17,15 @@ class Candidate{
     this.vx = 0;
     this.vy = 0;
     this.speed = speed;
-    // Health properties
+    // power properties
     this.maxPower = radius;
     this.power = this.maxPower; // Must be AFTER defining this.maxHealth
-    this.powerLossPerMove = 0.05;
-    this.powerGainPerVote = 1;
-    // Display properties
+    this.powerLossPerMove = 0.05; // reduce power so it will exit game if not enough votes got
+    this.powerGainPerVote = 1; // increase power when gets votes
 
-    this.radius = this.power; // Radius is defined in terms of health
-    // Input properties
+    this.radius = this.power; // Radius is defined in terms of power, so when power recude the size reduce
+
+    // set up key control
     this.p1upKey = UP_ARROW;
     this.p1downKey = DOWN_ARROW;
     this.p1leftKey = LEFT_ARROW;
@@ -44,23 +43,21 @@ class Candidate{
 
     this.playerImg = img; // display player as images
     this.isFailed = false; // check if players are dead
-    //this.callBoss=0;// count how many times the boss is called
-  // this.isCalled=false;// check if player press the key to call boss
 
-    this.vote= 0; // count votes
+    this.vote = 0; // count votes
 
-    this.bonus=0;
-    this.result=0;
+    this.bonus = 0; // extra votes got from boss
+    this.result = 0; // vote+ bonus= total votes
   }
 
   // handleInput
   //
-  // Checks if an arrow key is pressed and sets the predator's
+  // Checks if an arrow key is pressed and sets the candidates
   // velocity appropriately.
   handleInput() {
 
     // Horizontal movement
-    if (this.playerNumber === 1) { // players as a tiger
+    if (this.playerNumber === 1) { // players as a donkey
       if (keyIsDown(this.p1leftKey)) {
         this.vx = -this.speed;
       } else if (keyIsDown(this.p1rightKey)) {
@@ -80,11 +77,11 @@ class Candidate{
       if (keyIsDown(this.p1speedup)) { // speedup when shift is pressed
         this.vy = this.vy * 3;
         this.vx = this.vx * 3;
-  this.power=this.power-0.1;
+        this.power = this.power - 0.1;
       }
     }
 
-    if (this.playerNumber === 2) { // player as eagle
+    if (this.playerNumber === 2) { // player as elephant
       if (keyIsDown(this.p2leftKey)) {
         this.vx = -this.speed;
       } else if (keyIsDown(this.p2rightKey)) {
@@ -104,34 +101,28 @@ class Candidate{
       if (keyIsDown(this.p2speedup)) { // speedup when enter key is pressed
         this.vy = this.vy * 3;
         this.vx = this.vx * 3;
-        this.power=this.power-0.1;
+        this.power = this.power - 0.1;
       }
     }
 
-    //if(keyIsDown(this.cheat)){
-      //this.isCalled=true;}
-//  else{this.isCalled=false;}
-  //console.log(this.isCalled);
+
+  }
 
 
-}
   // move
-  //
   // Updates the position according to velocity
-  // Lowers health (as a cost of living)
   // Handles wrapping
   move() {
     // Update position
     this.x += this.vx;
     this.y += this.vy;
-    // Update health
-    if (this.isFailed) // rest player health and size when it is dead
+    // Update power(health)
+    if (this.isFailed) // rest player power and size when it exits
     {
       this.power = 0;
       this.radius = 0;
-    }
-     else { // reudce play health when game is active
-      this.power = this.power- this.powerLossPerMove;
+    } else { // reudce play power when game is active
+      this.power = this.power - this.powerLossPerMove;
       this.power = constrain(this.power, 0, this.maxPower);
       // Handle wrapping
       this.handleWrapping();
@@ -140,7 +131,7 @@ class Candidate{
 
   // handleWrapping
   //
-  // Checks if the predator has gone off the canvas and
+  // Checks if the candidates has gone off the canvas and
   // wraps it to the other side if so
   handleWrapping() {
     // Off the left or right
@@ -157,58 +148,55 @@ class Candidate{
     }
   }
 
-  // handleEating
-  //
-  // Takes a Prey object as an argument and checks if the predator
-  // overlaps it. If so, reduces the prey's health and increases
-  // the predator's. If the prey dies, it gets reset.
+  // handling votes
   gainVote(vote) {
-    // Calculate distance from this predator to the prey
+    // Calculate distance from this cadidates
     let d = dist(this.x, this.y, vote.x, vote.y);
-    // Check if the distance is less than their two radii (an overlap)
-      if (d < this.radius*2 + vote.radius*2){
+    // when votes get close to player, the shape and color changes
+    if (d < this.radius * 2 + vote.radius * 2) {
       vote.shapeShifting();
-}
+    }
+    // Check if the distance is less than their two radii (an overlap)
     if (d < this.radius + vote.radius) {
-      // Increase predator health and constrain it to its possible range
+      // Increase candidates power and constrain it to its possible range
       this.power += this.powerGainPerVote;
       this.power = constrain(this.power, 0, this.maxPower);
 
-      // Decrease prey health by the same amount
-      vote.effect= vote.effect-this.powerGainPerVote;
+      // Decrease cadidates power by the same amount
+      vote.effect = vote.effect - this.powerGainPerVote;
 
-      // Check if the prey died and reset it if so
-      if (vote.effect< 0) {
-        this.vote= this.vote+ 1; // track how mnay preys the player eat
+      // Check if the votes lost effectivityand reset it if so
+      if (vote.effect < 0) {
+        this.vote = this.vote + 1; // track how votes the player get
         vote.reset();
 
       }
     }
   }
 
-  bossConnect(bossPower,bossIsActive){
-     if(!this.isFailed){// firstly check if play is active
-    if(bossIsActive){ // when key V for calling boss is pressed
-this.power=this.power-0.5; // reduce player' health
-this.bonus= floor(bossPower/3);     //this.eat=getEat+floor(bossEat/3);
-}
+  bossConnect(bossPower, bossIsActive) {
+    if (!this.isFailed) { // firstly check if play is active
+      if (bossIsActive) { // when key V for calling boss is pressed
+        this.power = this.power - 0.5; // reduce player' power when boss is called
+        this.bonus = floor(bossPower / 3); // bonus increase when boss power increases
+      }
+    }
   }
-}
-  // chekc if player is dead
+  // chekc if player exits
   checkState() {
 
-    if (this.power < 1) {
-      this.isFailed = true;
+    if (this.power < 1) { // when power is lower than 1
+      this.isFailed = true; // player cannot play anymore
     }
-      this.result=this.vote+this.bonus;
+    this.result = this.vote + this.bonus; // count total votes
   }
 
 
 
   // display
   //
-  // Draw the predator as an ellipse on the canvas
-  // with a radius the same size as its current health.
+  // Draw the cadidates as images
+  // with a radius the same size as its current power.
   display() {
     if (!this.isFailed) { // display when game is actvie
       push();
@@ -216,7 +204,6 @@ this.bonus= floor(bossPower/3);     //this.eat=getEat+floor(bossEat/3);
       imageMode(CENTER);
       this.radius = this.power;
       image(this.playerImg, this.x, this.y, 2 * this.radius, 2 * this.radius);
-      //console.log(this.radius);
       pop();
     }
   }
