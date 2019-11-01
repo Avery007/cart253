@@ -14,7 +14,7 @@ class Predator {
   //
   // Sets the initial values for the Predator's properties
   // Either sets default values or uses the arguments provided
-  construction(x, y, speed, fillColor, radius) {
+  constructor(x, y, speed, fillColor, radius) {
     // Position
     this.x = x;
     this.y = y;
@@ -71,8 +71,8 @@ class Predator {
   // Handles wrapping
   move() {
     // Update position
-    this.x = this.x+this.vx;
-    this.y = this.y+this.vy;
+    this.x += this.vx;
+    this.y +=this.vy;
     // Update health
     this.health = this.health - this.healthLossPerMove;
     this.health = constrain(this.health, 0, this.maxHealth);
@@ -130,7 +130,7 @@ class Predator {
   display() {
     push();
     noStroke();
-    fill(255);
+    fill(this.fillColor);
     this.radius = this.health;
     ellipse(this.x, this.y, this.radius * 2,this.radius * 2);
     pop();
