@@ -26,10 +26,10 @@ let bee;
 // Creates objects for the predator and three prey
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  tiger = new Predator(100, 100, 5,color(255, 100, 10), 40);
+  tiger = new Predator(100, 100, 5, color(255, 255, 100), 40);
   antelope = new Prey(100, 100, 10, color(255, 100, 10), 50);
   zebra = new Prey(100,100, 8, color(255, 255, 255), 60);
-  bee = new Prey(100, 100, 20, color(255, 255, 50), 10);
+  bee = new Prey(100, 100, 20, color(255, 255, 0), 10);
 }
 
 // draw()
@@ -45,10 +45,13 @@ function draw() {
   tiger.move();
   antelope.move();
   zebra.move();
+<<<<<<< HEAD
   bee.move();
 
   tiger.handleInput();
 
+=======
+>>>>>>> parent of 4eb6786... P5: fix the constructor of predator class
 
   // Handle the tiger eating any of the prey
   tiger.handleEating(antelope);
