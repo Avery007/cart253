@@ -72,8 +72,13 @@ class Predator {
   move() {
     // Update position
 <<<<<<< HEAD
+<<<<<<< HEAD
     this.x += this.vx;
     this.y += this.vy;
+=======
+    this.x = this.x+this.vx;
+    this.y = this.y+this.vy;
+>>>>>>> parent of 4eb6786... P5: fix the constructor of predator class
 =======
     this.x = this.x+this.vx;
     this.y = this.y+this.vy;
