@@ -45,15 +45,19 @@ function draw() {
   tiger.move();
   antelope.move();
   zebra.move();
-
-//  bee.move();
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+  bee.move();
 
   tiger.handleInput();
 
-
 =======
 >>>>>>> parent of 4eb6786... Ex6: fix the constructor of predator class
-
+=======
+>>>>>>> parent of 4eb6786... Ex6: fix the constructor of predator class
+=======
+>>>>>>> parent of 4eb6786... P5: fix the constructor of predator class
 
   // Handle the tiger eating any of the prey
   tiger.handleEating(antelope);
