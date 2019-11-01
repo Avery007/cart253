@@ -56,7 +56,7 @@ class Predator {
     if (keyIsDown(this.upKey)) {
       this.vy = -this.speed;
     }
-    else if (keyIsClown(this.downKey)) {
+    else if (keyIsDown(this.downKey)) {
       this.vy = this.speed;
     }
     else {
@@ -71,8 +71,8 @@ class Predator {
   // Handles wrapping
   move() {
     // Update position
-    this.x = this.vx;
-    this.y = this.vy;
+    this.x = this.x+this.vx;
+    this.y = this.y+this.vy;
     // Update health
     this.health = this.health - this.healthLossPerMove;
     this.health = constrain(this.health, 0, this.maxHealth);
@@ -108,7 +108,7 @@ class Predator {
   // the predator's. If the prey dies, it gets reset.
   handleEating(prey) {
     // Calculate distance from this predator to the prey
-    let d = dist(this.y, this.y, prey.x, prey.y);
+    let d = dist(this.x, this.y, prey.x, prey.y);
     // Check if the distance is less than their two radii (an overlap)
     if (d < this.radius + prey.radius) {
       // Increase predator health and constrain it to its possible range
@@ -118,7 +118,7 @@ class Predator {
       prey.health -= this.healthGainPerEat;
       // Check if the prey died and reset it if so
       if (prey.health < 0) {
-        prey.rest();
+        prey.reset();
       }
     }
   }
@@ -130,7 +130,7 @@ class Predator {
   display() {
     push();
     noStroke();
-    fill(random(0,255));
+    fill(255);
     this.radius = this.health;
     ellipse(this.x, this.y, this.radius * 2,this.radius * 2);
     pop();
