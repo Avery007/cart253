@@ -9,7 +9,7 @@ class Candidate {
   //
   // Sets the initial values for the candidates properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, radius, player, img) {
+  constructor(x, y, speed, radius, img,moveUpkey,moveDownkey,moveLeftkey,moveRightkey,speedupKey) {
     // Position
     this.x = x;
     this.y = y;
@@ -26,26 +26,16 @@ class Candidate {
     this.radius = this.power; // Radius is defined in terms of power, so when power recude the size reduce
 
     // set up key control
-    this.p1upKey = UP_ARROW;
-    this.p1downKey = DOWN_ARROW;
-    this.p1leftKey = LEFT_ARROW;
-    this.p1rightKey = RIGHT_ARROW;
-
-    this.p2upKey = 87; // key W
-    this.p2downKey = 83; // key S
-    this.p2leftKey = 65; // key A
-    this.p2rightKey = 68; // key D
-
-    this.p1speedup = 13; // enter key
-    this.p2speedup = SHIFT;
-
-    this.playerNumber = player; // used to check which player
+    this.upKey = moveUpkey;
+    this.downKey = moveDownkey;
+    this.leftKey = moveLeftkey;
+    this.rightKey = moveRightkey;
+    this.speedupKey = speedupKey; // enter key
 
     this.playerImg = img; // display player as images
     this.isFailed = false; // check if players are dead
 
     this.vote = 0; // count votes
-
     this.bonus = 0; // extra votes got from boss
     this.result = 0; // vote+ bonus= total votes
   }
@@ -57,53 +47,28 @@ class Candidate {
   handleInput() {
 
     // Horizontal movement
-    if (this.playerNumber === 1) { // players as a donkey
-      if (keyIsDown(this.p1leftKey)) {
+
+      if (keyIsDown(this.leftKey)) {
         this.vx = -this.speed;
-      } else if (keyIsDown(this.p1rightKey)) {
+      } else if (keyIsDown(this.rightKey)) {
         this.vx = this.speed;
       } else {
         this.vx = 0;
       }
       // Vertical movement
-      if (keyIsDown(this.p1upKey)) {
+      if (keyIsDown(this.upKey)) {
         this.vy = -this.speed;
-      } else if (keyIsDown(this.p1downKey)) {
+      } else if (keyIsDown(this.downKey)) {
         this.vy = this.speed;
       } else {
         this.vy = 0;
       }
 
-      if (keyIsDown(this.p1speedup)) { // speedup when shift is pressed
+      if (keyIsDown(this.speedupKey)) { // speedup when shift is pressed
         this.vy = this.vy * 3;
         this.vx = this.vx * 3;
         this.power = this.power - 0.1;
       }
-    }
-
-    if (this.playerNumber === 2) { // player as elephant
-      if (keyIsDown(this.p2leftKey)) {
-        this.vx = -this.speed;
-      } else if (keyIsDown(this.p2rightKey)) {
-        this.vx = this.speed;
-      } else {
-        this.vx = 0;
-      }
-      // Vertical movement
-      if (keyIsDown(this.p2upKey)) {
-        this.vy = -this.speed;
-      } else if (keyIsDown(this.p2downKey)) {
-        this.vy = this.speed;
-      } else {
-        this.vy = 0;
-      }
-
-      if (keyIsDown(this.p2speedup)) { // speedup when enter key is pressed
-        this.vy = this.vy * 3;
-        this.vx = this.vx * 3;
-        this.power = this.power - 0.1;
-      }
-    }
 
 
   }

@@ -125,8 +125,8 @@ function setup() {
   boss1 = new HiddenBoss(0,  bossImg, 77); //"bossDonkey",
   boss2 = new HiddenBoss(0, bossImg, 90);
   // creat two candidates
-  donkey = new Candidate(width - 200, 200, 5, 50, 1, donkeyImg);
-  elephant = new Candidate(200, 200, 5, 50, 2, elephantImg);
+  donkey = new Candidate(width - 200, 200, 5, 50, donkeyImg,UP_ARROW,DOWN_ARROW,LEFT_ARROW,RIGHT_ARROW,13); // ENTER key to speed up
+  elephant = new Candidate(200, 200, 5, 50, elephantImg,87,83,65,68,SHIFT); //  WSAD to move
   //  create elites
   elites = new Elites(100, 100, 20, eliteImage, 10);
 
