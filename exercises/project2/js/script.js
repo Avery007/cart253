@@ -54,7 +54,6 @@ let cheerleader1 = [];
 let cheerleader = [];
 
 let numElites=3;
-
 let elites=[];
 
 let winner; //display winner
@@ -71,11 +70,10 @@ function preload() {
   elephantImg = loadImage('./assets/images/elephant0.png'); // elephant
   background = loadImage('./assets/images/chess0.jpg'); // backgorund when game is active
   front = loadImage('./assets/images/p2front.png'); // starting scrren
-  bossImg = loadImage('./assets/images/boss1.png'); //boss image
-  finalBossImg = loadImage('./assets/images/boss.png'); // boss showing up when game ends
+  bossImg = loadImage('./assets/images/boss.png'); //boss image
+  eliteImage = loadImage('./assets/images/superElite.png'); // triangle
   clImage = loadImage('./assets/images/cheerleader.png'); // cheerleader team  elepant
   cl1Image = loadImage('./assets/images/cheerleader1.png'); // cheerleader team  donkey
-  eliteImage = loadImage('./assets/images/superElite.png'); // triangle
   // load music
   backMusic = loadSound('./assets/sounds/music.wav'); // backgorund music
   bossMusic = loadSound('./assets/sounds/bossSound.wav'); // sound when boss is called
@@ -87,9 +85,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
 
 
-  // An empty array to store them in (we'll create them in setup())
-
-  // Run a for loop numVote times to generate each voteand put it in the array
+ // Run a for loop numVote times to generate each voteand put it in the array
   for (let i = 0; i < numVoter; i++) {
     // Generate (mostly) random values for the arguments of the Voter constructor
     let voterX = random(0, 500);
@@ -257,6 +253,8 @@ function draw() {
 
     }
 
+
+// display elites
     for(let k=0;k<elites.length;k++){
 
        elites[k].display();
@@ -322,7 +320,7 @@ function setupEnd() {
   fill(255, 253, 181, 3);
   rect(width / 2, 200, width / 1.5, height / 1.5); // background
   imageMode(CENTER);
-  image(finalBossImg, width / 2, 200, width / 3, height / 3)// boos face image
+  image(bossImg, width / 2, 200, width / 3, height / 3)// boos face image
   fill(random(120, 255), random(126, 200), 252);
   textSize(40);
   textAlign(CENTER, CENTER);

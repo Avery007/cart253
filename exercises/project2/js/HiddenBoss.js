@@ -1,5 +1,5 @@
 // class boss used to cheat--get votes easily
-// but player's power reduces when boss is activeKey//
+// but player's power reduces when boss is activeKey
 // boss gets bigger when its power increases
 
 class HiddenBoss {
@@ -29,8 +29,9 @@ class HiddenBoss {
     if (this.bossManipulation) { // when boss is active
 
       this.callCount = this.callCount + 1; // count how mnay times boss is called
-      this.power = floor(this.callCount - this.callCount / 1.1); // defualt power, more times when boss is called, boss power increases
 
+      // defualt power, more times when boss is called, boss power increases
+      this.power = floor(this.callCount - this.callCount / 1.1);
 
     }
 
@@ -70,11 +71,14 @@ class HiddenBoss {
     if (this.bossManipulation) { // check if the key is pressed
 
       this.size = this.power + 100; // boss size increases when it has more power
-      this.x = random(0, 1000);
-      this.y = random(0, 500);
+      this.x = random(0, width);
+      this.y = random(0, height);
+      rectMode(CENTER);
+      fill(random(190, 255));
+      rect(this.x,this.y,this.size,this.size);
       imageMode(CENTER);
       image(this.img, this.x, this.y, this.size, this.size);
-      fill(random(190, 255));
+
       textSize(60);
       text("Boss Power !", 500, 150);
 
