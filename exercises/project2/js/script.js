@@ -22,7 +22,7 @@ let donkey;
 let elephant;
 
 let boss; // the hidden boss used to cheat
-let elites; //elites
+
 
 
 // display how many votes
@@ -52,6 +52,10 @@ let numCheerleader = 5; // How many cheerleader to simulate
 // different cheerleader team for both players
 let cheerleader1 = [];
 let cheerleader = [];
+
+let numElites=3;
+
+let elites=[];
 
 let winner; //display winner
 
@@ -121,6 +125,17 @@ function setup() {
 
   }
 
+// set elites
+  for(let k=0;k<numElites;k++) {
+    let powerMax=floor(random(30,50)); // random max power
+    let visibility=100-powerMax; // more power more invisible
+    let speed=powerMax/2; // more power run faster
+    let elite = new Elites(powerMax, visibility, speed, eliteImage);
+
+    elites.push(elite);
+
+}
+
   // creat two instances of boss class for two candidates
   boss1 = new HiddenBoss(0,  bossImg, 77); //"bossDonkey",
   boss2 = new HiddenBoss(0, bossImg, 90);
@@ -128,7 +143,7 @@ function setup() {
   donkey = new Candidate(width - 200, 200, 5, 50, donkeyImg,UP_ARROW,DOWN_ARROW,LEFT_ARROW,RIGHT_ARROW,13); // ENTER key to speed up
   elephant = new Candidate(200, 200, 5, 50, elephantImg,87,83,65,68,SHIFT); //  WSAD to move
   //  create elites
-  elites = new Elites(100, 100, 20, eliteImage, 10);
+
 
 }
 
@@ -152,16 +167,12 @@ function draw() {
     donkey.handleInput(); // key control for donkey
     elephant.handleInput(); // key control for elephant
 
-    elites.handleVote(elephant);// when elephant gets elites
-    elites.handleVote(donkey);// when donkey gets elites
-
     donkey.move(); // movement of donkey
     elephant.move(); // movement of elephant
-    elites.move(); // movement of elites
+    // movement of elites
 
     donkey.display(); // display donkey
     elephant.display(); // display elephant
-    elites.display(); // display elites
 
 // for donkey and elephant to call boss, and change votes
     donkey.bossConnect(boss1.bossEat, boss1.bossManipulation);
@@ -171,13 +182,11 @@ function draw() {
     donkey.checkState();
     elephant.checkState();
     // check elites power and update
-    elites.elitesPowerUpdate();
 
-    boss1.bossGain(elites);// boss to
+
     boss1.keyControl(); // boss key control
     boss1.display(); // display
     boss1.bossPower(); // boss power
-    boss2.bossGain(elites);
     boss2.keyControl();
     boss2.display();
     boss2.bossPower();
@@ -245,6 +254,19 @@ function draw() {
       cheerleader1[m].keyControl();
       cheerleader1[m].move(-1.5);// set cheerleader movemnet on X
 
+
+    }
+
+    for(let k=0;k<elites.length;k++){
+
+       elites[k].display();
+       elites[k].move();
+       elites[k].elitesPowerUpdate();// changeable power
+       elites[k].handleVote(elephant);// when elephant gets elites
+       elites[k].handleVote(donkey);// when donkey gets elites
+       elites[k].checkElites(); // check if the elites is active
+       boss1.bossGain(elites[k]);// boss to get elites as vote
+       boss2.bossGain(elites[k]);// // boss to get elites as vote
 
     }
 
