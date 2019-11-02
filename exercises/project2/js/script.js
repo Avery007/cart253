@@ -36,7 +36,7 @@ let eliteImage; // triangle image represents elites
 let background; // background img
 let front; // front image
 let bossImg; // boss image
-let finalBossImg; // almost same as the boss image but without background
+let winnerImage; // display winner image at the end of the game
 
 // add background musci
 let backMusic;
@@ -273,8 +273,10 @@ function draw() {
 
   // set up display when games end
   else if (gameState === 2) {
-    setupEnd();
 
+    getWinner();
+    setupEnd();
+  instruction();
   }
 }
 // function to show instruction
@@ -306,25 +308,30 @@ function gameOver() {
 function getWinner() {
   if (donkey.result > elephant.result) {
     winner = "Donkey !";
+    winnerImage=donkeyImg;
   } else {
     winner = "Elephant";
+    winnerImage=elephantImg;
   }
 
   return winner; // return value
 }
 
 
+
 // function to display ending screen
 function setupEnd() {
   noStroke();
-  fill(255, 253, 181, 3);
-  rect(width / 2, 200, width / 1.5, height / 1.5); // background
+  fill(255, 253, 181);// pale yellow
+  rect(width / 2, 250, width / 1.2, height / 1.2); // background
   imageMode(CENTER);
-  image(bossImg, width / 2, 200, width / 3, height / 3)// boos face image
-  fill(random(120, 255), random(126, 200), 252);
+  image(bossImg, width / 2, 250, width / 3, height / 3);// boos face image
+  image(winnerImage,random(width/3.5,width/1.2),height/2,200,200); ///display winner's image and make it move
+  fill(random(120, 255), random(126, 200), 252);// random color
   textSize(40);
   textAlign(CENTER, CENTER);
   text("Game over! the winner is " + getWinner(), width / 2, height / 2); // show winner
+
 
 
 }
