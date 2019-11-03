@@ -133,8 +133,8 @@ class Elites { //set elites properties
       // reset values to let elites exit the game
       this.resetPower = 0;
       this.radius = 0;
-      this.x = 0;
-      this.y = 0;
+      this.x = -100; 
+      this.y = -100;
     }
 
   }
