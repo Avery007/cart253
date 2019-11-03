@@ -114,7 +114,7 @@ class Candidate {
   }
 
   // handling votes
-  gainVote(vote) {
+  gainVote(vote,voteSound) {
     // Calculate distance from this cadidates
     let d = dist(this.x, this.y, vote.x, vote.y);
     // when votes get close to player, the shape and color changes
@@ -133,6 +133,7 @@ class Candidate {
       // Check if the votes lost effectivityand reset it if so
       if (vote.effect < 0) {
         this.vote = this.vote + 1; // track how votes the player get
+        vote.sound(voteSound);// play sound when player gets votes
         vote.reset();
 
       }

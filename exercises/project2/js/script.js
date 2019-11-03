@@ -42,6 +42,8 @@ let winnerImage; // display winner image at the end of the game
 let backMusic;
 let bossMusic;
 let clSound;
+let voteSound;
+let elitesSound;
 
 let gameState = 0; // tracking game state
 
@@ -75,9 +77,11 @@ function preload() {
   clImage = loadImage('./assets/images/cheerleader.png'); // cheerleader team  elepant
   cl1Image = loadImage('./assets/images/cheerleader1.png'); // cheerleader team  donkey
   // load music
-  backMusic = loadSound('./assets/sounds/music.wav'); // backgorund music
-  bossMusic = loadSound('./assets/sounds/bossSound.wav'); // sound when boss is called
-  clSound = loadSound('./assets/sounds/clSound.wav'); // sound when Cheerleader is active
+  backMusic = loadSound('./assets/sounds/musicback.wav'); // backgorund music
+  bossMusic = loadSound('./assets/sounds/bossmusic.wav'); // sound when boss is called
+  clSound = loadSound('./assets/sounds/clSound0.wav'); // sound when Cheerleader is active
+  voteSound=loadSound('./assets/sounds/vote.wav');// sound when get votes
+  elitesSound=loadSound('./assets/sounds/elites.wav');// sound when get elites
 }
 
 // function set up
@@ -222,8 +226,8 @@ function draw() {
       voter[i].mesmerizing(random(3, 10), 88, 78, cheerleader[1].sober, cheerleader1[1].sober);
       // reduce prey's speed when cheerleader is active
 
-      donkey.gainVote(voter[i]); // increase votes for donkey
-      elephant.gainVote(voter[i]); // increase votes for elephant
+      donkey.gainVote(voter[i],voteSound); // increase votes for donkey
+      elephant.gainVote(voter[i],voteSound); // increase votes for elephant
       boss1.bossGain(voter[i]); // for donkey,use boss to increase votes
       boss2.bossGain(voter[i]); // for elephant, use boss to increase votes
 
@@ -260,8 +264,8 @@ function draw() {
        elites[k].display();
        elites[k].move();
        elites[k].elitesPowerUpdate();// changeable power
-       elites[k].handleVote(elephant);// when elephant gets elites
-       elites[k].handleVote(donkey);// when donkey gets elites
+       elites[k].handleVote(elephant,elitesSound);// when elephant gets elites
+       elites[k].handleVote(donkey,elitesSound);// when donkey gets elites
        elites[k].checkElites(); // check if the elites is active
        boss1.bossGain(elites[k]);// boss to get elites as vote
        boss2.bossGain(elites[k]);// // boss to get elites as vote

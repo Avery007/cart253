@@ -94,7 +94,7 @@ class Elites { //set elites properties
     }
   }
 
-  handleVote(candidate) {
+  handleVote(candidate,elitesSound) {
     // Calculate distance from this elite to the candidate
     let d = dist(this.x, this.y, candidate.x, candidate.y);
     // when candidates are too close to the elites,change elites visibility and speed
@@ -110,6 +110,7 @@ class Elites { //set elites properties
       candidate.maxPower = candidate.maxPower + floor(this.power / 3); // change candidates max power so it could grow bigger
       this.countElites = this.countElites + 1; // count how many elites players get
       this.resetPower = this.maxPower - 10 * this.countElites; // power reduces each time when player gets elite
+      this.music(elitesSound); // player musci when player gets elites
       this.reset(); // rest location and speed
 
 
@@ -143,7 +144,7 @@ class Elites { //set elites properties
   // Set the position to a random location and reset power
 
   reset() {
-
+   if(!this.noElites){
     // Random position
     this.x = random(0, width);
     this.y = random(0, height);
@@ -153,7 +154,13 @@ class Elites { //set elites properties
     this.speed = this.originalSpeed; // reset speed to initial speed
 
   }
+}
+// add sound for elites
+music(sound){
+  sound.play();
+  sound.setVolume(0.4);
 
 
+}
 
 }
