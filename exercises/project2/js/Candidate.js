@@ -143,8 +143,8 @@ class Candidate {
   bossConnect(bossPower, bossIsActive) {
     if (!this.isFailed) { // firstly check if play is active
       if (bossIsActive) { // when key V for calling boss is pressed
-        this.power = this.power - 0.5; // reduce player' power when boss is called
-        this.bonus = floor(bossPower / 3); // bonus increase when boss power increases
+        this.power = this.power - 0.2; // reduce player' power when boss is called
+        this.bonus = floor(bossPower / 2); // bonus increase when boss power increases
       }
     }
   }

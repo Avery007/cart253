@@ -49,7 +49,7 @@ let elitesSound;
 
 let gameState = 0; // tracking game state
 
-let numVoter = 10; // How many votes to simulate
+let numVoter = 15; // How many votes to simulate
 let voter = [];
 
 let numCheerleader = 5; // How many cheerleader to simulate
