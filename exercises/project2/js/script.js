@@ -3,19 +3,21 @@
 //
 // two players play as candidates ：elephant and donkey with different key controls,
 //and elipse represents votes with random movement, using array to create many votes
-// to win the game players need to get 450 votes in totall or have more votes than the opposite.
-//The candidates have changeable power which is correspoinding to vote and their movement
+//to win the game players need to get 450 votes in totall or have more votes than the opposite.
+//The candidates have changeable power which is correspoinding to the number of votes gained, and their movement
 // Candidates exit the game when their power reduced to zero
 //
-//there is a Elites class whose instance moves faster than the normal votes, and  players can increase their max size(power) by getting elites
+//there is a Elites class whose instances move faster than the normal votes, and players can increase their max size(power) by getting elites
 // the power of elites recude each time player get them and when it turns zero there will be no elites showing up
-//
-//The cheerleader is used to reduce votes' speed so players can get them easily, but the effect is reducing.
+// how many elites players can get determines the winner!
+
+//The cheerleader is used to "confuse voters" that is, to reduce votes' speed so players can get them easily,
+//but the effect is reducing each time when the cheerleaders moving to the edge of screen.
 //Using array to display many cheerleaders
 //
-// the Boss is similar to cheating, an image will show up and gets votes quickly as boss is active
+// the Boss is similar to cheating, players can call the boss to get votes quickly, but players' power also reduce rapidly when boss is active
 
-//
+
 
 // Our candidates
 let donkey;
