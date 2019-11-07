@@ -57,8 +57,8 @@ let numCheerleader = 5; // How many cheerleader to simulate
 let cheerleader1 = [];
 let cheerleader = [];
 
-let numElites=3;
-let elites=[];
+let numElites = 3;
+let elites = [];
 
 let winner; //display winner
 
@@ -82,8 +82,8 @@ function preload() {
   backMusic = loadSound('./assets/sounds/musicback.wav'); // backgorund music
   bossMusic = loadSound('./assets/sounds/bossmusic.wav'); // sound when boss is called
   clSound = loadSound('./assets/sounds/clSound0.wav'); // sound when Cheerleader is active
-  voteSound=loadSound('./assets/sounds/vote.wav');// sound when get votes
-  elitesSound=loadSound('./assets/sounds/elites.wav');// sound when get elites
+  voteSound = loadSound('./assets/sounds/vote.wav'); // sound when get votes
+  elitesSound = loadSound('./assets/sounds/elites.wav'); // sound when get elites
 }
 
 // function set up
@@ -91,7 +91,7 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
 
 
- // Run a for loop numVote times to generate each voteand put it in the array
+  // Run a for loop numVote times to generate each voteand put it in the array
   for (let i = 0; i < numVoter; i++) {
     // Generate (mostly) random values for the arguments of the Voter constructor
     let voterX = random(0, 500);
@@ -127,23 +127,23 @@ function setup() {
 
   }
 
-// set elites
-  for(let k=0;k<numElites;k++) {
-    let powerMax=floor(random(30,50)); // random max power
-    let visibility=100-powerMax; // more power more invisible
-    let speed=powerMax/2; // more power run faster
+  // set elites
+  for (let k = 0; k < numElites; k++) {
+    let powerMax = floor(random(30, 50)); // random max power
+    let visibility = 100 - powerMax; // more power more invisible
+    let speed = powerMax / 2; // more power run faster
     let elite = new Elites(powerMax, visibility, speed, eliteImage);
 
     elites.push(elite);
 
-}
+  }
 
   // creat two instances of boss class for two candidates
-  boss1 = new HiddenBoss(0,  bossImg, 77); //"bossDonkey",
+  boss1 = new HiddenBoss(0, bossImg, 77); //"bossDonkey",
   boss2 = new HiddenBoss(0, bossImg, 90);
   // creat two candidates
-  donkey = new Candidate(width - 200, 200, 5, 50, donkeyImg,UP_ARROW,DOWN_ARROW,LEFT_ARROW,RIGHT_ARROW,13); // ENTER key to speed up
-  elephant = new Candidate(200, 200, 5, 50, elephantImg,87,83,65,68,SHIFT); //  WSAD to move
+  donkey = new Candidate(width - 200, 200, 5, 50, donkeyImg, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 13); // ENTER key to speed up
+  elephant = new Candidate(200, 200, 5, 50, elephantImg, 87, 83, 65, 68, SHIFT); //  WSAD to move
   //  create elites
 
 
@@ -157,7 +157,7 @@ function draw() {
 
 
   if (gameState === 0) { // display starting screen
-
+    imageMode(CORNER);
     image(front, 0, 0, width, height);
   }
   // when game starts
@@ -176,7 +176,7 @@ function draw() {
     donkey.display(); // display donkey
     elephant.display(); // display elephant
 
-// for donkey and elephant to call boss, and change votes
+    // for donkey and elephant to call boss, and change votes
     donkey.bossConnect(boss1.bossEat, boss1.bossManipulation);
     elephant.bossConnect(boss2.bossEat, boss2.bossManipulation);
 
@@ -193,23 +193,23 @@ function draw() {
     boss2.display();
     boss2.bossPower();
 
-  // sounds effects
-  //music when boss is called
+    // sounds effects
+    //music when boss is called
     boss1.bossMusic(bossMusic);
 
-   // pause music when no key is pressed
+    // pause music when no key is pressed
     boss2.bossMusic(bossMusic);
-    if(boss1.bossManipulation===false&&boss2.bossManipulation===false){
-    bossMusic.pause();
+    if (boss1.bossManipulation === false && boss2.bossManipulation === false) {
+      bossMusic.pause();
 
     }
 
     cheerleader[1].musicPlay(clSound);
     cheerleader1[1].musicPlay(clSound);
 
-// pause music when no key is pressed
-    if(cheerleader[1].activeState===false && cheerleader1[1].activeState===false){
-    clSound.pause();
+    // pause music when no key is pressed
+    if (cheerleader[1].activeState === false && cheerleader1[1].activeState === false) {
+      clSound.pause();
 
     }
 
@@ -228,8 +228,8 @@ function draw() {
       voter[i].mesmerizing(random(3, 10), 88, 78, cheerleader[1].sober, cheerleader1[1].sober);
       // reduce prey's speed when cheerleader is active
 
-      donkey.gainVote(voter[i],voteSound); // increase votes for donkey
-      elephant.gainVote(voter[i],voteSound); // increase votes for elephant
+      donkey.gainVote(voter[i], voteSound); // increase votes for donkey
+      elephant.gainVote(voter[i], voteSound); // increase votes for elephant
       boss1.bossGain(voter[i]); // for donkey,use boss to increase votes
       boss2.bossGain(voter[i]); // for elephant, use boss to increase votes
 
@@ -242,7 +242,7 @@ function draw() {
 
       cheerleader[n].display();
       cheerleader[n].keyControl();
-      cheerleader[n].move(1.5);// set cheerleader movemnet on X
+      cheerleader[n].move(1.5); // set cheerleader movemnet on X
 
 
     }
@@ -254,23 +254,23 @@ function draw() {
 
       cheerleader1[m].display();
       cheerleader1[m].keyControl();
-      cheerleader1[m].move(-1.5);// set cheerleader movemnet on X
+      cheerleader1[m].move(-1.5); // set cheerleader movemnet on X
 
 
     }
 
 
-// display elites
-    for(let k=0;k<elites.length;k++){
+    // display elites
+    for (let k = 0; k < elites.length; k++) {
 
-       elites[k].display();
-       elites[k].move();
-       elites[k].elitesPowerUpdate();// changeable power
-       elites[k].handleVote(elephant,elitesSound);// when elephant gets elites
-       elites[k].handleVote(donkey,elitesSound);// when donkey gets elites
-       elites[k].checkElites(); // check if the elites is active
-       boss1.bossGain(elites[k]);// boss to get elites as vote
-       boss2.bossGain(elites[k]);// // boss to get elites as vote
+      elites[k].display();
+      elites[k].move();
+      elites[k].elitesPowerUpdate(); // changeable power
+      elites[k].handleVote(elephant, elitesSound); // when elephant gets elites
+      elites[k].handleVote(donkey, elitesSound); // when donkey gets elites
+      elites[k].checkElites(); // check if the elites is active
+      boss1.bossGain(elites[k]); // boss to get elites as vote
+      boss2.bossGain(elites[k]); // // boss to get elites as vote
 
     }
 
@@ -282,7 +282,7 @@ function draw() {
 
     getWinner();
     setupEnd();
-  instruction();
+    instruction();
   }
 }
 // function to show instruction
@@ -314,10 +314,10 @@ function gameOver() {
 function getWinner() {
   if (donkey.result > elephant.result) {
     winner = "Donkey !";
-    winnerImage=donkeyImg;
+    winnerImage = donkeyImg;
   } else {
     winner = "Elephant";
-    winnerImage=elephantImg;
+    winnerImage = elephantImg;
   }
 
   return winner; // return value
@@ -328,15 +328,16 @@ function getWinner() {
 // function to display ending screen
 function setupEnd() {
   noStroke();
-  fill(255, 253, 181);// pale yellow
+  fill(255, 253, 181); // pale yellow
   rect(width / 2, 250, width / 1.2, height / 1.2); // background
   imageMode(CENTER);
-  image(bossImg, width / 2, 250, width / 3, height / 3);// boos face image
-  image(winnerImage,random(width/3.5,width/1.2),height/2,200,200); ///display winner's image and make it move
-  fill(random(120, 255), random(126, 200), 252);// random color
+  image(bossImg, width / 2, 250, width / 3, height / 3); // boos face image
+  image(winnerImage, random(width / 3.5, width / 1.2), height / 2, 200, 200); ///display winner's image and make it move
+  fill(random(120, 255), random(126, 200), 252); // random color
   textSize(40);
   textAlign(CENTER, CENTER);
   text("Game over! the winner is " + getWinner(), width / 2, height / 2); // show winner
+  text(" Click to restart the game ", width / 2, height/1.5);
 
 
 
@@ -349,5 +350,10 @@ function mousePressed() {
     backMusic.setVolume(0.5);
     backMusic.loop(); // play music when game starts
   }
-
+  // giving a choice to restart the game when it is over
+  else if (gameState === 2) { // when game is over
+    clear();
+    gameState = 0; // reset gamestate
+    setup(); // reset
+  }
 }
