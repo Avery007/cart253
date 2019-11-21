@@ -43,6 +43,16 @@ let ufoSize = 10;
 let ufoSpeed ;
 let ufoVX ;
 
+let x1=300;
+let x2=400;
+let x3=350;
+let y1=100;
+let y2=150;
+let y3=290;
+
+let rectX;
+let rectY;
+
 
 function preload(){
 
@@ -128,15 +138,39 @@ console.log(avatarSize);
 
    }
 rotation();
-
+rotationTri();
+rectmove();
 }
 
 function rotation(){
   push();
+
   translate(rotateX,rotateY);
   rotate(degrees(1*millis()/10000));
 image(rotateImg,0,0,100,100);
 pop();
 
 console.log(rotateX);
+}
+
+function rotationTri(){
+  push();
+  fill(255);
+  translate(x2,y2);
+  rotate(degrees(1*millis()/100000));
+triangle(x1,y1,0,0,x3,y3);
+
+pop();
+
+console.log(x1);
+}
+
+function rectmove(){
+fill(100);
+rectX=x1;
+rextY=x2;
+rectX=rectX+5;
+rectY=rectY+5;
+rect(x1,y1,50,50);
+
 }
