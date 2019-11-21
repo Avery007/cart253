@@ -19,11 +19,14 @@ let showlose; // show how mnay times players are hit
 let player;  //player image
 let ufo;
 let backimg; //background image
+let rotateImg;
 
 let avatarX;
 let avatarY;
 let avatarSize;
 
+let rotateX;
+let rotateY;
 
 
 // The speed and velocity of our avatar circle
@@ -46,13 +49,17 @@ function preload(){
   backimg=loadImage("assets/images/fire.jpg"); // source:https://pixabay.com/photos/thunderbolt-lightning-thunderstorm-1905603/
   player = loadImage("assets/images/run.png");// source of image: https://tenor.com/view/help-dog-anime-gif-12333977
   ufo=loadImage("assets/images/ufo.png");
+  rotateImg=loadImage("assets/images/rotate.png");
 }
+
 function setup() {
   // Create our playing area
   createCanvas(800,500);
 
 	imageMode(CENTER); // set center to compare the distance betweens images
 
+ rotateX=500;
+ rotateY=100;
 
   avatarSpeed=10;
   avatarSize = 40;
@@ -120,6 +127,16 @@ console.log(avatarSize);
   avatarSpeed=ufoSpeed;
 
    }
-   
+rotation();
 
+}
+
+function rotation(){
+  push();
+  translate(rotateX,rotateY);
+  rotate(degrees(1*millis()/10000));
+image(rotateImg,0,0,100,100);
+pop();
+
+console.log(rotateX);
 }
