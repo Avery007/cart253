@@ -61,7 +61,7 @@ function preload(){
 
   backimg=loadImage("assets/images/fire.jpg"); // source:https://pixabay.com/photos/thunderbolt-lightning-thunderstorm-1905603/
   player = loadImage("assets/images/run.png");// source of image: https://tenor.com/view/help-dog-anime-gif-12333977
-  ufo=loadImage("assets/images/ufo.png");
+  ufo=loadImage("assets/images/flying.png");
   rotateImg=loadImage("assets/images/rotate.png");
 }
 
@@ -109,7 +109,7 @@ image(player,avatarX,avatarY,avatarSize,avatarSize);
   avatarX = avatarX + avatarVX;
   avatarY = avatarY + avatarVY;
 
-  
+
   ufoVX = ufoSpeed;
 
 
