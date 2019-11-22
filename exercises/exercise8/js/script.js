@@ -43,6 +43,7 @@ let ufoSize = 10;
 let ufoSpeed ;
 let ufoVX ;
 
+//display a rotating trianle
 let x1=300;
 let x2=400;
 let x3=350;
@@ -50,8 +51,10 @@ let y1=100;
 let y2=150;
 let y3=290;
 
-let rectX;
-let rectY;
+//noise movement
+let noiseTimeY=0;
+let noiseTimeX=0;
+
 
 
 function preload(){
@@ -100,49 +103,96 @@ function draw() {
 
 // display player as an image and the size and speed could change
 image(player,avatarX,avatarY,avatarSize,avatarSize);
-console.log(avatarSize);
 
-// Left and right
-  if (keyIsDown(LEFT_ARROW)) {
-    avatarVX = -avatarSpeed;
-  }
-  else if (keyIsDown(RIGHT_ARROW)) {
-    avatarVX = avatarSpeed;
-  }
 
-  // Up and down (separate if-statements so you can move vertically and
-  // horizontally at the same time)
-  if (keyIsDown(UP_ARROW)) {
-    avatarVY = -avatarSpeed;
-  }
-  else if (keyIsDown(DOWN_ARROW)) {
-    avatarVY = avatarSpeed;
-  }
-
-  // Move the avatar according to its calculated velocity
+ keycontrol();
   avatarX = avatarX + avatarVX;
   avatarY = avatarY + avatarVY;
 
-  // The enemy always moves at enemySpeed
+  
   ufoVX = ufoSpeed;
-  // Update the enemy's position based on its velocity
+
 
   ufoX = ufoX + ufoVX;
 
 
-  if (dist(ufoX,ufoY,avatarX,avatarY) < ufoSize/2+avatarSize/2) {
+  checkcollides();
 
+attackerMove();
+rotationTri();
+ellipseMask();
+}
+
+function keycontrol(){
+  // Left and right
+    if (keyIsDown(LEFT_ARROW)) {
+      avatarVX = -avatarSpeed;
+    }
+    else if (keyIsDown(RIGHT_ARROW)) {
+      avatarVX = avatarSpeed;
+    }
+
+    // Up and down (separate if-statements so you can move vertically and
+    // horizontally at the same time)
+    if (keyIsDown(UP_ARROW)) {
+      avatarVY = -avatarSpeed;
+    }
+    else if (keyIsDown(DOWN_ARROW)) {
+      avatarVY = avatarSpeed;
+    }
+
+
+
+}
+
+function checkcollides(){
+  // check if player moves to the UFO
+  if (dist(ufoX,ufoY,avatarX,avatarY) < ufoSize/2+avatarSize/2) {
+  // if so, make player moves the same as the UFO
   avatarY=ufoY;
   avatarX=ufoX;
   avatarSpeed=ufoSpeed;
 
    }
-rotation();
-rotationTri();
-rectmove();
+
+   //check if player runs into the attacker
+   if (dist(rotateX,rotateY,avatarX,avatarY) < 120/2+avatarSize/2) {
+  // if so, reset player location
+   avatarY=random(0,500);
+   avatarX=random(0,700);
+
+
+    }
+
+
 }
 
+function attackerMove(){
+
+  noiseTimeX = noiseTimeX + 0.01; // make noisetime keep increasing so noise() returns different value
+  noiseTimeY = noiseTimeY + 0.02;
+  attackerVx = map(noise(noiseTimeX), 0, 1, -10, 10);
+  attackerVy = map(noise(noiseTimeY), 0, 1, -10, 10);
+
+  if(rotateX>width||rotateX<0){// check if gets off the screen
+// reset
+    rotateX=random(0,width);
+    rotateY=random(0,height);
+  }
+  else{// move
+  rotateX=rotateX+attackerVx;
+  rotateY=rotateY+attackerVy;
+  console.log(rotateX);
+
+}
+// rotate the attacker
+rotation();
+}
+
+
+//rotate the attacker
 function rotation(){
+
   push();
 
   translate(rotateX,rotateY);
@@ -153,11 +203,13 @@ pop();
 console.log(rotateX);
 }
 
+
+// create a scanning triangle
 function rotationTri(){
   push();
   fill(255);
   translate(x2,y2);
-  rotate(degrees(1*millis()/100000));
+  rotate(degrees(1*millis()/5000));
 triangle(x1,y1,0,0,x3,y3);
 
 pop();
@@ -165,12 +217,11 @@ pop();
 console.log(x1);
 }
 
-function rectmove(){
-fill(100);
-rectX=x1;
-rextY=x2;
-rectX=rectX+5;
-rectY=rectY+5;
-rect(x1,y1,50,50);
+
+// the invisible ellipse is used to cover the rotating attacker and check collisions
+function ellipseMask(){
+fill(100,0,0,0);
+ellipseMode(CENTER);
+ellipse(rotateX,rotateY,120,120);
 
 }
