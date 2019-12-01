@@ -68,14 +68,37 @@ class Killer { //set elites properties
 
       pop();
     }
-  
+
 
   chaseCheck(playerX,playerY){
-    if(playerX===this.x||playerY===this.y){
+    if(playerX===floor(this.x)|| playerY===floor(this.y)){
      this.chasing=true;
 
    }
+
     }
+
+ chase(playerX,playerY){
+
+if(this.chasing){
+
+  if(playerX>this.x){
+    this.x=this.x+2;
+  }
+  else{this.x=this.x-2;}
+
+  if(playerY>this.y){
+    this.y=this.y+2;
+  }
+  else{this.y=this.y-2;}
+
+
+
+}
+
+
+ }
+
 
 
   }

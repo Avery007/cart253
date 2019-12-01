@@ -69,5 +69,9 @@ function draw() {
     cathari.handleInput();
     cathari.display();
     cathari.move();
+    killer.chaseCheck(floor(cathari.x),floor(cathari.y));
+    killer.chase(cathari.x,cathari.y);
+    console.log(killer.chasing);
+  console.log(floor(killer.x));
 
   }
