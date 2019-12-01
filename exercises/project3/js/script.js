@@ -8,6 +8,7 @@
 let player1Info;
 
 let killer;
+let cathari;
 // display players and background by image
 let catharImg; // player image
 let arrowImg;
@@ -51,7 +52,7 @@ function setup() {
       imageMode(CENTER);
 
       killer = new Killer(50,5, killerImg); //"bossDonkey",
-
+      cathari = new Cathari(width - 200, 200, 5, 50, catharImg, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 13);
 
 }
 // draw()
@@ -65,6 +66,8 @@ function draw() {
     killer.normalMove();
     killer.display();
     killer.chaseCheck();
-
+    cathari.handleInput();
+    cathari.display();
+    cathari.move();
 
   }
