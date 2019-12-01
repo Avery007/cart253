@@ -83,14 +83,14 @@ class Killer { //set elites properties
 if(this.chasing){
 
   if(playerX>this.x){
-    this.x=this.x+2;
+    this.x=this.x+this.speed/2;
   }
-  else{this.x=this.x-2;}
+  else{this.x=this.x-this.speed/2;}
 
   if(playerY>this.y){
-    this.y=this.y+2;
+    this.y=this.y+this.speed/2;
   }
-  else{this.y=this.y-2;}
+  else{this.y=this.y-this.speed/2;}
 
 
 
