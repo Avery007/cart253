@@ -9,6 +9,9 @@ let player1Info;
 
 let killer=[];
 let cathari;
+let scrolls=[];
+let scrollImg;
+
 // display players and background by image
 let catharImg; // player image
 let arrowImg;
@@ -39,7 +42,7 @@ function preload() {
   catharImg = loadImage('./images/cathari.png'); // player
   killerImg = loadImage('./images/killer.png'); // killer
   background = loadImage('./images/casle.jpg'); // backgorund when game is active
-
+  scrollImg = loadImage('./images/book.png');
 
 
 
@@ -66,6 +69,22 @@ function setup() {
         killer.push(newKiller);
       }
 
+      for (let m = 0; m< 5; m++) {
+        // Generate (mostly) random values for the arguments of the Voter constructor
+        let bookX = random(0, width);
+        let bookY = random(0, height);
+        let bookSpeed = random(4, 10); // set vote move speed
+        let bookRadius = random(30, 60); // set size
+        let reduceVisible=random(0.5, 3);
+        // Create a new Prey objects with the random values
+        let newBook= new Scrolls(bookX,bookY, bookSpeed,bookRadius,reduceVisible,scrollImg);
+        // Add the new vote object to the END of our array using push()
+        scrolls.push(newBook);
+      }
+
+
+
+
 }
 // draw()
 //
@@ -85,11 +104,20 @@ function draw() {
 
     }
       // display votes
+      for (let a = 0; a< scrolls.length; a++) {
 
+        scrolls[a].move();
+        scrolls[a].display();
+        scrolls[a].appearChange();
+
+      }
+
+      console.log(scrolls[1].visibility);
+        // display votes
     cathari.handleInput();
     cathari.display();
     cathari.move();
 
-  
+
 
   }

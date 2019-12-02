@@ -10,7 +10,7 @@ class Scrolls {
   //
   // Sets the initial values for the voter's properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, radius,img) {
+  constructor(x, y, speed, radius,visibleReduce,img) {
     // Position
     this.x = x;
     this.y = y;
@@ -19,6 +19,9 @@ class Scrolls {
     this.vy = 0;
     this.speed = speed;
     this.image=img;
+
+    this.visibility=255;
+    this.visibleReduce=visibleReduce;
     // Time properties for noise() function
     this.tx = random(0, 1000); // To make x and y noise different
     this.ty = random(0, 1000); // we use random starting values
@@ -69,6 +72,12 @@ class Scrolls {
     }
   }
 
+ appearChange(){
+  this.visibility=this.visibility-this.visibleReduce;
+
+
+
+ }
   // display
   //
   // Draw the prey as an ellipse on the canvas
@@ -77,8 +86,8 @@ class Scrolls {
 
     push();
     noStroke();
-    this.radius = 2*this.effect; // make the effectivity related to its size
     imageMode(CENTER);
+    tint(255,this.visibility);
     image(this.image,this.x,this.y,this.radius,this.radius);
 
     pop();
