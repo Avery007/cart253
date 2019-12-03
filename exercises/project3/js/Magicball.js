@@ -4,14 +4,13 @@ class Magicball {
   //
   // Sets the initial values for the candidates properties
   // Either sets default values or uses the arguments provided
-  constructor(speed, radius,img,moveUpkey,moveDownkey,moveLeftkey,moveRightkey,speedupKey) {
+  constructor(x,y,radius,img,moveUpkey,moveDownkey,moveLeftkey,moveRightkey) {
     // Position
-    this.x = 0;
-    this.y = 0;
+    this.x = x;
+    this.y = y;
     // Velocity and speed
-    this.vx = 0;
-    this.vy = 0;
-    this.speed = speed;
+
+    this.speed = 10;
     // power properties
     this.size = radius;
 
@@ -20,7 +19,7 @@ class Magicball {
     this.downKey = moveDownkey;
     this.leftKey = moveLeftkey;
     this.rightKey = moveRightkey;
-    this.speedupKey = speedupKey; // enter key
+
 
     this.playerImg = img; // display player as images
     this.isActive = false; // check if players are dead
@@ -33,39 +32,38 @@ class Magicball {
   //
   // Checks if an arrow key is pressed and sets the candidates
   // velocity appropriately.
-  handleInput() {
+  handleInput(getX,getY) {
 
     // Horizontal movement
 
       if (keyIsDown(this.leftKey)) {
         this.display();
-        this.vx = -this.speed;
-        this.x =this.x- this.vx;
+        this.x =this.x- this.speed;
       } else if (keyIsDown(this.rightKey)) {
-        this.vx = this.speed;
         this.display();
-        this.x =this.x- this.vx;
-      } else {
-        this.vx = 0;
+        this.x =this.x+ this.speed;
       }
       // Vertical movement
-      if (keyIsDown(this.upKey)) {
+      else if (keyIsDown(this.upKey)) {
         this.display();
-        this.vy = -this.speed;
-        this.y =this.y- this.vy;
+        this.y =this.y- this.speed;
       } else if (keyIsDown(this.downKey)) {
         this.display();
-        this.vy = -this.speed;
-        this.y =this.y- this.vy;
+        this.y =this.y+ this.speed;
       } else {
-        this.vy = 0;
+        this.resetBalls(getX,getY);
       }
 
 
   }
 
 
+resetBalls(getX,getY){
+  this.x=getX;
+  this.y=getY;
 
+
+}
 
   display() {
 

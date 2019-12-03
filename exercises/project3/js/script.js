@@ -10,12 +10,14 @@ let player1Info;
 let killer=[];
 let cathari;
 let scrolls=[];
+let ball;
 let scrollImg;
 
 // display players and background by image
 let catharImg; // player image
 let arrowImg;
 let killerImage; // attacker
+let ballImage;
 let background; // background img
 let front; // front image
 
@@ -43,6 +45,7 @@ function preload() {
   killerImg = loadImage('./images/killer.png'); // killer
   background = loadImage('./images/casle.jpg'); // backgorund when game is active
   scrollImg = loadImage('./images/book.png');
+  ballImage = loadImage('./images/ball.png');
 
 
 
@@ -57,6 +60,7 @@ function setup() {
 
 
       cathari = new Cathari(width - 200, 200, 5, 50, catharImg, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 13);
+      ball=new Magicball(cathari.x,cathari.y,20,ballImage,87, 83, 65, 68); //wsad movement
 
       for (let i = 0; i < 5; i++) {
         // Generate (mostly) random values for the arguments of the Voter constructor
@@ -117,6 +121,9 @@ function draw() {
     cathari.handleInput();
     cathari.display();
     cathari.move();
+    
+    ball.handleInput(cathari.x,cathari.y);
+
 
 
 
