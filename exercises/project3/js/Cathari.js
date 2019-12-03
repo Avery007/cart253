@@ -23,6 +23,7 @@ class Cathari {
     this.speedupKey = speedupKey; // enter key
 
      this.getCount=0;
+     this.rate=this.getCount;
     this.playerImg = img; // display player as images
     this.isFailed = false; // check if players are dead
 
@@ -101,7 +102,13 @@ class Cathari {
         this.getCount=this.getCount+1;
         scrolls.reset();
 
+        if(floor(this.getCount/1.5)-this.rate>0){
+         makeNewKiller();
+         this.rate=this.getCount;
+         console.log(this.rate);
       }
+    }
+
     }
 
   display() {

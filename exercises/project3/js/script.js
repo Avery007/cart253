@@ -73,6 +73,26 @@ function setupKiller(){
 
 
 }
+function makeNewKiller(){
+  //console.log(killerNumber);
+  //
+
+   //for (let i = killer.length; i <killer.length+killerNumber; i++) {
+
+     // Generate (mostly) random values for the arguments of the Voter constructor
+
+     let killerSpeed = random(1, 6); // set vote move speed
+     let killerRadius = random(30, 60); // set size
+     // Create a new Prey objects with the random values
+     let newKiller = new Killer(killerRadius, killerSpeed,killerImg);
+     // Add the new vote object to the END of our array using push()
+     killer.push(newKiller);
+  // }
+
+
+
+}
+
 
 
 
@@ -86,6 +106,7 @@ function setup() {
       cathari = new Cathari(width - 200, 200, 10, 50, catharImg, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 13);
       ball=new Magicball(cathari.x,cathari.y,20,ballImage,87, 83, 65, 68); //wsad movement
       powerfulMantra=new Scrolls(random(0,width),random(0,height),10,50,2,mantraImg);
+
 
       setupKiller();
 
@@ -126,7 +147,7 @@ function draw() {
       killer[n].chase(cathari.x,cathari.y);
       killer[n].killCathari(cathari);
       ball.killercollision(killer[n],cathari.x,cathari.y);
-console.log(cathari.isFailed);
+
 
 
     }
@@ -139,7 +160,7 @@ console.log(cathari.isFailed);
         scrolls[a].appearChange();
 
         cathari.getScrolls(scrolls[a]);
-     console.log(cathari.getCount);
+
       }
 
 
