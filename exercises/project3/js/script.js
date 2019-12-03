@@ -100,7 +100,9 @@ function draw() {
 
 
     image(background, width/2, height/2, windowWidth, windowHeight); // display background
-
+    fill(255);
+    textSize(25);
+    text("You have saved " + cathari.getCount,100,100 );
     for (let n = 0; n < killer.length; n++) {
 
       killer[n].normalMove();
@@ -109,7 +111,7 @@ function draw() {
       killer[n].chaseCheck(floor(cathari.x),floor(cathari.y));
       killer[n].chase(cathari.x,cathari.y);
       killer[n].checkAlive();
-ball.killercollision(killer[n],cathari.x,cathari.y);
+      ball.killercollision(killer[n],cathari.x,cathari.y);
 
 
 
@@ -122,6 +124,8 @@ ball.killercollision(killer[n],cathari.x,cathari.y);
         scrolls[a].display();
         scrolls[a].appearChange();
 
+        cathari.getScrolls(scrolls[a]);
+     console.log(cathari.getCount);
       }
 
 
@@ -135,7 +139,6 @@ ball.killercollision(killer[n],cathari.x,cathari.y);
     powerfulMantra.mantraCollision(cathari,ball);
     ball.handleInput(cathari.x,cathari.y);
 
-    console.log(ball.isActive);
 
 
 

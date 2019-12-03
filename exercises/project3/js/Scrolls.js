@@ -29,7 +29,7 @@ class Scrolls {
     this.maxEffect = radius/2;
     this.effect= this.maxEffect; // Must be AFTER defining this.maxHealth
     // Display properties
-
+     this.getCount=0;
     this.radius = radius;
     this.isDestroyed=false; // check if the book is isDestroyed
     this.isAvailable=true;
@@ -113,6 +113,8 @@ else{this.reset();}  // reset the visibility when it disapears
     }
   }
 
+
+
   // reset
   //
   // Set the position to a random location and reset effect
@@ -125,7 +127,7 @@ else{this.reset();}  // reset the visibility when it disapears
 
   }
 
-  
+
 
 // sound when player gets vote
   sound(music) {

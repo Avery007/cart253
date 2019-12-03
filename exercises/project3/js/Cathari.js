@@ -22,6 +22,7 @@ class Cathari {
     this.rightKey = moveRightkey;
     this.speedupKey = speedupKey; // enter key
 
+     this.getCount=0;
     this.playerImg = img; // display player as images
     this.isFailed = false; // check if players are dead
 
@@ -90,6 +91,21 @@ class Cathari {
     }
   }
 
+    getScrolls(scrolls) {
+      // Calculate distance from this cadidates
+      let d = dist(this.x, this.y, scrolls.x, scrolls.y);
+
+      // Check if the distance is less than their two radii (an overlap)
+      if (d < this.size + scrolls.radius) {
+        // Increase candidates power and constrain it to its possible range
+        this.getCount=this.getCount+1;
+        scrolls.reset();
+
+
+
+
+      }
+    }
   display() {
 
       push();
