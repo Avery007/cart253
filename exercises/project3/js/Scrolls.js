@@ -73,8 +73,10 @@ class Scrolls {
   }
 
  appearChange(){
+   if(this.visibility>0){ // make the books get less visible
   this.visibility=this.visibility-this.visibleReduce;
-
+}
+else{this.reset();}  // reset the visibility when it disapears
 
 
  }
@@ -101,10 +103,8 @@ class Scrolls {
     // Random position
     this.x = random(0, width);
     this.y = random(0, height);
-    // Default effect
-    this.effect = this.maxEffect;
-    // Default radius
-    this.radius = this.effect;
+    this.visibility=255;
+
   }
 
 // sound when player gets vote
