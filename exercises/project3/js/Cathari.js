@@ -101,11 +101,9 @@ class Cathari {
         this.getCount=this.getCount+1;
         scrolls.reset();
 
-
-
-
       }
     }
+
   display() {
 
       push();

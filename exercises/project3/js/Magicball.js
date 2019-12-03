@@ -12,7 +12,7 @@ class Magicball {
 
     this.speed = 10;
     // power properties
-    this.size = radius*2;
+    this.size = 0;
 
     // set up key control
     this.upKey = moveUpkey;
@@ -53,6 +53,7 @@ class Magicball {
         this.y =this.y+ this.speed;
       } else {
         this.resetBalls(getX,getY);
+        this.size=0;
       }
 
 
@@ -68,6 +69,7 @@ resetBalls(getX,getY){
 
 
 killercollision(killer,getX,getY) {
+
   // Calculate distance from this cadidates
   let d = dist(this.x, this.y, killer.x, killer.y);
 
@@ -85,7 +87,7 @@ killercollision(killer,getX,getY) {
 
 
   display() {
-
+      this.size=20;
       push();
       noStroke();
       imageMode(CENTER);

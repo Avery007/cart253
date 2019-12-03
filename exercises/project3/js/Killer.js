@@ -66,7 +66,7 @@ class Killer { //set elites properties
 
       push();
       imageMode(CENTER);
-      image(this.img, this.x, this.y, 50, 100);
+      image(this.img, this.x, this.y, this.size, this.size*2);
 
       pop();
     }
@@ -80,6 +80,18 @@ class Killer { //set elites properties
 
     }
 
+ killCathari(cathari) {
+      // Calculate distance from this cadidates
+      let d = dist(this.x, this.y, cathari.x, cathari.y);
+
+      // Check if the distance is less than their two radii (an overlap)
+      if (d < this.size/2 + cathari.size/2) {
+        // Increase candidates power and constrain it to its possible range
+        cathari.isFailed=true;
+
+
+      }
+    }
 
   reset(){
     this.x = random(0, width);
@@ -92,7 +104,7 @@ class Killer { //set elites properties
 
    }
 
-  
+
 
  chase(playerX,playerY){
 
