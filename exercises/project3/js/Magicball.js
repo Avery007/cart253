@@ -72,11 +72,11 @@ killercollision(killer,getX,getY) {
   let d = dist(this.x, this.y, killer.x, killer.y);
 
   // Check if the distance is less than their two radii (an overlap)
-  if (d < this.radius + killer.size) {
+  if (d < this.size + killer.size) {
     // Increase candidates power and constrain it to its possible range
 
-      resetBalls(getX,getY);
-      killer.isHit=true;
+      this.resetBalls(getX,getY);
+      killer.reset();
 
 
   }

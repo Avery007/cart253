@@ -110,7 +110,7 @@ function draw() {
       killer[n].chaseCheck();
       killer[n].chaseCheck(floor(cathari.x),floor(cathari.y));
       killer[n].chase(cathari.x,cathari.y);
-      killer[n].checkAlive();
+    
       ball.killercollision(killer[n],cathari.x,cathari.y);
 
 

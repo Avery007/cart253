@@ -81,15 +81,18 @@ class Killer { //set elites properties
     }
 
 
-  checkAlive(){
-   if(this.isHit){
-   this.size=0;
-
+  reset(){
+    this.x = random(0, width);
+    this.y = random(0, height);
+    // Velocity and speed
+    this.vx = 0;
+    this.vy = 0;
+    this.chasing=false;
 
 
    }
 
-  }
+  
 
  chase(playerX,playerY){
 
