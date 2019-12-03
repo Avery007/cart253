@@ -12,7 +12,7 @@ class Magicball {
 
     this.speed = 10;
     // power properties
-    this.size = radius;
+    this.size = radius*2;
 
     // set up key control
     this.upKey = moveUpkey;
@@ -33,6 +33,7 @@ class Magicball {
   // Checks if an arrow key is pressed and sets the candidates
   // velocity appropriately.
   handleInput(getX,getY) {
+    if(this.isActive){
 
     // Horizontal movement
 
@@ -56,7 +57,7 @@ class Magicball {
 
 
   }
-
+}
 
 resetBalls(getX,getY){
   this.x=getX;
@@ -64,6 +65,24 @@ resetBalls(getX,getY){
 
 
 }
+
+
+killercollision(killer,getX,getY) {
+  // Calculate distance from this cadidates
+  let d = dist(this.x, this.y, killer.x, killer.y);
+
+  // Check if the distance is less than their two radii (an overlap)
+  if (d < this.radius + killer.size) {
+    // Increase candidates power and constrain it to its possible range
+
+      resetBalls(getX,getY);
+      killer.isHit=true;
+
+
+  }
+}
+
+
 
   display() {
 

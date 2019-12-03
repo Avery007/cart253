@@ -32,6 +32,7 @@ class Scrolls {
 
     this.radius = radius;
     this.isDestroyed=false; // check if the book is isDestroyed
+    this.isAvailable=true;
 
   }
 
@@ -40,6 +41,7 @@ class Scrolls {
   // Sets velocity based on the noise() function and the Prey's speed
   // Moves based on the resulting velocity and handles wrapping
   move() {
+    if(this.isAvailable){
     // Set velocity via noise()
     this.vx = map(noise(this.tx), 0, 1, -this.speed, this.speed);
     this.vy = map(noise(this.ty), 0, 1, -this.speed, this.speed);
@@ -52,7 +54,7 @@ class Scrolls {
     // Handle wrapping
     this.handleWrapping();
   }
-
+}
 
   //
   // Checks if the voter has gone off the canvas and
@@ -85,7 +87,7 @@ else{this.reset();}  // reset the visibility when it disapears
   // Draw the prey as an ellipse on the canvas
   // with a radius the same size as its current health.
   display() {
-
+   if(this.isAvailable){
     push();
     noStroke();
     imageMode(CENTER);
@@ -93,6 +95,22 @@ else{this.reset();}  // reset the visibility when it disapears
     image(this.image,this.x,this.y,this.radius,this.radius);
 
     pop();
+  }
+}
+
+  mantraCollision(cathari,magicBall) {
+    // Calculate distance from this cadidates
+    let d = dist(this.x, this.y, cathari.x, cathari.y);
+
+    // Check if the distance is less than their two radii (an overlap)
+    if (d < this.radius + cathari.size) {
+      // Increase candidates power and constrain it to its possible range
+      magicBall.isActive=true;
+    this.isAvailable=false;
+
+
+
+    }
   }
 
   // reset
@@ -106,6 +124,8 @@ else{this.reset();}  // reset the visibility when it disapears
     this.visibility=255;
 
   }
+
+  
 
 // sound when player gets vote
   sound(music) {

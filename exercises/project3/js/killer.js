@@ -19,7 +19,7 @@ class Killer { //set elites properties
 
     this.size = size;
     this.chasing= false; // check whether the killer is chasing after player
-
+     this.isHit=false;
 
     this.img = img;
 
@@ -59,6 +59,8 @@ class Killer { //set elites properties
     }
   }
 
+
+
   display() {
 
 
@@ -77,6 +79,17 @@ class Killer { //set elites properties
    }
 
     }
+
+
+  checkAlive(){
+   if(this.isHit){
+   this.size=0;
+
+
+
+   }
+
+  }
 
  chase(playerX,playerY){
 

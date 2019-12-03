@@ -18,6 +18,7 @@ let catharImg; // player image
 let arrowImg;
 let killerImage; // attacker
 let ballImage;
+let mantraImg;
 let background; // background img
 let front; // front image
 
@@ -46,6 +47,7 @@ function preload() {
   background = loadImage('./images/casle.jpg'); // backgorund when game is active
   scrollImg = loadImage('./images/book.png');
   ballImage = loadImage('./images/ball.png');
+  mantraImg = loadImage('./images/specialPower.png');
 
 
 
@@ -61,6 +63,7 @@ function setup() {
 
       cathari = new Cathari(width - 200, 200, 5, 50, catharImg, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 13);
       ball=new Magicball(cathari.x,cathari.y,20,ballImage,87, 83, 65, 68); //wsad movement
+      powerfulMantra=new Scrolls(random(0,width),random(0,height),10,50,2,mantraImg);
 
       for (let i = 0; i < 5; i++) {
         // Generate (mostly) random values for the arguments of the Voter constructor
@@ -105,8 +108,13 @@ function draw() {
       killer[n].chaseCheck();
       killer[n].chaseCheck(floor(cathari.x),floor(cathari.y));
       killer[n].chase(cathari.x,cathari.y);
+      killer[n].checkAlive();
+ball.killercollision(killer[n],cathari.x,cathari.y);
+
+
 
     }
+
       // display votes
       for (let a = 0; a< scrolls.length; a++) {
 
@@ -116,13 +124,18 @@ function draw() {
 
       }
 
-      console.log(scrolls[1].visibility);
+
         // display votes
     cathari.handleInput();
     cathari.display();
     cathari.move();
-    
+
+    powerfulMantra.display();
+    powerfulMantra.move();
+    powerfulMantra.mantraCollision(cathari,ball);
     ball.handleInput(cathari.x,cathari.y);
+
+    console.log(ball.isActive);
 
 
 
