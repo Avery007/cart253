@@ -7,6 +7,7 @@
 // display information
 let player1Info;
 
+
 let killer=[];
 let cathari;
 let scrolls=[];
@@ -19,8 +20,11 @@ let arrowImg;
 let killerImage; // attacker
 let ballImage;
 let mantraImg;
+let coverImg;
 let background; // background img
-let front; // front image
+let frontImg; // front image
+let instructionImg;
+let catharsInfoImg;
 
 let killerNumber;
 // add background musci
@@ -48,9 +52,9 @@ function preload() {
   scrollImg = loadImage('./images/book.png');
   ballImage = loadImage('./images/ball.png');
   mantraImg = loadImage('./images/specialPower.png');
-
-
-
+  coverImg = loadImage('./images/front.jpg');
+  instructionImg = loadImage('./images/instruction.jpg');
+  catharsInfoImg = loadImage('./images/cathars0.jpg');
 }
 
 // function set up
@@ -131,8 +135,17 @@ function setup() {
 //
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
+       if(gameState===0){
+  image(coverImg, width/2, height/2, windowWidth, windowHeight);
 
 
+
+
+
+       }
+
+
+    if(gameState===2){
     image(background, width/2, height/2, windowWidth, windowHeight); // display background
     fill(255);
     textSize(25);
@@ -176,5 +189,18 @@ function draw() {
     ball.handleInput(cathari.x,cathari.y);
 
 
+   }
+  }
 
+  function mousePressed() {
+    if (gameState === 0) {
+      gameState = 1; // start the game when mouse is clicked
+      image(catharsInfoImg,width/2,height/2,windowWidth,windowHeight);
+      console.log(gameState);
+    }
+    // giving a choice to restart the game when it is over
+    else if (gameState === 1) { // when game is over
+      gameState = 2; // reset gamestate
+
+    }
   }

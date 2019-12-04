@@ -100,16 +100,29 @@ class Cathari {
       if (d < this.size + scrolls.radius) {
         // Increase candidates power and constrain it to its possible range
         this.getCount=this.getCount+1;
+        //this.speed=this.speed-1;
         scrolls.reset();
 
         if(floor(this.getCount/1.5)-this.rate>0){
          makeNewKiller();
          this.rate=this.getCount;
-         console.log(this.rate);
+         console.log(this.speed);
       }
     }
 
     }
+
+  tireness(){
+    if(this.getCount>10)
+    {
+
+this.speed=this.speed-1;
+
+    }
+
+}
+
+
   exit(){
      if (this.x<100&&this.y<100){
 if(keyIsDown(ENTER)){
