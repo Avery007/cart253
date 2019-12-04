@@ -110,7 +110,17 @@ class Cathari {
     }
 
     }
+  exit(){
+     if (this.x<100&&this.y<100){
+if(keyIsDown(ENTER)){
+  this.size=0;
 
+}
+
+     }
+
+
+  }
   display() {
 
       push();

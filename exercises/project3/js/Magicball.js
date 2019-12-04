@@ -87,7 +87,7 @@ killercollision(killer,getX,getY) {
 
 
   display() {
-      this.size=20;
+      this.size=10;
       push();
       noStroke();
       imageMode(CENTER);

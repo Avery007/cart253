@@ -3,8 +3,8 @@ class Killer { //set elites properties
   //construction
   constructor(size, speed, img) {
     // random position
-    this.x = random(0, width);
-    this.y = random(0, height);
+    this.x = random(200, width);
+    this.y = random(0, 200);
     // Velocity and speed
     this.vx = 0;
     this.vy = 0;

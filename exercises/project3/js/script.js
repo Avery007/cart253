@@ -103,8 +103,8 @@ function setup() {
 
 
 
-      cathari = new Cathari(width - 200, 200, 10, 50, catharImg, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 13);
-      ball=new Magicball(cathari.x,cathari.y,20,ballImage,87, 83, 65, 68); //wsad movement
+      cathari = new Cathari(width - 200, 200, 10, 30, catharImg, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 13);
+      ball=new Magicball(cathari.x,cathari.y,10,ballImage,87, 83, 65, 68); //wsad movement
       powerfulMantra=new Scrolls(random(0,width),random(0,height),10,50,2,mantraImg);
 
 
@@ -168,6 +168,7 @@ function draw() {
     cathari.handleInput();
     cathari.display();
     cathari.move();
+    cathari.exit();
 
     powerfulMantra.display();
     powerfulMantra.move();
