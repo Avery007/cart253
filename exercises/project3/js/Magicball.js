@@ -10,7 +10,7 @@ class Magicball {
     this.y = y;
     // Velocity and speed
 
-    this.speed = 10;
+    this.speed = 15;
     // power properties
     this.size = 0;
 
@@ -20,7 +20,7 @@ class Magicball {
     this.leftKey = moveLeftkey;
     this.rightKey = moveRightkey;
 
-
+   this.hitCount=0;
     this.playerImg = img; // display player as images
     this.isActive = false; // check if players are dead
 
@@ -68,7 +68,7 @@ resetBalls(getX,getY){
 }
 
 
-killercollision(killer,getX,getY) {
+killercollision(killer,cathari,getX,getY) {
 
   // Calculate distance from this cadidates
   let d = dist(this.x, this.y, killer.x, killer.y);
@@ -78,7 +78,11 @@ killercollision(killer,getX,getY) {
     // Increase candidates power and constrain it to its possible range
 
       this.resetBalls(getX,getY);
+
       killer.reset();
+    this.hitCount=this.hitCount+1;
+    cathari.tireness(this.hitCount);
+
 
 
   }

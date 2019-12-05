@@ -66,7 +66,7 @@ function setupKiller(){
 
      // Generate (mostly) random values for the arguments of the Voter constructor
 
-     let killerSpeed = random(1, 6); // set vote move speed
+     let killerSpeed = random(1, 5); // set vote move speed
      let killerRadius = random(30, 60); // set size
      // Create a new Prey objects with the random values
      let newKiller = new Killer(killerRadius, killerSpeed,killerImg);
@@ -156,7 +156,7 @@ function draw() {
       killer[n].chaseCheck(floor(cathari.x),floor(cathari.y));
       killer[n].chase(cathari.x,cathari.y);
       killer[n].killCathari(cathari);
-      ball.killercollision(killer[n],cathari.x,cathari.y);
+      ball.killercollision(killer[n],cathari,cathari.x,cathari.y);
 
 
 
@@ -184,6 +184,7 @@ function draw() {
     powerfulMantra.move();
     powerfulMantra.mantraCollision(cathari,ball);
     ball.handleInput(cathari.x,cathari.y);
+    cathari.energy(ball.hitCount);
 
 
    }

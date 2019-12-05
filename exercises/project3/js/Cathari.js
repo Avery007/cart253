@@ -12,8 +12,10 @@ class Cathari {
     this.vx = 0;
     this.vy = 0;
     this.speed = speed;
+  
     // power properties
     this.size = radius;
+    this.energyLeft=200;
 
     // set up key control
     this.upKey = moveUpkey;
@@ -100,28 +102,38 @@ class Cathari {
       if (d < this.size + scrolls.radius) {
         // Increase candidates power and constrain it to its possible range
         this.getCount=this.getCount+1;
-        //this.speed=this.speed-1;
+
         scrolls.reset();
 
         if(floor(this.getCount/1.5)-this.rate>0){
          makeNewKiller();
          this.rate=this.getCount;
-         console.log(this.speed);
-      }
-    }
+
+       }
 
     }
 
-  tireness(){
-    if(this.getCount>10)
-    {
-
-this.speed=this.speed-1;
-
     }
 
+  tireness(killerHitCount){
+
+
+        if(this.speed>1){
+      this.speed=10-killerHitCount*0.05;
+  console.log(killerHitCount*0.01);
+
+
+    }
 }
 
+energy(hitCount){
+   fill(255);
+   if(this.energyLeft>0){
+   this.energyLeft=150-hitCount;}
+   rect(this.x,this.y-this.size*1.5,this.energyLeft,10);
+
+
+}
 
   exit(){
      if (this.x<100&&this.y<100){
