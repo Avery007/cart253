@@ -53,7 +53,7 @@ function preload() {
   ballImage = loadImage('./images/ball.png');
   mantraImg = loadImage('./images/specialPower.png');
   coverImg = loadImage('./images/front.jpg');
-  instructionImg = loadImage('./images/instruction.jpg');
+  instructionImg = loadImage('./images/instruct.jpg');
   catharsInfoImg = loadImage('./images/cathars0.jpg');
 }
 
@@ -139,13 +139,10 @@ function draw() {
   image(coverImg, width/2, height/2, windowWidth, windowHeight);
 
 
+}
 
 
-
-       }
-
-
-    if(gameState===2){
+    if(gameState===3){
     image(background, width/2, height/2, windowWidth, windowHeight); // display background
     fill(255);
     textSize(25);
@@ -201,6 +198,9 @@ function draw() {
     // giving a choice to restart the game when it is over
     else if (gameState === 1) { // when game is over
       gameState = 2; // reset gamestate
-
+     image(instructionImg,width/2,height/2,windowWidth,windowHeight);
+    }
+    else if (gameState === 2) {
+      gameState=3;
     }
   }
