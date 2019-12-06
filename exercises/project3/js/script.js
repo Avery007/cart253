@@ -29,7 +29,7 @@ let catharsInfoImg;
 let killerNumber;
 // add background musci
 let backMusic;
-
+let rotateTri;
 
 
 let gameState = 0; // tracking game state
@@ -55,6 +55,9 @@ function preload() {
   coverImg = loadImage('./images/front.jpg');
   instructionImg = loadImage('./images/instruct.jpg');
   catharsInfoImg = loadImage('./images/cathars0.jpg');
+  fireImg=loadImage("./images/fire.jpg"); // source:https://pixabay.com/photos/thunderbolt-lightning-thunderstorm-1905603/
+  ufo=loadImage("./images/flying.png");
+  triImg=loadImage("./images/tri.png");
 }
 
 // function set up
@@ -110,7 +113,7 @@ function setup() {
       cathari = new Cathari(width - 200, 200, 10, 30, catharImg, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 13);
       ball=new Magicball(cathari.x,cathari.y,10,ballImage,87, 83, 65, 68); //wsad movement
       powerfulMantra=new Scrolls(random(0,width),random(0,height),10,50,2,mantraImg);
-
+      rotateTri=new RotateTriangle(100,100,10,100,triImg);
 
       setupKiller();
 
@@ -185,7 +188,7 @@ function draw() {
     powerfulMantra.mantraCollision(cathari,ball);
     ball.handleInput(cathari.x,cathari.y);
     cathari.energy(ball);
-
+    rotateTri.move();
 
    }
   }
