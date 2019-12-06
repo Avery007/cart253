@@ -184,7 +184,7 @@ function draw() {
     powerfulMantra.move();
     powerfulMantra.mantraCollision(cathari,ball);
     ball.handleInput(cathari.x,cathari.y);
-    cathari.energy(ball.hitCount);
+    cathari.energy(ball);
 
 
    }

@@ -69,6 +69,13 @@ class Killer { //set elites properties
       image(this.img, this.x, this.y, this.size, this.size*2);
 
       pop();
+      if(this.chasing){
+        fill(random(0,255));
+        textSize(15);
+        text("Chasing",this.x,this.y-this.size);
+
+
+      }
     }
 
 

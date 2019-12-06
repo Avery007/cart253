@@ -12,7 +12,7 @@ class Cathari {
     this.vx = 0;
     this.vy = 0;
     this.speed = speed;
-  
+
     // power properties
     this.size = radius;
     this.energyLeft=200;
@@ -126,10 +126,11 @@ class Cathari {
     }
 }
 
-energy(hitCount){
+energy(ball){
    fill(255);
    if(this.energyLeft>0){
-   this.energyLeft=150-hitCount;}
+   this.energyLeft=150-ball.hitCount;}
+   else{ball.isActive=false;}
    rect(this.x,this.y-this.size*1.5,this.energyLeft,10);
 
 
