@@ -1,13 +1,14 @@
 class RotateTriangle{
 
-constructor(x, y, speed, size,img) {
+constructor( speed, size,rate,img) {
   // Position
-  this.x = x;
-  this.y = y;
+  this.x=random(0,width-100);
+  this.y=random(0,height-100);
   // Velocity and speed
   this.vx = 0;
   this.vy = 0;
   this.speed = speed;
+  this.rotatingRate=rate;
 
   // power properties
   this.size = size;
@@ -31,8 +32,8 @@ move(){
 
   if(this.x>width||this.x<0||this.y<0||this.y>height){// check if gets off the screen
 // reset
-    this.x=random(0,width);
-    this.y=random(0,height);
+    this.x=random(0,width-100);
+    this.y=random(0,height-100);
   }
   else{// move
   this.x=this.x+this.vx;
@@ -51,7 +52,8 @@ this.rotation();
   push();
 
   translate(this.x,this.y);
-  rotate(degrees(1*millis()/10000));
+  rotate(degrees(1*millis()/this.rotatingRate));
+  imageMode(CENTER);
   image(this.img,0,0,this.size,this.size);
 
 
@@ -71,8 +73,8 @@ ellipse(this.x,this.y,this.size+20,this.size+20);
 checkcollides(cathar){
 if (dist(this.x,this.y,cathar.x,cathar.y) < (this.size+20)/2+cathar.size/2) {
 // if so, reset player location
-cathar.x=random(0,500);
-cathar.y=random(0,700);
+cathar.x=width;
+cathar.y=height;
 
 
  }

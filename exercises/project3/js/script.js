@@ -36,7 +36,7 @@ let ufo;
 let killerNumber;
 // add background musci
 let backMusic;
-let rotateTri;
+let rotateTri=[];
 
 
 let gameState = 0; // tracking game state
@@ -123,7 +123,7 @@ function setup() {
       cathari = new Cathari(width - 200, 200, 10, 30, catharImg, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 13);
       ball=new Magicball(cathari.x,cathari.y,10,ballImage,87, 83, 65, 68); //wsad movement
       powerfulMantra=new Scrolls(random(0,width),random(0,height),10,50,2,mantraImg);
-      rotateTri=new RotateTriangle(100,100,10,100,triImg);
+      //rotateTri=new RotateTriangle(10,50,triImg);
       arrow=new Arrows(5,arrowImg);
 
       setupKiller();
@@ -141,7 +141,16 @@ function setup() {
         scrolls.push(newBook);
       }
 
-
+      for (let r = 0; r< 25; r++) {
+        // Generate (mostly) random values for the arguments of the Voter constructor
+        let speed = random(2, 6);
+        let size = random(20, 50);
+        let rate=random(1000,20000);
+        // Create a new Prey objects with the random values
+        let newRotateTri= new RotateTriangle(speed,size,rate,triImg);
+        // Add the new vote object to the END of our array using push()
+        rotateTri.push(newRotateTri);
+      }
 
 
 }
@@ -210,28 +219,36 @@ function draw() {
      if(bcWidth>0&&!cathari.shieldActive){
      bcWidth=bcWidth-0.2;}
 
+
      image(section2,-bcWidth,0,width+3000,height);
 
-     rotateTri.move();
-     rotateTri.checkcollides(cathari);
+
+     for (let a = 0; a< rotateTri.length; a++) {
+
+       rotateTri[a].move();
+       rotateTri[a].checkcollides(cathari);
+
+     }
+
      arrow.move();
      arrow.display();
      cathari.handleInput();
       cathari.getShield(shieldImg,catharImg);
      cathari.display();
      cathari.move();
-     console.log(gameState);
+     arrow.collisionCheck(cathari);
+
 
 
    }
-   console.log(gameState);
+
   }
 
   function mousePressed() {
     if (gameState === 0) {
       gameState = 1; // start the game when mouse is clicked
       image(catharsInfoImg,width/2,height/2,windowWidth,windowHeight);
-      console.log(gameState);
+
     }
     // giving a choice to restart the game when it is over
     else if (gameState === 1) { // when game is over

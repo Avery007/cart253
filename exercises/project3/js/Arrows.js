@@ -48,10 +48,27 @@ move(){
 
   else{this.speed=this.speed;} //  speed stops changing
 
-console.log(this.speed);
+
 
 }
 
+collisionCheck(cathar){
+  let d = dist(this.x, this.y, cathar.x, cathar.y);
+
+  // Check if the distance is less than their two radii (an overlap)
+  if (d < this.size + cathar.size) {
+    if(cathar.shieldActive){
+      this.x = 0;
+      this.y = random(0,height);
+      console.log(cathar.shieldActive);
+
+
+  }
+
+
+}
+
+}
 
 display(){
 
