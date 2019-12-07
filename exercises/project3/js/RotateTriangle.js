@@ -52,7 +52,7 @@ this.rotation();
 
   translate(this.x,this.y);
   rotate(degrees(1*millis()/10000));
-  image(this.img,0,0,100,100);
+  image(this.img,0,0,this.size,this.size);
 
 
 pop();
@@ -64,12 +64,12 @@ ellipseMask(){
 fill(255,0,0,0);// invisible ellipse to check collisions
 noStroke();
 ellipseMode(CENTER);
-ellipse(this.x,this.y,120,120);
+ellipse(this.x,this.y,this.size+20,this.size+20);
 
 }
 
 checkcollides(cathar){
-if (dist(this.x,this.y,cathar.x,cathar.y) < 120/2+cathar.size/2) {
+if (dist(this.x,this.y,cathar.x,cathar.y) < (this.size+20)/2+cathar.size/2) {
 // if so, reset player location
 cathar.x=random(0,500);
 cathar.y=random(0,700);
