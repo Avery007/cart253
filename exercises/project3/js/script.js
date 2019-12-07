@@ -189,7 +189,7 @@ function draw() {
     ball.handleInput(cathari.x,cathari.y);
     cathari.energy(ball);
     rotateTri.move();
-
+    rotateTri.checkcollides(cathari);
    }
   }
 
