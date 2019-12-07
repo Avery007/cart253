@@ -13,6 +13,7 @@ let cathari;
 let scrolls=[];
 let ball;
 let arrow;
+let bcWidth=3000;
 let scrollImg;
 
 // display players and background by image
@@ -26,6 +27,7 @@ let background; // background img
 let frontImg; // front image
 let instructionImg;
 let catharsInfoImg;
+let shieldImg;
 
 let triImg;
 let fireImg;
@@ -64,6 +66,8 @@ function preload() {
   ufo=loadImage("./images/flying.png");
   triImg=loadImage("./images/tri.png");
   arrowImg=loadImage("./images/arrow.png");
+  section2=loadImage("./images/bc.jpg");
+  shieldImg=loadImage("./images/shield.png");
 }
 
 // function set up
@@ -145,6 +149,7 @@ function setup() {
 //
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
+
        if(gameState===0){
   image(coverImg, width/2, height/2, windowWidth, windowHeight);
 
@@ -152,7 +157,7 @@ function draw() {
 }
 
 
-    if(gameState===3){
+    else if(gameState===3){
     image(background, width/2, height/2, windowWidth, windowHeight); // display background
     fill(255);
     textSize(25);
@@ -184,10 +189,10 @@ function draw() {
       }
 
 
-        // display votes
-    cathari.handleInput();
-    cathari.display();
-    cathari.move();
+      cathari.handleInput();
+      cathari.display();
+      cathari.move();
+
     cathari.exit();
 
     powerfulMantra.display();
@@ -195,11 +200,31 @@ function draw() {
     powerfulMantra.mantraCollision(cathari,ball);
     ball.handleInput(cathari.x,cathari.y);
     cathari.energy(ball);
-    rotateTri.move();
-    rotateTri.checkcollides(cathari);
-    arrow.move();
-    arrow.display();
+
    }
+
+   else if(gameState===4){
+     clear();
+     imageMode(CORNER);
+
+     if(bcWidth>0&&!cathari.shieldActive){
+     bcWidth=bcWidth-0.2;}
+
+     image(section2,-bcWidth,0,width+3000,height);
+
+     rotateTri.move();
+     rotateTri.checkcollides(cathari);
+     arrow.move();
+     arrow.display();
+     cathari.handleInput();
+      cathari.getShield(shieldImg,catharImg);
+     cathari.display();
+     cathari.move();
+     console.log(gameState);
+
+
+   }
+   console.log(gameState);
   }
 
   function mousePressed() {

@@ -10,7 +10,7 @@ class Arrows{
     this.speed =this.orignalSpeed;
 
     // power properties
-    this.size = 50;
+    this.size = 70;
 
 
 
@@ -24,6 +24,7 @@ class Arrows{
 move(){
 
   this.x = this.x + this.speed;
+  this.speedUpdate();
 
   // Check if the arrow has moved all the way across the screen
   if (this.x > width) {
@@ -40,14 +41,14 @@ move(){
 
  speedUpdate(){
 // change the speed of enermy when players make dodges
-  if(this.speed<60 && this.speed>0){           // set the max speed of enermy to 60
-    	this.speed=this.originalSpeed+0.5*dodges;  // rate of increased speed
+  if(this.speed<50 && this.speed>0){           // set the max speed of enermy to 60
+    	this.speed=this.orignalSpeed+0.5*this.dodges;  // rate of increased speed
 
       }
 
   else{this.speed=this.speed;} //  speed stops changing
 
-
+console.log(this.speed);
 
 }
 
@@ -55,28 +56,12 @@ move(){
 display(){
 
 imageMode(CENTER);
-image(this.img,this.x,this.y,this.size,this.size/2);
+image(this.img,this.x,this.y,this.size,this.size/3);
 
 
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

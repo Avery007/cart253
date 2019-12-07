@@ -28,6 +28,8 @@ class Cathari {
      this.rate=this.getCount;
     this.playerImg = img; // display player as images
     this.isFailed = false; // check if players are dead
+    this.shieldActive=false;
+
 
 
 
@@ -64,7 +66,21 @@ class Cathari {
       }
 
 
+
   }
+
+
+  getShield(shieldImg,catharImg){
+    if (keyIsDown(75)) {
+      this.shieldActive=true;
+
+      this.playerImg=shieldImg;
+  }
+  else{this.playerImg=catharImg;
+       this.shieldActive=false;
+  }
+
+}
 
   move() {
     // Update position
@@ -120,7 +136,7 @@ class Cathari {
 
         if(this.speed>1){
       this.speed=10-killerHitCount*0.05;
-  console.log(killerHitCount*0.01);
+
 
 
     }
@@ -139,7 +155,9 @@ energy(ball){
   exit(){
      if (this.x<100&&this.y<100){
 if(keyIsDown(ENTER)){
-  this.size=0;
+
+  gameState=4;
+
 
 }
 
