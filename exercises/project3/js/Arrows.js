@@ -41,7 +41,7 @@ move(){
 
  speedUpdate(){
 // change the speed of enermy when players make dodges
-  if(this.speed<50 && this.speed>0){           // set the max speed of enermy to 60
+  if(this.speed<60 && this.speed>0){           // set the max speed of enermy to 60
     	this.speed=this.orignalSpeed+0.5*this.dodges;  // rate of increased speed
 
       }
@@ -60,11 +60,9 @@ collisionCheck(cathar){
     if(cathar.shieldActive){
       this.x = 0;
       this.y = random(0,height);
-      console.log(cathar.shieldActive);
-
 
   }
-
+    else{gameState=5;}
 
 }
 

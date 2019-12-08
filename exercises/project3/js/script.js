@@ -15,6 +15,7 @@ let keys=[];
 let ball;
 let arrow;
 let bcWidth=3000;
+let section2;
 let scrollImg;
 
 // display players and background by image
@@ -71,6 +72,7 @@ function preload() {
   section2=loadImage("./images/bc.jpg");
   shieldImg=loadImage("./images/shield.png");
   gameOverImg=loadImage("./images/endtime.jpg");
+  info=loadImage("./images/info.jpg");
 }
 
 // function set up
@@ -118,7 +120,8 @@ function setupElements(){
   arrow=new Arrows(5,arrowImg);
 
 
-
+section2Start=false;
+cathari.keyCount=0;
 
 }
 
@@ -136,6 +139,7 @@ killerN=3;
      let newKiller = new Killer(killerRadius, killerSpeed,killerImg);
      // Add the new vote object to the END of our array using push()
      killer.push(newKiller);
+     killer[i].chasing=false; // reset value for restart game
    }
 
       for (let m = 0; m< 5; m++) {
@@ -167,8 +171,10 @@ killerN=3;
         let size = random(20, 50);
         // Create a new Prey objects with the random values
         let newKey= new Key(size,speed,keyImg);
+
         // Add the new vote object to the END of our array using push()
         keys.push(newKey);
+       keys[n].isGot=false;// reset value for restart game
       }
 }
 
@@ -202,7 +208,7 @@ function draw() {
       killer[n].chase(cathari.x,cathari.y);
       killer[n].killCathari(cathari);
       ball.killercollision(killer[n],cathari,cathari.x,cathari.y);
-      
+
 
 
 
@@ -236,15 +242,25 @@ function draw() {
    }
 
    else if(gameState===4){
-     clear();
-     imageMode(CORNER);
 
+     if(!section2Start){
+     clear();
+
+     imageMode(CORNER);
+     image(info,0,0,width,height);
+
+    }
+
+    else{
+      clear();
      if(bcWidth>0&&!cathari.shieldActive){
      bcWidth=bcWidth-0.2;}
+     imageMode(CORNER);
+    image(section2,-bcWidth,0,width+3000,height);
 
+    instruction();
 
-     image(section2,-bcWidth,0,width+3000,height);
-
+    // instruction(info);
 
      for (let a = 0; a< rotateTri.length; a++) {
 
@@ -272,11 +288,12 @@ function draw() {
      arrow.collisionCheck(cathari);
 
 
-
+}
    }
  else if(gameState===5){
    imageMode(CORNER);
     image(gameOverImg,0,0,width,height);
+
     if(keyIsDown(32)) {
       clear();
       setupArrays();
@@ -291,7 +308,7 @@ function draw() {
     }
 
  }
- console.log(killer.length);
+
   }
 
   function mousePressed() {
@@ -308,4 +325,23 @@ function draw() {
     else if (gameState === 2) {
       gameState=3;
     }
+    else if (gameState === 4) {
+      section2Start=true;
+    }
+  }
+
+  function instruction(){
+         fill(255);
+         textSize(24);
+         let content;
+         if(cathari.keyCount<12){
+       content="You have got keys: "+cathari.keyCount;
+     }
+
+       else{content="Congratulations! You have got all keys";}
+      // console.log(cathari.keyCount);
+
+
+ text(content,width/2,50);
+
   }

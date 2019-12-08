@@ -125,7 +125,7 @@ class Cathari {
         if(floor(this.getCount/1.5)-this.rate>0){
          makeNewKiller();
 
-         this.rate=this.getCount;
+        this.rate=this.getCount;
 
        }
 
@@ -159,7 +159,8 @@ energy(ball){
 if(keyIsDown(ENTER)){
 
   gameState=4;
-
+  this.x=width-100;
+  this.y=height-100;
 
 }
 

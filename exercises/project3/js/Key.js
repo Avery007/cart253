@@ -91,16 +91,24 @@ class Key { //set key properties
         if(!cathar.shieldActive){
         // Increase candidates power and constrain it to its possible range
         this.isGot=true;
-        this.size=0;
-        this.x=0;
-        this.y=0;
+        this.x = random(0, width);
+        this.y = random(0, height);
+        // Velocity and speed
+        this.vx = 0;
+        this.vy = 0;
+
+
         cathar.keyCount= cathar.keyCount+1;
-       console.log(cathar.keyCount);
+
+      
+
 
 
 }
       }
     }
+
+
 
 
 }
