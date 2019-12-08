@@ -32,7 +32,7 @@ move(){
       this.dodges = this.dodges + 1;
       // Reset the enemy's position to the left at a random height
       this.x = 0;
-      this.y = random(0,height);
+      this.y = random(20,height);
     }
 
 
@@ -41,7 +41,7 @@ move(){
 
  speedUpdate(){
 // change the speed of enermy when players make dodges
-  if(this.speed<60 && this.speed>0){           // set the max speed of enermy to 60
+  if(this.speed<30 && this.speed>0){           // set the max speed of enermy to 60
     	this.speed=this.orignalSpeed+0.5*this.dodges;  // rate of increased speed
 
       }
@@ -56,13 +56,14 @@ collisionCheck(cathar){
   let d = dist(this.x, this.y, cathar.x, cathar.y);
 
   // Check if the distance is less than their two radii (an overlap)
-  if (d < this.size + cathar.size) {
+  if (d < this.size/2 + cathar.size/2) {
     if(cathar.shieldActive){
       this.x = 0;
-      this.y = random(0,height);
+      this.y = random(20,height);
 
   }
-    else{gameState=5;}
+    else{gameState=5;
+        failReason="Oops!You are shoot by an arrow \n"+ "so you are captured!";}
 
 }
 

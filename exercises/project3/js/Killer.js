@@ -97,6 +97,7 @@ class Killer { //set elites properties
         // Increase candidates power and constrain it to its possible range
         //cathari.isFailed=true;
         gameState=5;
+        failReason="Oops! You are captured by a soldier!";
         this.reset();
 
 }

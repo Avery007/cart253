@@ -98,16 +98,16 @@ class Cathari {
   // wraps it to the other side if so
   handleWrapping() {
     // Off the left or right
-    if (this.x < 0) {
-      this.x += width;
+    if (this.x < 30) {
+      this.x = 30;
     } else if (this.x > width) {
-      this.x -= width;
+      this.x = width;
     }
     // Off the top or bottom
-    if (this.y < 0) {
-      this.y += height;
+    if (this.y < 30) {
+      this.y = 30;
     } else if (this.y > height) {
-      this.y -= height;
+      this.y = height;
     }
   }
 

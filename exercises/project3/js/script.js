@@ -6,7 +6,7 @@
 
 // display information
 let player1Info;
-
+let failReason;
 
 let killer=[];
 let cathari;
@@ -14,7 +14,7 @@ let scrolls=[];
 let keys=[];
 let ball;
 let arrow;
-let bcWidth=3000;
+let bcWidth=2500;
 let section2;
 let scrollImg;
 
@@ -30,7 +30,7 @@ let frontImg; // front image
 let instructionImg;
 let catharsInfoImg;
 let shieldImg;
-
+let winImg;
 let triImg;
 let fireImg;
 let keyImg;
@@ -73,6 +73,7 @@ function preload() {
   shieldImg=loadImage("./images/shield.png");
   gameOverImg=loadImage("./images/endtime.jpg");
   info=loadImage("./images/info.jpg");
+  winImg=loadImage("./images/final.png");
 }
 
 // function set up
@@ -254,9 +255,10 @@ function draw() {
     else{
       clear();
      if(bcWidth>0&&!cathari.shieldActive){
-     bcWidth=bcWidth-0.2;}
+     bcWidth=bcWidth-0.5;}
+
      imageMode(CORNER);
-    image(section2,-bcWidth,0,width+3000,height);
+    image(section2,-bcWidth,0,width+2500,height);
 
     instruction();
 
@@ -286,14 +288,14 @@ function draw() {
      cathari.display();
      cathari.move();
      arrow.collisionCheck(cathari);
-
+      checkResult();
 
 }
    }
  else if(gameState===5){
    imageMode(CORNER);
     image(gameOverImg,0,0,width,height);
-
+ explain();
     if(keyIsDown(32)) {
       clear();
       setupArrays();
@@ -304,10 +306,18 @@ function draw() {
       scrolls.length=5;
       keys.length=12;
       rotateTri.length=25;
+      cathari.keyCount=0;
+      bcWidth=2500;
 
     }
 
  }
+ else if(gameState===6){
+  clear();
+ winScreen();
+
+ }
+
 
   }
 
@@ -335,13 +345,58 @@ function draw() {
          textSize(24);
          let content;
          if(cathari.keyCount<12){
-       content="You have got keys: "+cathari.keyCount;
+       content="You have got keys: "+cathari.keyCount+"   Distance: "+ bcWidth;
      }
 
-       else{content="Congratulations! You have got all keys";}
+       else{content="Congratulations! You have got all keys"+ "   Distance: "+ bcWidth;}
       // console.log(cathari.keyCount);
 
 
  text(content,width/2,50);
+
+  }
+
+  function explain(){
+     fill(random(0,255));
+     textSize(30);
+     text(failReason,width/5,height/1.8);
+
+
+  }
+
+  function checkResult(){
+    if(bcWidth<10){
+      if(cathari.keyCount>11){
+  gameState=6;}
+
+else {gameState=5;
+     bcWidth=2500;
+      failReason="Oops!You dont get enough keys\n " +"when you arrive at the destination\n"
+                  +"So you are trapped here\n" + "And you are captured!";
+
+}
+
+  }
+}
+  function winScreen() {
+
+    noStroke();
+    imageMode(CORNER);
+    image(winImg, 0, 0, width, height); // backgorund image
+    image(catharImg, random(width / 3.5, width / 1.2), height / 2, 100, 200); ///display winner's image and make it move
+    fill(random(120, 255), random(126, 200), 252); // random color
+    textSize(40);
+    textAlign(CENTER, CENTER);
+    text("Congratulations for your successful escape!\n", width / 2, height / 2.5); // show winner
+    fill(255);
+    textSize(20);
+    textAlign(CENTER, CENTER);
+    let finaltext=" I have got " + cathari.getCount+ " scrolls\n"+
+                   "Now I will bury them under the mountain where no villain can enter\n"
+                   +"And one day they should be discovered again!";
+    text(finaltext, width / 2, 100);
+
+
+
 
   }
