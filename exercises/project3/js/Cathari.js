@@ -16,6 +16,7 @@ class Cathari {
     // power properties
     this.size = radius;
     this.energyLeft=200;
+    this.keyCount=0;
 
     // set up key control
     this.upKey = moveUpkey;
@@ -123,6 +124,7 @@ class Cathari {
 
         if(floor(this.getCount/1.5)-this.rate>0){
          makeNewKiller();
+
          this.rate=this.getCount;
 
        }

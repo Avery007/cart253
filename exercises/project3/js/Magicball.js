@@ -91,12 +91,13 @@ killercollision(killer,cathari,getX,getY) {
 
 
   display() {
+       if(this.isActive){
       this.size=10;
       push();
       noStroke();
       imageMode(CENTER);
       image(this.playerImg, this.x, this.y, 2 * this.size, 2 * this.size);
       pop();
-
+}
   }
 }

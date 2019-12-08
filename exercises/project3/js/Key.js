@@ -3,7 +3,7 @@ class Key { //set key properties
   //construction
   constructor(size, speed, img) {
     // random position
-    this.x = random(0 width);
+    this.x = random(0, width);
     this.y = random(0, height);
     // Velocity and speed
     this.vx = 0;
@@ -20,6 +20,7 @@ class Key { //set key properties
     this.size = size;
 
      this.isGot=false;
+
 
     this.img = img;
 
@@ -63,13 +64,13 @@ class Key { //set key properties
 
   display() {
 
-
+       if(!this.isGot){
       push();
       imageMode(CENTER);
       image(this.img, this.x, this.y, this.size/2, this.size);
 
       pop();
-      if(!this.isGot){
+
         fill(random(0,255));
         textSize(15);
         text("Got me",this.x,this.y-this.size);
@@ -81,15 +82,20 @@ class Key { //set key properties
 
 
 
-   GotKey(cathari) {
+   GotKey(cathar) {
       // Calculate distance from this cadidates
-      let d = dist(this.x, this.y, cathari.x, cathari.y);
+      let d = dist(this.x, this.y, cathar.x, cathar.y);
 
       // Check if the distance is less than their two radii (an overlap)
-      if (d < this.size/2 + cathari.size/2) {
-        if(!cathari.shieldActive){
+      if (d < this.size/2 + cathar.size/2) {
+        if(!cathar.shieldActive){
         // Increase candidates power and constrain it to its possible range
         this.isGot=true;
+        this.size=0;
+        this.x=0;
+        this.y=0;
+        cathar.keyCount= cathar.keyCount+1;
+       console.log(cathar.keyCount);
 
 
 }

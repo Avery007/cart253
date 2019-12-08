@@ -11,6 +11,7 @@ let player1Info;
 let killer=[];
 let cathari;
 let scrolls=[];
+let keys=[];
 let ball;
 let arrow;
 let bcWidth=3000;
@@ -31,15 +32,16 @@ let shieldImg;
 
 let triImg;
 let fireImg;
-let ufo;
-
-let killerNumber;
+let keyImg;
+let gameOverImg;
+let killerN;
 // add background musci
 let backMusic;
 let rotateTri=[];
 
 
 let gameState = 0; // tracking game state
+
 
 
 
@@ -63,33 +65,17 @@ function preload() {
   instructionImg = loadImage('./images/instruct.jpg');
   catharsInfoImg = loadImage('./images/cathars0.jpg');
   fireImg=loadImage("./images/fire.jpg"); // source:https://pixabay.com/photos/thunderbolt-lightning-thunderstorm-1905603/
-  ufo=loadImage("./images/flying.png");
+  keyImg=loadImage("./images/key.png");
   triImg=loadImage("./images/tri.png");
   arrowImg=loadImage("./images/arrow.png");
   section2=loadImage("./images/bc.jpg");
   shieldImg=loadImage("./images/shield.png");
+  gameOverImg=loadImage("./images/endtime.jpg");
 }
 
 // function set up
 
-function setupKiller(){
 
-  killerNumber=3+floor(cathari.getCount/3);
-   for (let i = 0; i < killerNumber; i++) {
-
-     // Generate (mostly) random values for the arguments of the Voter constructor
-
-     let killerSpeed = random(1, 5); // set vote move speed
-     let killerRadius = random(30, 60); // set size
-     // Create a new Prey objects with the random values
-     let newKiller = new Killer(killerRadius, killerSpeed,killerImg);
-     // Add the new vote object to the END of our array using push()
-     killer.push(newKiller);
-   }
-
-
-
-}
 function makeNewKiller(){
   //console.log(killerNumber);
   //
@@ -116,17 +102,41 @@ function makeNewKiller(){
 function setup() {
   createCanvas(windowWidth, windowHeight);
 
-      imageMode(CENTER);
+
+
+    setupElements();
+    setupArrays();
+
+
+    }
+
+function setupElements(){
+  cathari = new Cathari(width - 100, height/2, 10, 30, catharImg, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 13);
+  ball=new Magicball(cathari.x,cathari.y,10,ballImage,87, 83, 65, 68); //wsad movement
+  powerfulMantra=new Scrolls(random(0,width),random(0,height),10,50,2,mantraImg);
+  //rotateTri=new RotateTriangle(10,50,triImg);
+  arrow=new Arrows(5,arrowImg);
 
 
 
-      cathari = new Cathari(width - 200, 200, 10, 30, catharImg, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 13);
-      ball=new Magicball(cathari.x,cathari.y,10,ballImage,87, 83, 65, 68); //wsad movement
-      powerfulMantra=new Scrolls(random(0,width),random(0,height),10,50,2,mantraImg);
-      //rotateTri=new RotateTriangle(10,50,triImg);
-      arrow=new Arrows(5,arrowImg);
 
-      setupKiller();
+}
+
+
+function setupArrays(){
+killerN=3;
+  //killerNumber=3+floor(cathari.getCount/3);
+   for (let i = 0; i < killerN; i++) {
+
+     // Generate (mostly) random values for the arguments of the Voter constructor
+
+     let killerSpeed = random(1, 5); // set vote move speed
+     let killerRadius = random(30, 60); // set size
+     // Create a new Prey objects with the random values
+     let newKiller = new Killer(killerRadius, killerSpeed,killerImg);
+     // Add the new vote object to the END of our array using push()
+     killer.push(newKiller);
+   }
 
       for (let m = 0; m< 5; m++) {
         // Generate (mostly) random values for the arguments of the Voter constructor
@@ -151,15 +161,25 @@ function setup() {
         // Add the new vote object to the END of our array using push()
         rotateTri.push(newRotateTri);
       }
-
-
+      for (let n= 0; n< 12; n++) {
+        // Generate (mostly) random values for the arguments of the Voter constructor
+        let speed = random(4, 12);
+        let size = random(20, 50);
+        // Create a new Prey objects with the random values
+        let newKey= new Key(size,speed,keyImg);
+        // Add the new vote object to the END of our array using push()
+        keys.push(newKey);
+      }
 }
+
+
 // draw()
 //
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
 
        if(gameState===0){
+   imageMode(CENTER);
   image(coverImg, width/2, height/2, windowWidth, windowHeight);
 
 
@@ -167,6 +187,7 @@ function draw() {
 
 
     else if(gameState===3){
+      imageMode(CENTER);
     image(background, width/2, height/2, windowWidth, windowHeight); // display background
     fill(255);
     textSize(25);
@@ -181,6 +202,7 @@ function draw() {
       killer[n].chase(cathari.x,cathari.y);
       killer[n].killCathari(cathari);
       ball.killercollision(killer[n],cathari,cathari.x,cathari.y);
+      
 
 
 
@@ -196,6 +218,7 @@ function draw() {
         cathari.getScrolls(scrolls[a]);
 
       }
+
 
 
       cathari.handleInput();
@@ -230,6 +253,16 @@ function draw() {
 
      }
 
+     for (let m = 0; m< keys.length; m++) {
+
+       keys[m].GotKey(cathari);
+       keys[m].display();
+       keys[m].movement()
+
+
+
+     }
+
      arrow.move();
      arrow.display();
      cathari.handleInput();
@@ -241,7 +274,24 @@ function draw() {
 
 
    }
+ else if(gameState===5){
+   imageMode(CORNER);
+    image(gameOverImg,0,0,width,height);
+    if(keyIsDown(32)) {
+      clear();
+      setupArrays();
+      setupElements();
+      //killer.length=3;
+      gameState=0;
+      killer.length=3;
+      scrolls.length=5;
+      keys.length=12;
+      rotateTri.length=25;
 
+    }
+
+ }
+ console.log(killer.length);
   }
 
   function mousePressed() {

@@ -3,8 +3,8 @@ class Killer { //set elites properties
   //construction
   constructor(size, speed, img) {
     // random position
-    this.x = random(200, width);
-    this.y = random(0, 200);
+    this.x = random(200, width/2);
+    this.y = random(50, 100);
     // Velocity and speed
     this.vx = 0;
     this.vy = 0;
@@ -92,17 +92,20 @@ class Killer { //set elites properties
       let d = dist(this.x, this.y, cathari.x, cathari.y);
 
       // Check if the distance is less than their two radii (an overlap)
-      if (d < this.size/2 + cathari.size/2) {
+      if (d < this.size + cathari.size) {
+        if(cathari.getCount>0);{// prevent die at the beginning when game restarts
         // Increase candidates power and constrain it to its possible range
-        cathari.isFailed=true;
+        //cathari.isFailed=true;
+        gameState=5;
+        this.reset();
 
-
+}
       }
     }
 
   reset(){
-    this.x = random(0, width);
-    this.y = random(0, height);
+    this.x = random(100, width/2);
+    this.y = random(50, 100);
     // Velocity and speed
     this.vx = 0;
     this.vy = 0;
