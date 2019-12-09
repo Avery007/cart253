@@ -1,3 +1,6 @@
+// key class
+// player needs to get enough key in stage 2 to win the game
+
 class Key { //set key properties
 
   //construction
@@ -19,7 +22,7 @@ class Key { //set key properties
 
     this.size = size;
 
-     this.isGot=false;
+    this.isGot = false;
 
 
     this.img = img;
@@ -29,7 +32,7 @@ class Key { //set key properties
   }
 
   movement() {
-    if (!this.isGot) {// when elites is active
+    if (!this.isGot) { // if the key is available
       // Set velocity via noise()
       this.vx = map(noise(this.tx), 0, 1, -this.speed, this.speed);
       this.vy = map(noise(this.ty), 0, 1, -this.speed, this.speed);
@@ -61,36 +64,37 @@ class Key { //set key properties
   }
 
 
+  // display the key
 
   display() {
 
-       if(!this.isGot){
+    if (!this.isGot) {
       push();
       imageMode(CENTER);
-      image(this.img, this.x, this.y, this.size/2, this.size);
+      image(this.img, this.x, this.y, this.size / 2, this.size);
 
       pop();
 
-        fill(random(0,255));
-        textSize(15);
-        text("Got me",this.x,this.y-this.size);
+      fill(random(0, 255));
+      textSize(15);
+      text("Got me", this.x, this.y - this.size);
 
 
-      }
     }
+  }
 
 
 
 
-   GotKey(cathar) {
-      // Calculate distance from this cadidates
-      let d = dist(this.x, this.y, cathar.x, cathar.y);
+  GotKey(cathar) {
+    // Calculate distance
+    let d = dist(this.x, this.y, cathar.x, cathar.y);
 
-      // Check if the distance is less than their two radii (an overlap)
-      if (d < this.size/2 + cathar.size/2) {
-        if(!cathar.shieldActive){
-        // Increase candidates power and constrain it to its possible range
-        this.isGot=true;
+    // Check if the distance is less than their two radii (an overlap)
+    if (d < this.size / 2 + cathar.size / 2) {
+      if (!cathar.shieldActive) { // player cannot get the key when using shield
+
+        this.isGot = true;
         this.x = random(0, width);
         this.y = random(0, height);
         // Velocity and speed
@@ -98,16 +102,13 @@ class Key { //set key properties
         this.vy = 0;
 
 
-        cathar.keyCount= cathar.keyCount+1;
-
-      
+        cathar.keyCount = cathar.keyCount + 1; // count keys numbers
 
 
 
-}
       }
     }
-
+  }
 
 
 

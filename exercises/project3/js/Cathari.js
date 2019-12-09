@@ -1,10 +1,14 @@
+// class represent player
+// only one player in this game
+
+
 class Cathari {
 
   // constructor
   //
-  // Sets the initial values for the candidates properties
+  // Sets the initial values for the player properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, radius,img,moveUpkey,moveDownkey,moveLeftkey,moveRightkey) {
+  constructor(x, y, speed, radius, img, moveUpkey, moveDownkey, moveLeftkey, moveRightkey) {
     // Position
     this.x = x;
     this.y = y;
@@ -13,10 +17,9 @@ class Cathari {
     this.vy = 0;
     this.speed = speed;
 
-    // power properties
     this.size = radius;
-    this.energyLeft=200;
-    this.keyCount=0;
+    this.energyLeft = 200; // orginal energy
+    this.keyCount = 0; // count how mnay keys player gets
 
     // set up key control
     this.upKey = moveUpkey;
@@ -25,65 +28,66 @@ class Cathari {
     this.rightKey = moveRightkey;
 
 
-     this.getCount=0;
-     this.rate=this.getCount;
-    this.playerImg = img; // display player as images
+    this.getCount = 0; // count how many books player get
+    this.rate = this.getCount; // set killer increasing rate based on getCOunt
+
     this.isFailed = false; // check if players are dead
-    this.shieldActive=false;
+    this.shieldActive = false; // check if player is using shield
 
-
+    this.playerImg = img; // display player as images
 
 
   }
 
   // handleInput
   //
-  // Checks if an arrow key is pressed and sets the candidates
+  // Checks if an arrow key is pressed and sets it
   // velocity appropriately.
   handleInput() {
 
     // Horizontal movement
 
-      if (keyIsDown(this.leftKey)) {
-        this.vx = -this.speed;
-      } else if (keyIsDown(this.rightKey)) {
-        this.vx = this.speed;
-      } else {
-        this.vx = 0;
-      }
-      // Vertical movement
-      if (keyIsDown(this.upKey)) {
-        this.vy = -this.speed;
-      } else if (keyIsDown(this.downKey)) {
-        this.vy = this.speed;
-      } else {
-        this.vy = 0;
-      }
+    if (keyIsDown(this.leftKey)) {
+      this.vx = -this.speed;
+    } else if (keyIsDown(this.rightKey)) {
+      this.vx = this.speed;
+    } else {
+      this.vx = 0;
+    }
+    // Vertical movement
+    if (keyIsDown(this.upKey)) {
+      this.vy = -this.speed;
+    } else if (keyIsDown(this.downKey)) {
+      this.vy = this.speed;
+    } else {
+      this.vy = 0;
+    }
 
 
 
   }
 
+  // player can press K to shield themselves from arrows
+  getShield(shieldImg, catharImg) {
+    if (keyIsDown(75)) { // when key is pressed
+      this.shieldActive = true;
 
-  getShield(shieldImg,catharImg){
-    if (keyIsDown(75)) {
-      this.shieldActive=true;
+      this.playerImg = shieldImg; //replace player image with the shield
+    } else {
+      this.playerImg = catharImg; // display player
+      this.shieldActive = false;
+    }
 
-      this.playerImg=shieldImg;
   }
-  else{this.playerImg=catharImg;
-       this.shieldActive=false;
-  }
 
-}
-
+  // using existing codes from previous exercise
   move() {
     // Update position
     this.x += this.vx;
     this.y += this.vy;
 
-      this.handleWrapping();
-    }
+    this.handleWrapping();
+  }
 
 
   // handleWrapping
@@ -105,71 +109,84 @@ class Cathari {
     }
   }
 
-    getScrolls(scrolls) {
-      // Calculate distance from this cadidates
-      let d = dist(this.x, this.y, scrolls.x, scrolls.y);
-
-      // Check if the distance is less than their two radii (an overlap)
-      if (d < this.size + scrolls.radius) {
-        // Increase candidates power and constrain it to its possible range
-        this.getCount=this.getCount+1;
-
-        scrolls.reset();
-
-        if(floor(this.getCount/1.5)-this.rate>0){
-         makeNewKiller();
-
-        this.rate=this.getCount;
-
-       }
-
-    }
-
-    }
-
-  tireness(killerHitCount){
 
 
-        if(this.speed>1){
-      this.speed=10-killerHitCount*0.05;
+  // player-scrolls collisons
+  getScrolls(scrolls) {
+    // Calculate distance
+    let d = dist(this.x, this.y, scrolls.x, scrolls.y);
 
+    // Check if the distance is less than their two radii (an overlap)
+    if (d < this.size + scrolls.radius) {
+      // count collisions times
+      this.getCount = this.getCount + 1;
 
+      scrolls.reset(); // reset
+
+      // increases killer's number based on the collisions of player and books
+      if (floor(this.getCount / 2) - this.rate > 0) { // set a inscreasing certain
+        makeNewKiller();
+        this.rate = this.getCount;
+
+      }
 
     }
-}
 
-energy(ball){
-   fill(255);
-   if(this.energyLeft>0){
-   this.energyLeft=150-ball.hitCount;}
-   else{ball.isActive=false;}
-   rect(this.x,this.y-this.size*1.5,this.energyLeft,10);
+  }
 
 
-}
+  // as players hit the killer, it is getting slower
 
-  exit(){
-     if (this.x<100&&this.y<100){
-      
-if(keyIsDown(ENTER)){
+  tireness(killerHitCount) {
 
-  gameState=4;
-  this.x=width-100;
-  this.y=height-100;
+    if (this.speed > 1) {
+      this.speed = 10 - killerHitCount * 0.05;
 
-}
+    }
+  }
 
-     }
+
+  // update player's energy
+  energy(ball) {
+    fill(255);
+    if (this.energyLeft > 0) {
+      this.energyLeft = 150 - ball.hitCount;
+    } else {
+      ball.isActive = false;
+    }
+    rect(this.x, this.y - this.size * 1.5, this.energyLeft, 10);
 
 
   }
+
+
+
+  // allow player to exit
+  exit() {
+    if (this.x < 100 && this.y < 100) { // move to certain area
+      // and press ENTER key
+      if (keyIsDown(ENTER)) {
+        // shift to stage 2 and reset position
+        gameState = 4;
+        this.x = width - 100;
+        this.y = height - 100;
+
+      }
+
+    }
+
+
+  }
+
+
+  // display player
   display() {
 
-      push();
-      noStroke();
-      imageMode(CENTER);
-      image(this.playerImg, this.x, this.y, 2 * this.size, 2 * this.size);
-      pop();
+    push();
+    noStroke();
+    imageMode(CENTER);
+    image(this.playerImg, this.x, this.y, 2 * this.size, 2 * this.size);
+    pop();
 
   }
 }

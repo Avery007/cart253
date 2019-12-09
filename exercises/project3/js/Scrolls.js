@@ -8,9 +8,9 @@ class Scrolls {
 
   // constructor
   //
-  // Sets the initial values for the voter's properties
+  // Sets the initial values
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, radius,visibleReduce,img) {
+  constructor(x, y, speed, radius, visibleReduce, img) {
     // Position
     this.x = x;
     this.y = y;
@@ -18,46 +18,47 @@ class Scrolls {
     this.vx = 0;
     this.vy = 0;
     this.speed = speed;
-    this.image=img;
+    this.image = img;
 
-    this.visibility=255;
-    this.visibleReduce=visibleReduce;
+    this.visibility = 255;
+    this.visibleReduce = visibleReduce;
     // Time properties for noise() function
     this.tx = random(0, 1000); // To make x and y noise different
     this.ty = random(0, 1000); // we use random starting values
     // effect properties
-    this.maxEffect = radius/2;
-    this.effect= this.maxEffect; // Must be AFTER defining this.maxHealth
-    // Display properties
-     this.getCount=0;
+    this.maxEffect = radius / 2;
+    this.effect = this.maxEffect;
+
+    this.getCount = 0;
     this.radius = radius;
-    this.isDestroyed=false; // check if the book is isDestroyed
-    this.isAvailable=true;
+    this.isDestroyed = false; // check if the normal book is isDestroyed
+    this.isAvailable = true; // check if the special mantra is got by players, it can only be got once
+
 
   }
 
   // move
   //
-  // Sets velocity based on the noise() function and the Prey's speed
+  // Sets velocity based on the noise() function
   // Moves based on the resulting velocity and handles wrapping
   move() {
-    if(this.isAvailable){
-    // Set velocity via noise()
-    this.vx = map(noise(this.tx), 0, 1, -this.speed, this.speed);
-    this.vy = map(noise(this.ty), 0, 1, -this.speed, this.speed);
-    // Update position
-    this.x += this.vx;
-    this.y += this.vy;
-    // Update time properties
-    this.tx += 0.01;
-    this.ty += 0.01;
-    // Handle wrapping
-    this.handleWrapping();
+    if (this.isAvailable) {
+      // Set velocity via noise()
+      this.vx = map(noise(this.tx), 0, 1, -this.speed, this.speed);
+      this.vy = map(noise(this.ty), 0, 1, -this.speed, this.speed);
+      // Update position
+      this.x += this.vx;
+      this.y += this.vy;
+      // Update time properties
+      this.tx += 0.01;
+      this.ty += 0.01;
+      // Handle wrapping
+      this.handleWrapping();
+    }
   }
-}
 
   //
-  // Checks if the voter has gone off the canvas and
+  // Checks if the book has gone off the canvas and
   // wraps it to the other side if so
   handleWrapping() {
     // Off the left or right
@@ -74,39 +75,40 @@ class Scrolls {
     }
   }
 
- appearChange(){
-   if(this.visibility>0){ // make the books get less visible
-  this.visibility=this.visibility-this.visibleReduce;
-}
-else{this.reset();}  // reset the visibility when it disapears
+  appearChange() {
+    if (this.visibility > 0) { // make the books get less visible
+      this.visibility = this.visibility - this.visibleReduce;
+    } else {
+      this.reset();
+    } // reset the visibility when it disapears
 
 
- }
+  }
   // display
   //
   // Draw the prey as an ellipse on the canvas
   // with a radius the same size as its current health.
   display() {
-   if(this.isAvailable){
-    push();
-    noStroke();
-    imageMode(CENTER);
-    tint(255,this.visibility);
-    image(this.image,this.x,this.y,this.radius,this.radius);
+    if (this.isAvailable) {
+      push();
+      noStroke();
+      imageMode(CENTER);
+      tint(255, this.visibility);
+      image(this.image, this.x, this.y, this.radius, this.radius);
 
-    pop();
+      pop();
+    }
   }
-}
 
-  mantraCollision(cathari,magicBall) {
-    // Calculate distance from this cadidates
+  mantraCollision(cathari, magicBall) { /// special mantra
+    // Calculate distance
     let d = dist(this.x, this.y, cathari.x, cathari.y);
 
     // Check if the distance is less than their two radii (an overlap)
     if (d < this.radius + cathari.size) {
-      // Increase candidates power and constrain it to its possible range
-      magicBall.isActive=true;
-    this.isAvailable=false;
+      // make the magic ball available for pkayer
+      magicBall.isActive = true;
+      this.isAvailable = false; // the mantra displays only once
 
 
 
@@ -123,12 +125,9 @@ else{this.reset();}  // reset the visibility when it disapears
     // Random position
     this.x = random(0, width);
     this.y = random(0, height);
-    this.visibility=255;
+    this.visibility = 255; // reset visibility
 
   }
-
-
-
 
 
 

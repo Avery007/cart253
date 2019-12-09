@@ -15,8 +15,6 @@ class Killer { //set killer properties
     this.tx = random(500, 1000); // To make x and y noise different
     this.ty = random(0, 1000); // we use random starting values
 
-
-
     this.size = size;
     this.chasing = false; // check whether the killer is chasing after player
     this.isHit = false; // check if the killer is hit by ball

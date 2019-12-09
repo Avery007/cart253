@@ -1,10 +1,14 @@
+// the magic ball is player's weapon against killerSpeed
+// it wont reduce the enermy,
+// but will reset their location
+
 class Magicball {
 
   // constructor
   //
-  // Sets the initial values for the candidates properties
+  // Sets the initial values
   // Either sets default values or uses the arguments provided
-  constructor(x,y,radius,img,moveUpkey,moveDownkey,moveLeftkey,moveRightkey) {
+  constructor(x, y, radius, img, moveUpkey, moveDownkey, moveLeftkey, moveRightkey) {
     // Position
     this.x = x;
     this.y = y;
@@ -20,9 +24,9 @@ class Magicball {
     this.leftKey = moveLeftkey;
     this.rightKey = moveRightkey;
 
-   this.hitCount=0;
-    this.playerImg = img; // display player as images
-    this.isActive = false; // check if players are dead
+    this.hitCount = 0;
+    this.Img = img; // display it by image
+    this.isActive = false; // check if player gets special manttra so they can use ball
 
 
 
@@ -32,72 +36,72 @@ class Magicball {
   //
   // Checks if an arrow key is pressed and sets the candidates
   // velocity appropriately.
-  handleInput(getX,getY) {
-    if(this.isActive){
+  handleInput(getX, getY) {
+    if (this.isActive) {
 
-    // Horizontal movement
+      // Horizontal movement
 
       if (keyIsDown(this.leftKey)) {
         this.display();
-        this.x =this.x- this.speed;
+        this.x = this.x - this.speed;
       } else if (keyIsDown(this.rightKey)) {
         this.display();
-        this.x =this.x+ this.speed;
+        this.x = this.x + this.speed;
       }
       // Vertical movement
       else if (keyIsDown(this.upKey)) {
         this.display();
-        this.y =this.y- this.speed;
+        this.y = this.y - this.speed;
       } else if (keyIsDown(this.downKey)) {
         this.display();
-        this.y =this.y+ this.speed;
+        this.y = this.y + this.speed;
       } else {
-        this.resetBalls(getX,getY);
-        this.size=0;
+        this.resetBalls(getX, getY);
+        this.size = 0;
       }
 
 
+    }
   }
-}
 
-resetBalls(getX,getY){
-  this.x=getX;
-  this.y=getY;
-
-
-}
+  resetBalls(getX, getY) {
+    this.x = getX;
+    this.y = getY;
 
 
-killercollision(killer,cathari,getX,getY) {
+  }
 
-  // Calculate distance from this cadidates
-  let d = dist(this.x, this.y, killer.x, killer.y);
+  // check ball killer collions
+  killercollision(killer, cathari, getX, getY) {
 
-  // Check if the distance is less than their two radii (an overlap)
-  if (d < this.size + killer.size) {
-    // Increase candidates power and constrain it to its possible range
+    // Calculate distance from this cadidates
+    let d = dist(this.x, this.y, killer.x, killer.y);
 
-      this.resetBalls(getX,getY);
+    // Check if the distance is less than their two radii (an overlap)
+    if (d < this.size + killer.size) {
+
+
+      this.resetBalls(getX, getY);
 
       killer.reset();
-    this.hitCount=this.hitCount+1;
-    cathari.tireness(this.hitCount);
+      this.hitCount = this.hitCount + 1;
+      cathari.tireness(this.hitCount); // player's energy reduce
 
 
 
+    }
   }
-}
 
 
-
+  //display ball
   display() {
-       if(this.isActive){
-      this.size=10;
+    if (this.isActive) {
+      this.size = 10;
       push();
       noStroke();
       imageMode(CENTER);
-      image(this.playerImg, this.x, this.y, 2 * this.size, 2 * this.size);
+      image(this.Img, this.x, this.y, 2 * this.size, 2 * this.size);
       pop();
-}
+    }
   }
 }
