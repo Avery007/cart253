@@ -4,7 +4,7 @@ class Cathari {
   //
   // Sets the initial values for the candidates properties
   // Either sets default values or uses the arguments provided
-  constructor(x, y, speed, radius,img,moveUpkey,moveDownkey,moveLeftkey,moveRightkey,speedupKey) {
+  constructor(x, y, speed, radius,img,moveUpkey,moveDownkey,moveLeftkey,moveRightkey) {
     // Position
     this.x = x;
     this.y = y;
@@ -23,7 +23,7 @@ class Cathari {
     this.downKey = moveDownkey;
     this.leftKey = moveLeftkey;
     this.rightKey = moveRightkey;
-    this.speedupKey = speedupKey; // enter key
+
 
      this.getCount=0;
      this.rate=this.getCount;
@@ -58,12 +58,6 @@ class Cathari {
         this.vy = this.speed;
       } else {
         this.vy = 0;
-      }
-
-      if (keyIsDown(this.speedupKey)) { // speedup when shift is pressed
-        this.vy = this.vy * 3;
-        this.vx = this.vx * 3;
-
       }
 
 

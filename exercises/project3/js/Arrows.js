@@ -63,6 +63,7 @@ collisionCheck(cathar){
 
   }
     else{gameState=5;
+         cathar.isFailed=true;
         failReason="Oops!You are shoot by an arrow \n"+ "so you are captured!";}
 
 }

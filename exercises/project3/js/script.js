@@ -32,7 +32,6 @@ let catharsInfoImg;
 let shieldImg;
 let winImg;
 let triImg;
-let fireImg;
 let keyImg;
 let gameOverImg;
 let killerN;
@@ -43,7 +42,10 @@ let rotateTri=[];
 
 let gameState = 0; // tracking game state
 
-
+let fightingSound;
+let finalSound;
+let beginSound;
+let escapeSound;
 
 
 
@@ -65,7 +67,6 @@ function preload() {
   coverImg = loadImage('./images/front.jpg');
   instructionImg = loadImage('./images/instruct.jpg');
   catharsInfoImg = loadImage('./images/cathars0.jpg');
-  fireImg=loadImage("./images/fire.jpg"); // source:https://pixabay.com/photos/thunderbolt-lightning-thunderstorm-1905603/
   keyImg=loadImage("./images/key.png");
   triImg=loadImage("./images/tri.png");
   arrowImg=loadImage("./images/arrow.png");
@@ -74,6 +75,10 @@ function preload() {
   gameOverImg=loadImage("./images/endtime.jpg");
   info=loadImage("./images/info.jpg");
   winImg=loadImage("./images/final.png");
+  fightingSound=loadSound("./sounds/fightt.wav");
+  beginSound=loadSound("./sounds/trouble.wav");
+  escapeSound=loadSound("./sounds/esc.wav");
+  finalSound=loadSound("./sounds/final.wav");
 }
 
 // function set up
@@ -114,9 +119,9 @@ function setup() {
     }
 
 function setupElements(){
-  cathari = new Cathari(width - 100, height/2, 10, 30, catharImg, UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW, 13);
-  ball=new Magicball(cathari.x,cathari.y,10,ballImage,87, 83, 65, 68); //wsad movement
-  powerfulMantra=new Scrolls(random(0,width),random(0,height),10,50,2,mantraImg);
+  cathari = new Cathari(width - 100, height/2, 10, 30, catharImg, 87, 83, 65, 68);
+  ball=new Magicball(cathari.x,cathari.y,10,ballImage,UP_ARROW, DOWN_ARROW, LEFT_ARROW, RIGHT_ARROW,); //wsad movement
+  powerfulMantra=new Scrolls(random(0,width),random(0,height),10,70,2,mantraImg);
   //rotateTri=new RotateTriangle(10,50,triImg);
   arrow=new Arrows(5,arrowImg);
 
@@ -185,6 +190,7 @@ killerN=3;
 // Handles input, movement, eating, and displaying for the system's objects
 function draw() {
 
+
        if(gameState===0){
    imageMode(CENTER);
   image(coverImg, width/2, height/2, windowWidth, windowHeight);
@@ -194,11 +200,20 @@ function draw() {
 
 
     else if(gameState===3){
+      if(!fightingSound.isPlaying()&&!cathari.isFailed){
+        fightingSound.play();
+    }
+
+
+
       imageMode(CENTER);
     image(background, width/2, height/2, windowWidth, windowHeight); // display background
     fill(255);
     textSize(25);
     text("You have saved " + cathari.getCount,100,100 );
+    if(ball.isActive){
+      text("press arrow keys to use your magic ball!",100,120 );
+    }
 
     for (let n = 0; n < killer.length; n++) {
 
@@ -246,7 +261,10 @@ function draw() {
 
      if(!section2Start){
      clear();
+     if(!beginSound.isPlaying()){
+       beginSound.play();
 
+     }
      imageMode(CORNER);
      image(info,0,0,width,height);
 
@@ -254,6 +272,10 @@ function draw() {
 
     else{
       clear();
+      if(!escapeSound.isPlaying()&&!cathari.isFailed){
+        escapeSound.play();
+    }
+
      if(bcWidth>0&&!cathari.shieldActive){
      bcWidth=bcWidth-0.5;}
 
@@ -293,6 +315,10 @@ function draw() {
 }
    }
  else if(gameState===5){
+   if(!beginSound.isPlaying()){
+     beginSound.play();
+
+   }
    imageMode(CORNER);
     image(gameOverImg,0,0,width,height);
  explain();
@@ -308,6 +334,7 @@ function draw() {
       rotateTri.length=25;
       cathari.keyCount=0;
       bcWidth=2500;
+      cathari.isFailed=false;
 
     }
 
@@ -315,9 +342,17 @@ function draw() {
  else if(gameState===6){
   clear();
  winScreen();
+ if(!finalSound.isPlaying()){
+   finalSound.play();
 
  }
 
+ }
+ else{if(!beginSound.isPlaying()){
+   beginSound.play();
+
+ }
+}
 
   }
 
@@ -325,6 +360,7 @@ function draw() {
     if (gameState === 0) {
       gameState = 1; // start the game when mouse is clicked
       image(catharsInfoImg,width/2,height/2,windowWidth,windowHeight);
+
 
     }
     // giving a choice to restart the game when it is over
@@ -334,7 +370,8 @@ function draw() {
     }
     else if (gameState === 2) {
       gameState=3;
-    }
+
+  }
     else if (gameState === 4) {
       section2Start=true;
     }
@@ -378,6 +415,9 @@ else {gameState=5;
 
   }
 }
+
+
+
   function winScreen() {
 
     noStroke();

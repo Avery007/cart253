@@ -95,7 +95,7 @@ class Killer { //set elites properties
       if (d < this.size + cathari.size) {
         if(cathari.getCount>0);{// prevent die at the beginning when game restarts
         // Increase candidates power and constrain it to its possible range
-        //cathari.isFailed=true;
+        cathari.isFailed=true;
         gameState=5;
         failReason="Oops! You are captured by a soldier!";
         this.reset();

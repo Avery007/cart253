@@ -129,10 +129,7 @@ else{this.reset();}  // reset the visibility when it disapears
 
 
 
-// sound when player gets vote
-  sound(music) {
-        music.play();
-        music.setVolume(0.4);
-      }
+
+
 
 }
