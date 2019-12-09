@@ -210,6 +210,7 @@ function draw() {
     image(background, width/2, height/2, windowWidth, windowHeight); // display background
     fill(255);
     textSize(25);
+    text("To exit, move to the topleft corner and press ENTER " , 100,70 );
     text("You have saved " + cathari.getCount,100,100 );
     if(ball.isActive){
       text("press arrow keys to use your magic ball!",100,120 );

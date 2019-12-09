@@ -150,6 +150,7 @@ energy(ball){
 
   exit(){
      if (this.x<100&&this.y<100){
+      
 if(keyIsDown(ENTER)){
 
   gameState=4;
